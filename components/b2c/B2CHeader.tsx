@@ -47,7 +47,6 @@ export default function B2CHeader() {
               />
             </Link>
 
-            {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-2">
               <div className="relative group h-20 flex items-center" 
                    onMouseEnter={() => setIsProgramsOpen(true)} 
@@ -67,7 +66,7 @@ export default function B2CHeader() {
                   </div>
                 )}
               </div>
-              {['Masterclass', 'Alumni', 'Research'].map((link) => (
+              {['Masterclass', 'Alumni', 'Research', 'Advisory Council'].map((link) => (
                 <Link key={link} href="#" className="px-4 py-2 text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-white transition-colors">
                   {link}
                 </Link>
@@ -75,7 +74,6 @@ export default function B2CHeader() {
             </nav>
           </div>
 
-          {/* Right Actions */}
           <div className="flex items-center gap-4">
             <button onClick={() => setIsSearchOpen(true)} className="p-2 text-slate-400 hover:text-white transition-colors">
               <Search className="w-5 h-5" />
@@ -84,7 +82,6 @@ export default function B2CHeader() {
               Apply Now
             </button>
             
-            {/* Mobile Menu Toggle */}
             <button onClick={() => setIsMobileMenuOpen(true)} className="lg:hidden p-2 text-white bg-white/5 rounded-lg">
               <Menu className="w-6 h-6" />
             </button>
