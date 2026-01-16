@@ -6,11 +6,11 @@ import Image from 'next/image';
 import { ChevronDown, Search, Menu, X, ArrowRight, Sparkles } from 'lucide-react';
 
 const programs = [
-  { name: 'InternX-AI', href: '#', desc: 'Autonomous Agent Deployment' },
-  { name: 'InternX-Cyber Security', href: '#', desc: 'Neural Security Protocols' },
-  { name: 'InternX-Blockchain', href: '#', desc: 'Decentralized Intelligence' },
-  { name: 'InternX-Cloud AI & DevOps', href: '#', desc: 'Scalable Neural Networks' },
-  { name: 'InternX-Web3', href: '#', desc: 'Semantic Web & AI' },
+  { name: 'InternX-AI', href: '/b2c/internx-ai', desc: 'Autonomous Agent Deployment' },
+  { name: 'InternX-Cyber Security', href: '/b2c/internx-cyber-security', desc: 'Neural Security Protocols' },
+  { name: 'InternX-Blockchain', href: '/b2c/internx-blockchain', desc: 'Decentralized Intelligence' },
+  { name: 'InternX-Cloud AI & DevOps', href: '/b2c/internx-cloud-ai-and-devops', desc: 'Scalable Neural Networks' },
+  { name: 'InternX-Web3', href: '/b2c/internx-web3', desc: 'Semantic Web & AI' },
 ];
 
 export default function B2CHeader() {
