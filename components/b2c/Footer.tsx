@@ -1,21 +1,70 @@
 'use client';
 
 import React from 'react';
-import { Github, Twitter, Linkedin, Mail, ArrowUpRight, Home, Layout, CreditCard, HelpCircle } from 'lucide-react';
+import { 
+  Github, Twitter, Linkedin, Mail, ArrowUpRight, 
+  Home, Layout, CreditCard, HelpCircle, MapPin, 
+  Phone, Navigation, Globe 
+} from 'lucide-react';
 import Link from 'next/link';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const whatsappNumber = "919810984968";
 
+  // Data from your screenshot
+  const locations = [
+    {
+      country: "Head Quarter (India)",
+      address: "5th Floor, Cyber Green Part-1, DLF Building No -2, Sector 25, Gurugram, Haryana 122002",
+      phone: "+91 8700236923"
+    },
+    {
+      country: "Branch Office (India)",
+      address: "21, Raheja Towers, Mahatma Gandhi Rd, Craig Park Layout, Ashok Nagar, Bengaluru, Karnataka 560001",
+      phone: "+91 8700236923"
+    },
+    {
+      country: "USA",
+      address: "128 Geary St, San Francisco California 94108, United States",
+      phone: "+1 (212) 814-6245"
+    },
+    {
+      country: "United Kingdom",
+      address: "2nd Floor, 23 Great Portland Street, London",
+      phone: "+44 7888873245"
+    },
+    {
+      country: "Dubai",
+      address: "R308 BUILDING - Office-403 - Al Mankhool - Dubai - United Arab Emirates",
+      phone: "+971 52 400 9232"
+    },
+    {
+      country: "Singapore",
+      address: "TripleOne Somerset, 111 Somerset Road, #04-01, Singapore, 238164",
+      phone: "+65 6815 1432"
+    },
+    {
+      country: "South Africa",
+      address: "3, Deneb House, 371 Browning Road, Cape Town, Western Cape, 7872, South Africa",
+      phone: "+27 8755063412"
+    },
+    {
+      country: "Germany",
+      address: "Grünberger Str. 54, 10245 Berlin, Germany",
+      phone: "+49 30 51588345"
+    }
+  ];
+
   return (
     <>
-      <footer className="bg-[#020617] pt-10 pb-10 md:pb-10 border-t border-white/5 relative overflow-hidden">
+      <footer className="bg-[#020617] pt-16 pb-10 md:pb-10 border-t border-white/5 relative overflow-hidden">
         <div className="absolute bottom-0 left-0 w-full h-[300px] bg-blue-600/5 blur-[120px] -z-10" />
 
         <div className="max-w-[1400px] mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
             
+            {/* --- LEFT COLUMN (Logo, Bio, Socials) --- */}
             <div className="lg:col-span-5 flex flex-col items-start">
               <div className="w-42 h-20 relative mb-4">
                 <img 
@@ -29,18 +78,26 @@ export default function Footer() {
                 Advancing human potential through neural-integrated learning. Join our elite cohort of engineers shipping the future.
               </p>
 
-              <div className="relative w-full max-w-md group">
-                <input 
-                  type="email" 
-                  placeholder="uplink@email.com" 
-                  className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-4 text-sm text-white focus:outline-none focus:border-blue-500/50 transition-all placeholder:text-slate-600"
-                />
-                <button className="absolute right-2 top-2 bottom-2 px-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all">
-                  Subscribe
-                </button>
+              <div className="flex gap-4">
+                {[
+                  { Icon: Github, href: "https://github.com" },
+                  { Icon: Twitter, href: "https://twitter.com" },
+                  { Icon: Linkedin, href: "https://linkedin.com" },
+                  { Icon: Mail, href: "mailto:support@careerlabconsulting.com" }
+                ].map((social, i) => (
+                  <Link 
+                    key={i} 
+                    href={social.href} 
+                    target="_blank"
+                    className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-blue-400 hover:border-blue-500/30 transition-all"
+                  >
+                    <social.Icon className="w-5 h-5" />
+                  </Link>
+                ))}
               </div>
             </div>
 
+            {/* --- RIGHT COLUMN (Links, Contact, Subscribe) --- */}
             <div className="lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-8 pt-4">
               {/* --- PROTOCOLS --- */}
               <div className="space-y-6">
@@ -76,30 +133,73 @@ export default function Footer() {
                 </ul>
               </div>
 
-              {/* --- CONNECT --- */}
+              {/* --- CONTACT & SUBSCRIBE --- */}
               <div className="space-y-6 col-span-2 md:col-span-1">
-                <h4 className="text-white text-[10px] font-black uppercase tracking-[0.2em]">Connect</h4>
-                <div className="flex gap-4">
-                  {[
-                    { Icon: Github, href: "https://github.com" },
-                    { Icon: Twitter, href: "https://twitter.com" },
-                    { Icon: Linkedin, href: "https://linkedin.com" },
-                    { Icon: Mail, href: "mailto:hello@careerlab.com" }
-                  ].map((social, i) => (
-                    <Link 
-                      key={i} 
-                      href={social.href} 
-                      target="_blank"
-                      className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-blue-400 hover:border-blue-500/30 transition-all"
-                    >
-                      <social.Icon className="w-5 h-5" />
-                    </Link>
-                  ))}
+                <h4 className="text-white text-[10px] font-black uppercase tracking-[0.2em]">Newsletter</h4>
+                <p className="text-slate-500 text-xs mb-4">Subscribe to our secure channel for updates.</p>
+                <div className="relative w-full group">
+                  <input 
+                    type="email" 
+                    placeholder="uplink@email.com" 
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-4 py-3 text-xs text-white focus:outline-none focus:border-blue-500/50 transition-all placeholder:text-slate-600"
+                  />
+                  <button className="absolute right-1.5 top-1.5 bottom-1.5 px-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-[9px] font-black uppercase tracking-widest transition-all">
+                    Join
+                  </button>
                 </div>
               </div>
             </div>
           </div>
 
+          {/* --- GLOBAL PRESENCE (GOOGLE MAP STYLE) --- */}
+          {/* This section is added before the copyright line as requested */}
+          <div className="mb-12">
+            <div className="flex items-center gap-3 mb-8">
+              <Globe className="w-5 h-5 text-blue-500" />
+              <h3 className="text-white font-bold text-lg tracking-wide">Global Presence</h3>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {locations.map((loc, idx) => (
+                <div 
+                  key={idx} 
+                  className="group relative bg-white/[0.02] hover:bg-white/[0.04] border border-white/5 hover:border-blue-500/30 rounded-2xl p-5 transition-all duration-300 flex flex-col justify-between h-full"
+                >
+                  <div>
+                    {/* Header: Country & Icon */}
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-blue-400 font-bold text-xs uppercase tracking-wider">{loc.country}</span>
+                      <MapPin className="w-4 h-4 text-slate-600 group-hover:text-blue-400 transition-colors" />
+                    </div>
+                    
+                    {/* Address */}
+                    <p className="text-slate-400 text-xs leading-relaxed mb-4 h-12 overflow-hidden line-clamp-3">
+                      {loc.address}
+                    </p>
+                    
+                    {/* Phone */}
+                    <div className="flex items-center gap-2 text-slate-500 text-xs mb-4">
+                      <Phone className="w-3 h-3" />
+                      <span>{loc.phone}</span>
+                    </div>
+                  </div>
+
+                  {/* Google Maps Link Button */}
+                  <a 
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.address)}`} 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 w-full py-2 bg-blue-600/10 hover:bg-blue-600 text-blue-400 hover:text-white rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all"
+                  >
+                    <Navigation className="w-3 h-3" />
+                    Get Directions
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* --- COPYRIGHT & STATUS BAR --- */}
           <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-6">
               <span className="text-[10px] text-slate-600 font-bold uppercase tracking-widest">© {currentYear} Career Lab Consulting</span>

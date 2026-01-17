@@ -3,85 +3,94 @@
 import React, { useState } from 'react';
 import { Play, Star, Users, ArrowRight, Download, X } from 'lucide-react';
 
+// Updated data to match InternX Domains
 const courseData = {
   "Top Courses": [
     {
-      title: "Data Science and Artificial Intelligence",
+      title: "InternX-AI: Autonomous Agent Deployment",
       duration: "4-10 MONTHS",
       rating: "4.9/5",
       students: "15k+ Students",
-      enrolled: "2152+ students enrolled in Dec 2025",
-      image: "https://images.unsplash.com/photo-1615938165708-feda49ca470c?q=80&w=1889&auto=format&fit=crop", 
-      category: "DATA SCIENCE",
-      videoId: "ua-CiDNNj30" 
+      enrolled: "2152+ students enrolled in Jan 2026",
+      image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1000", 
+      category: "AI & ML",
+      videoId: "whqLvigQWoE" 
     },
     {
-      title: "Generative AI and Agentic AI Development",
+      title: "InternX-Cyber Security: Threat Intelligence",
       duration: "4-10 MONTHS",
       rating: "4.9/5",
       students: "12k+ Students",
-      enrolled: "1817+ students enrolled in Dec 2025",
-      image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1000",
-      category: "GEN AI",
-      videoId: "mEsleV16qdo"
+      enrolled: "1817+ students enrolled in Jan 2026",
+      image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000",
+      category: "SECURITY",
+      videoId: "vViMFjvVT9E"
     },
     {
-      title: "Cloud Computing and DevOps",
-      duration: "IN-DEMAND",
+      title: "InternX-Blockchain: Smart Contract AI",
+      duration: "4-10 MONTHS",
       rating: "4.9/5",
       students: "13k+ Students",
-      enrolled: "1777+ students enrolled in Dec 2025",
-      image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000",
-      category: "CLOUD",
-      videoId: "M576WGiYoj4"
+      enrolled: "1777+ students enrolled in Jan 2026",
+      image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=1000",
+      category: "WEB3",
+      videoId: "qOVAbKKSH10"
     }
   ],
   "Technology & AI": [
     {
-      title: "Cyber Security and Ethical Hacking",
-      duration: "4-10 MONTHS",
+      title: "InternX-AI: Neural Training Protocols",
+      duration: "6 MONTHS",
       rating: "4.9/5",
       students: "10k+ Students",
       enrolled: "1200+ enrolled",
-      image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000",
-      category: "SECURITY",
-      videoId: "nzj7Wg46lsA"
+      image: "https://images.unsplash.com/photo-1615938165708-feda49ca470c?q=80&w=1000",
+      category: "AI",
+      videoId: "whqLvigQWoE"
+    },
+    {
+      title: "InternX-Cloud & DevOps: Global Infra",
+      duration: "4-10 MONTHS",
+      rating: "4.8/5",
+      students: "9k+ Students",
+      enrolled: "1100+ enrolled",
+      image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000",
+      category: "CLOUD",
+      videoId: "kriafQfqGZE"
     }
   ],
-  "Management": [
+  "Web3 & Blockchain": [
     {
-      title: "Product Management & Strategy",
+      title: "InternX-Web3: DApp Development",
       duration: "4 MONTHS",
       rating: "4.7/5",
       students: "8k+ Students",
       enrolled: "950+ enrolled",
-      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1000",
-      category: "PRODUCT",
-      videoId: "8-7idX7vWnk"
+      image: "https://images.unsplash.com/photo-1620321023374-d1a68fbc720d?q=80&w=1000",
+      category: "BLOCKCHAIN",
+      videoId: "4XO3g7Rfamk"
     }
   ],
-  "Finance": [
+  "Security & Cloud": [
     {
-      title: "Investment Banking & Analysis",
+      title: "InternX-Cyber Security: Advanced Ops",
       duration: "5 MONTHS",
       rating: "4.9/5",
       students: "5k+ Students",
       enrolled: "600+ enrolled",
-      image: "https://plus.unsplash.com/premium_photo-1661602120241-2362dc35c256?q=80&w=1170&auto=format&fit=crop",
-      category: "FINANCE",
-      videoId: "S7eKNoCQu_s"
-    }
-  ],
-  "Design": [
+      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1000",
+      category: "CYBER",
+      videoId: "vViMFjvVT9E"
+    },
     {
-      title: "UI/UX Design Masterclass",
-      duration: "3 MONTHS",
+      title: "InternX-Cloud & DevOps: AI Scaling",
+      duration: "4 MONTHS",
       rating: "4.9/5",
-      students: "11k+ Students",
-      enrolled: "1400+ enrolled",
-      image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=1000",
-      category: "DESIGN",
-      videoId: "c9Wg6A_zEAY"
+      students: "7k+ Students",
+      enrolled: "850+ enrolled",
+      image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=1000",
+      category: "DEVOPS",
+      videoId: "kriafQfqGZE"
     }
   ]
 };
@@ -92,19 +101,17 @@ export default function CourseGrid() {
   const [activeTab, setActiveTab] = useState<TabName>("Top Courses");
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
-  const tabs: TabName[] = ['Top Courses', 'Technology & AI', 'Management', 'Finance', 'Design'];
+  const tabs: TabName[] = ['Top Courses', 'Technology & AI', 'Web3 & Blockchain', 'Security & Cloud'];
 
   return (
     <section className="py-16 md:py-24 bg-[#020617] relative">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         
-        {/* Header & Tabs */}
         <div className="text-center mb-10 md:mb-16">
           <h2 className="text-3xl md:text-5xl font-black text-white mb-6 tracking-tighter uppercase leading-tight">
-            Courses Tailored to your <span className="text-blue-500 italic block sm:inline">Learning Goals</span>
+            Internship Tailored to your <span className="text-blue-500 italic block sm:inline">Learning Goals</span>
           </h2>
           
-          {/* Mobile Scrollable Tabs Wrapper */}
           <div className="flex overflow-x-auto no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 sm:justify-center gap-2 mt-8">
             {tabs.map((tab) => (
               <button 
@@ -122,14 +129,12 @@ export default function CourseGrid() {
           </div>
         </div>
 
-        {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 min-h-[400px]">
           {courseData[activeTab].map((course, idx) => (
             <div 
               key={`${activeTab}-${idx}`} 
               className="group bg-[#0a1229] border border-white/10 rounded-[2.5rem] overflow-hidden hover:border-blue-500/50 transition-all duration-500 animate-in fade-in slide-in-from-bottom-4"
             >
-              {/* Image/Video Area */}
               <div 
                 className="relative h-56 sm:h-64 w-full overflow-hidden cursor-pointer"
                 onClick={() => setSelectedVideo(course.videoId)}
@@ -141,7 +146,6 @@ export default function CourseGrid() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0a1229] to-transparent" />
                 
-                {/* Play Button - Optimized for touch */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="w-14 h-14 md:w-16 md:h-16 bg-blue-600/90 rounded-full flex items-center justify-center text-white backdrop-blur-sm group-hover:scale-110 transition-all duration-500 shadow-2xl">
                     <Play className="w-5 h-5 md:w-6 md:h-6 fill-current" />
@@ -155,7 +159,6 @@ export default function CourseGrid() {
                 </div>
               </div>
 
-              {/* Content */}
               <div className="p-6 md:p-8">
                 <h3 className="text-lg md:text-xl font-black text-white mb-4 leading-tight min-h-[3rem] line-clamp-2 italic uppercase">
                   {course.title}
@@ -176,7 +179,6 @@ export default function CourseGrid() {
                   </div>
                 </div>
 
-                {/* Mobile Button Stack */}
                 <div className="flex flex-col sm:flex-row gap-3">
                   <button className="flex-1 py-3 border border-white/10 rounded-2xl text-[10px] font-black uppercase text-slate-300 hover:bg-white/5 transition-all flex items-center justify-center gap-2">
                     <Download className="w-3 h-3" /> Brochure
@@ -191,7 +193,7 @@ export default function CourseGrid() {
         </div>
       </div>
 
-      {/* Video Modal - Improved for Mobile */}
+      {/* Video Modal Popup */}
       {selectedVideo && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-0 sm:p-4">
           <div className="absolute inset-0 bg-black/98 backdrop-blur-md" onClick={() => setSelectedVideo(null)} />
@@ -212,7 +214,6 @@ export default function CourseGrid() {
         </div>
       )}
 
-      {/* Tailwind Utility for hiding scrollbar */}
       <style jsx global>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
