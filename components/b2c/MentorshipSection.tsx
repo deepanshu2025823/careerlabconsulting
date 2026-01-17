@@ -32,20 +32,15 @@ const mentors = [
 export default function MentorshipSection() {
   return (
     <section className="py-16 md:py-24 bg-[#020617] relative overflow-hidden">
-      {/* Background Glow - Adjusted for mobile to prevent overflow/distraction */}
       <div className="absolute bottom-0 right-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-blue-600/5 blur-[80px] md:blur-[120px] rounded-full translate-x-1/2 translate-y-1/2 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
-          {/* --- LEFT: VISUAL STACK (Bento Grid) --- */}
-          {/* Mobile Order: Shows AFTER text (Order 2), Desktop: Shows LEFT (Order 1) */}
           <div className="order-2 lg:order-1 relative">
             <div className="grid grid-cols-2 gap-3 md:gap-6">
               
-              {/* Column 1 */}
               <div className="space-y-3 md:space-y-6 pt-8 md:pt-12">
-                {/* Card 1 */}
                 <div className="bg-[#0a0f1d] border border-white/5 p-4 md:p-6 rounded-2xl md:rounded-[2rem] shadow-xl hover:border-blue-500/30 transition-colors group">
                   <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-500/10 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 transition-transform">
                     <MessageSquare className="w-5 h-5 md:w-6 md:h-6 text-blue-400" />
@@ -54,7 +49,6 @@ export default function MentorshipSection() {
                   <p className="text-slate-500 text-[10px] md:text-xs leading-relaxed">Direct access to senior neural engineers.</p>
                 </div>
                 
-                {/* Card 2 */}
                 <div className="bg-[#0a0f1d] border border-white/5 p-4 md:p-6 rounded-2xl md:rounded-[2rem] shadow-xl hover:border-emerald-500/30 transition-colors group">
                   <div className="w-10 h-10 md:w-12 md:h-12 bg-emerald-500/10 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 transition-transform">
                     <Briefcase className="w-5 h-5 md:w-6 md:h-6 text-emerald-400" />
@@ -64,9 +58,7 @@ export default function MentorshipSection() {
                 </div>
               </div>
 
-              {/* Column 2 */}
               <div className="space-y-3 md:space-y-6">
-                {/* Big Stats Card */}
                 <div className="bg-gradient-to-br from-blue-600/20 to-indigo-900/10 border border-blue-500/20 p-5 md:p-8 rounded-2xl md:rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
                   <div className="absolute top-0 right-0 p-3 md:p-5">
                     <Zap className="w-4 h-4 md:w-5 md:h-5 text-blue-400 animate-pulse" />
@@ -91,7 +83,6 @@ export default function MentorshipSection() {
                   </div>
                 </div>
 
-                {/* Card 3 */}
                 <div className="bg-[#0a0f1d] border border-white/5 p-4 md:p-6 rounded-2xl md:rounded-[2rem] shadow-xl hover:border-purple-500/30 transition-colors group">
                   <div className="w-10 h-10 md:w-12 md:h-12 bg-purple-500/10 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 transition-transform">
                     <Globe className="w-5 h-5 md:w-6 md:h-6 text-purple-400" />
@@ -103,8 +94,6 @@ export default function MentorshipSection() {
             </div>
           </div>
 
-          {/* --- RIGHT: TEXT CONTENT --- */}
-          {/* Mobile Order: Shows FIRST (Order 1), Desktop: Shows RIGHT (Order 2) */}
           <div className="order-1 lg:order-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -138,7 +127,6 @@ export default function MentorshipSection() {
               ))}
             </div>
 
-            {/* Hiring Partners Strip */}
             <div className="pt-6 md:pt-8 border-t border-white/5">
               <p className="text-[10px] text-slate-500 font-black uppercase tracking-[0.3em] mb-6 md:mb-8">Our Alumni Work At</p>
               <div className="flex flex-wrap gap-x-6 gap-y-4 md:gap-x-10 md:gap-y-6 items-center">

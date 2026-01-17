@@ -28,7 +28,7 @@ export default function B2CPage() {
         <section className="py-24 px-6 max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-black text-white mb-4 uppercase tracking-tighter">
-              B2C Internship Domains
+              Internship Domains
             </h2>
             <p className="text-slate-400">Select your specialization in the Career Lab Ecosystem.</p>
           </div>

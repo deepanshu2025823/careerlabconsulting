@@ -7,13 +7,10 @@ export default function B2CHero() {
   return (
     <section className="relative min-h-screen pt-28 pb-12 md:pt-36 md:pb-20 overflow-hidden bg-[#020617] flex items-center">
       
-      {/* --- BACKGROUND DYNAMICS --- */}
       <div className="absolute inset-0 z-0">
-        {/* Animated Gradient Blobs */}
         <div className="absolute top-[-10%] right-[-10%] w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-blue-600/20 blur-[100px] md:blur-[150px] rounded-full animate-pulse" />
         <div className="absolute bottom-[-10%] left-[-10%] w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-cyan-500/10 blur-[100px] md:blur-[150px] rounded-full" />
         
-        {/* Grid Overlay for Tech feel */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
       </div>
@@ -21,7 +18,6 @@ export default function B2CHero() {
       <div className="max-w-[1400px] mx-auto px-6 relative z-10 w-full">
         <div className="flex flex-col lg:grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           
-          {/* --- LEFT SIDE: TEXT CONTENT --- */}
           <div className="w-full lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left order-1">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/[0.03] border border-white/10 mb-8 backdrop-blur-md">
               <Sparkles className="w-3 h-3 text-blue-400" />
@@ -53,16 +49,12 @@ export default function B2CHero() {
             </div>
           </div>
 
-          {/* --- RIGHT SIDE: THE DASHBOARD --- */}
           <div className="w-full lg:col-span-7 relative order-2 mt-12 lg:mt-0 flex justify-center lg:justify-end">
             
-            {/* Background Glow for Card */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-blue-600/10 blur-[80px] -z-10" />
 
-            {/* Main Dashboard Card */}
             <div className="w-full max-w-[640px] relative z-20 bg-[#0a0f1d]/80 backdrop-blur-2xl border border-white/10 rounded-[3rem] p-5 md:p-10 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.6)]">
               
-              {/* Dashboard Header */}
               <div className="flex items-center justify-between mb-10">
                 <div className="flex items-center gap-4">
                   <div className="relative group">
@@ -88,9 +80,7 @@ export default function B2CHero() {
                 </div>
               </div>
 
-              {/* Grid Content */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                {/* Module 1 */}
                 <div className="group bg-white/[0.02] border border-white/5 rounded-[2.5rem] p-6 hover:bg-white/[0.04] hover:border-blue-500/30 transition-all duration-500">
                    <div className="flex justify-between items-start mb-8">
                       <div className="w-12 h-12 bg-blue-500/10 rounded-2xl flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
@@ -110,7 +100,6 @@ export default function B2CHero() {
                    </div>
                 </div>
 
-                {/* Module 2 */}
                 <div className="bg-gradient-to-br from-emerald-500/10 to-transparent border border-emerald-500/20 rounded-[2.5rem] p-6 relative overflow-hidden group">
                    <div className="absolute top-0 right-0 p-4">
                       <CheckCircle2 className="text-emerald-500 w-6 h-6 opacity-50 group-hover:opacity-100 transition-opacity" />
@@ -126,7 +115,6 @@ export default function B2CHero() {
                 </div>
               </div>
 
-              {/* Stats Footer */}
               <div className="mt-8 pt-8 border-t border-white/5 flex items-center justify-between px-2">
                  {[
                    { val: '1.2k', label: 'RANK', color: 'text-white' },

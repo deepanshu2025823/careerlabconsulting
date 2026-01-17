@@ -54,7 +54,6 @@ export default function B2CHeader() {
               />
             </Link>
 
-            {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-2">
               <div className="relative group h-20 flex items-center" 
                    onMouseEnter={() => setIsProgramsOpen(true)} 

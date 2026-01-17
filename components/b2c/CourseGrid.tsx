@@ -11,7 +11,7 @@ const courseData = {
       rating: "4.9/5",
       students: "15k+ Students",
       enrolled: "2152+ students enrolled in Dec 2025",
-      image: "https://images.unsplash.com/photo-1615938165708-feda49ca470c?q=80&w=1889&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", 
+      image: "https://images.unsplash.com/photo-1615938165708-feda49ca470c?q=80&w=1889&auto=format&fit=crop", 
       category: "DATA SCIENCE",
       videoId: "ua-CiDNNj30" 
     },
@@ -46,16 +46,6 @@ const courseData = {
       image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000",
       category: "SECURITY",
       videoId: "nzj7Wg46lsA"
-    },
-    {
-      title: "Full Stack Web Development",
-      duration: "6 MONTHS",
-      rating: "4.8/5",
-      students: "20k+ Students",
-      enrolled: "3000+ enrolled",
-      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1000",
-      category: "WEB DEV",
-      videoId: "nu_pCVPKzTk"
     }
   ],
   "Management": [
@@ -77,7 +67,7 @@ const courseData = {
       rating: "4.9/5",
       students: "5k+ Students",
       enrolled: "600+ enrolled",
-      image: "https://plus.unsplash.com/premium_photo-1661602120241-2362dc35c256?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      image: "https://plus.unsplash.com/premium_photo-1661602120241-2362dc35c256?q=80&w=1170&auto=format&fit=crop",
       category: "FINANCE",
       videoId: "S7eKNoCQu_s"
     }
@@ -105,23 +95,25 @@ export default function CourseGrid() {
   const tabs: TabName[] = ['Top Courses', 'Technology & AI', 'Management', 'Finance', 'Design'];
 
   return (
-    <section className="py-24 bg-[#020617] relative">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="py-16 md:py-24 bg-[#020617] relative">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
         
         {/* Header & Tabs */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-black text-white mb-6 tracking-tighter uppercase">
-            Courses Tailored to your <span className="text-blue-500 italic">Learning Goals</span>
+        <div className="text-center mb-10 md:mb-16">
+          <h2 className="text-3xl md:text-5xl font-black text-white mb-6 tracking-tighter uppercase leading-tight">
+            Courses Tailored to your <span className="text-blue-500 italic block sm:inline">Learning Goals</span>
           </h2>
-          <div className="flex flex-wrap justify-center gap-3 mt-8">
+          
+          {/* Mobile Scrollable Tabs Wrapper */}
+          <div className="flex overflow-x-auto no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 sm:justify-center gap-2 mt-8">
             {tabs.map((tab) => (
               <button 
                 key={tab} 
                 onClick={() => setActiveTab(tab)}
-                className={`px-6 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all duration-300 ${
+                className={`whitespace-nowrap px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-300 border ${
                   activeTab === tab 
-                  ? 'bg-blue-600 text-white shadow-[0_0_20px_rgba(37,99,235,0.4)]' 
-                  : 'border border-white/10 text-slate-400 hover:border-white/30 hover:bg-white/5'
+                  ? 'bg-blue-600 text-white border-blue-600 shadow-[0_0_20px_rgba(37,99,235,0.4)]' 
+                  : 'border-white/10 text-slate-400 hover:border-white/30 hover:bg-white/5'
                 }`}
               >
                 {tab}
@@ -130,16 +122,16 @@ export default function CourseGrid() {
           </div>
         </div>
 
-        {/* Grid with Animation */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 min-h-[450px]">
+        {/* Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 min-h-[400px]">
           {courseData[activeTab].map((course, idx) => (
             <div 
               key={`${activeTab}-${idx}`} 
-              className="group bg-[#0a1229] border border-white/10 rounded-[2rem] overflow-hidden hover:border-blue-500/50 transition-all duration-500 animate-in fade-in slide-in-from-bottom-4"
+              className="group bg-[#0a1229] border border-white/10 rounded-[2.5rem] overflow-hidden hover:border-blue-500/50 transition-all duration-500 animate-in fade-in slide-in-from-bottom-4"
             >
               {/* Image/Video Area */}
               <div 
-                className="relative h-60 w-full overflow-hidden cursor-pointer"
+                className="relative h-56 sm:h-64 w-full overflow-hidden cursor-pointer"
                 onClick={() => setSelectedVideo(course.videoId)}
               >
                 <img 
@@ -149,28 +141,28 @@ export default function CourseGrid() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0a1229] to-transparent" />
                 
-                {/* Play Button */}
+                {/* Play Button - Optimized for touch */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-16 h-16 bg-blue-600/90 rounded-full flex items-center justify-center text-white backdrop-blur-sm group-hover:scale-110 transition-all duration-500 shadow-2xl">
-                    <Play className="w-6 h-6 fill-current" />
+                  <div className="w-14 h-14 md:w-16 md:h-16 bg-blue-600/90 rounded-full flex items-center justify-center text-white backdrop-blur-sm group-hover:scale-110 transition-all duration-500 shadow-2xl">
+                    <Play className="w-5 h-5 md:w-6 md:h-6 fill-current" />
                   </div>
                 </div>
 
                 <div className="absolute top-4 left-4">
-                  <span className="bg-white/10 backdrop-blur-md text-white text-[10px] font-black px-3 py-1 rounded-md border border-white/20">
+                  <span className="bg-blue-600 text-white text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-tighter">
                     {course.category}
                   </span>
                 </div>
               </div>
 
               {/* Content */}
-              <div className="p-8">
-                <h3 className="text-xl font-bold text-white mb-4 leading-tight min-h-[3.5rem]">
+              <div className="p-6 md:p-8">
+                <h3 className="text-lg md:text-xl font-black text-white mb-4 leading-tight min-h-[3rem] line-clamp-2 italic uppercase">
                   {course.title}
                 </h3>
 
-                <div className="space-y-3 mb-8">
-                  <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-widest">
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest">
                     <span className="text-slate-500">{course.duration}</span>
                     <span className="flex items-center gap-1 text-yellow-500">
                       <Star className="w-3 h-3 fill-current" /> {course.rating}
@@ -184,12 +176,13 @@ export default function CourseGrid() {
                   </div>
                 </div>
 
-                <div className="flex gap-3">
-                  <button className="flex-1 py-3 border border-white/10 rounded-xl text-[10px] font-black uppercase text-slate-300 hover:bg-white/5 transition-all flex items-center justify-center gap-2">
+                {/* Mobile Button Stack */}
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <button className="flex-1 py-3 border border-white/10 rounded-2xl text-[10px] font-black uppercase text-slate-300 hover:bg-white/5 transition-all flex items-center justify-center gap-2">
                     <Download className="w-3 h-3" /> Brochure
                   </button>
-                  <button className="flex-1 py-3 bg-blue-600 hover:bg-blue-500 rounded-xl text-[10px] font-black uppercase text-white transition-all flex items-center justify-center gap-2">
-                    View Course <ArrowRight className="w-3 h-3" />
+                  <button className="flex-1 py-3 bg-blue-600 hover:bg-blue-500 rounded-2xl text-[10px] font-black uppercase text-white transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-900/20">
+                    View Details <ArrowRight className="w-3 h-3" />
                   </button>
                 </div>
               </div>
@@ -198,26 +191,32 @@ export default function CourseGrid() {
         </div>
       </div>
 
-      {/* Video Modal */}
+      {/* Video Modal - Improved for Mobile */}
       {selectedVideo && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/95 backdrop-blur-sm" onClick={() => setSelectedVideo(null)} />
-          <div className="relative w-full max-w-4xl aspect-video bg-black rounded-3xl overflow-hidden border border-white/10 shadow-2xl animate-in zoom-in-95 duration-300">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-0 sm:p-4">
+          <div className="absolute inset-0 bg-black/98 backdrop-blur-md" onClick={() => setSelectedVideo(null)} />
+          <div className="relative w-full max-w-4xl aspect-video bg-black rounded-0 sm:rounded-3xl overflow-hidden border-y sm:border border-white/10 shadow-2xl animate-in zoom-in-95 duration-300">
             <button 
               onClick={() => setSelectedVideo(null)}
-              className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-white/20 rounded-full text-white transition-all"
+              className="absolute top-4 right-4 z-20 p-2 bg-black/50 hover:bg-white/20 rounded-full text-white transition-all"
             >
               <X className="w-6 h-6" />
             </button>
             <iframe
               className="w-full h-full"
-              src={`https://www.youtube.com/embed/${selectedVideo}?autoplay=1`}
+              src={`https://www.youtube.com/embed/${selectedVideo}?autoplay=1&rel=0`}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             />
           </div>
         </div>
       )}
+
+      {/* Tailwind Utility for hiding scrollbar */}
+      <style jsx global>{`
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      `}</style>
     </section>
   );
 }

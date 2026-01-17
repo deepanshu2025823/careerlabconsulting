@@ -64,15 +64,12 @@ export default function DeploymentRoadmap() {
           </p>
         </div>
 
-        {/* Roadmap Grid */}
         <div className="grid lg:grid-cols-3 gap-8">
           {roadmap.map((item, index) => (
             <div key={index} className="group relative">
-              {/* Card Decoration */}
               <div className={`absolute -inset-0.5 bg-gradient-to-b ${item.color} rounded-[2.5rem] opacity-0 group-hover:opacity-20 transition duration-500`} />
               
               <div className="relative h-full bg-[#0a0f1d] border border-white/5 p-8 rounded-[2.5rem] flex flex-col">
-                {/* Header */}
                 <div className="flex justify-between items-start mb-8">
                   <div className={`w-14 h-14 bg-gradient-to-br ${item.color} rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-500`}>
                     <item.icon className="w-7 h-7 text-white" />
@@ -80,14 +77,12 @@ export default function DeploymentRoadmap() {
                   <span className="text-[10px] font-black text-slate-600 uppercase tracking-[0.2em]">{item.phase}</span>
                 </div>
 
-                {/* Content */}
                 <h3 className="text-2xl font-bold text-white mb-2">{item.title}</h3>
                 <p className="text-blue-500 font-bold text-xs uppercase tracking-widest mb-4">{item.subtitle}</p>
                 <p className="text-slate-400 leading-relaxed mb-8 flex-grow">
                   {item.desc}
                 </p>
 
-                {/* Skills/Tags */}
                 <div className="flex flex-wrap gap-2 pt-6 border-t border-white/5">
                   {item.tags.map(tag => (
                     <span key={tag} className="text-[9px] font-black text-slate-500 bg-white/5 px-3 py-1 rounded-full uppercase tracking-tighter">
@@ -96,7 +91,6 @@ export default function DeploymentRoadmap() {
                   ))}
                 </div>
 
-                {/* Mobile Connector (Hidden on Desktop) */}
                 {index !== roadmap.length - 1 && (
                   <div className="lg:hidden absolute -bottom-8 left-1/2 -translate-x-1/2 text-white/10">
                     <ChevronRight className="w-8 h-8 rotate-90" />
@@ -107,7 +101,6 @@ export default function DeploymentRoadmap() {
           ))}
         </div>
 
-        {/* Bottom Action */}
         <div className="mt-20 p-8 rounded-[3rem] bg-gradient-to-r from-blue-900/20 via-[#0a0f1d] to-transparent border border-white/5 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="flex items-center gap-6">
             <div className="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20">

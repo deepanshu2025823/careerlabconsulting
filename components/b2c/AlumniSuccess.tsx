@@ -34,13 +34,11 @@ export default function AlumniSuccess() {
   return (
     <section className="py-16 md:py-24 bg-[#020617] relative overflow-hidden border-t border-white/5">
       
-      {/* Background Decor */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent" />
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-purple-600/5 blur-[100px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
         
-        {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 md:mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 mb-6">
             <BadgeCheck className="w-3 h-3 text-purple-400" />
@@ -56,15 +54,12 @@ export default function AlumniSuccess() {
           </p>
         </div>
 
-        {/* Reviews Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {reviews.map((review, i) => (
             <div key={i} className="group relative bg-[#0a0f1d] border border-white/10 p-6 md:p-8 rounded-2xl md:rounded-3xl hover:border-purple-500/30 transition-all duration-300 flex flex-col h-full">
               
-              {/* Hover Glow Effect */}
               <div className="absolute inset-0 bg-gradient-to-b from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl" />
               
-              {/* Header: User Info */}
               <div className="relative flex justify-between items-start mb-6">
                 <div className="flex gap-4">
                   <div className="w-12 h-12 rounded-xl overflow-hidden border border-white/10 group-hover:border-purple-500/50 transition-colors">
@@ -82,7 +77,6 @@ export default function AlumniSuccess() {
                 </div>
               </div>
 
-              {/* Quote Area */}
               <div className="relative flex-1 mb-8">
                 <div className="absolute -top-2 -left-2 text-white/5">
                    <Code2 className="w-8 h-8 rotate-180" />
@@ -92,7 +86,6 @@ export default function AlumniSuccess() {
                 </p>
               </div>
 
-              {/* Footer: Stats & Stack */}
               <div className="relative pt-6 border-t border-white/5 flex items-end justify-between mt-auto">
                 <div className="space-y-2">
                   <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Tech Stack</p>
