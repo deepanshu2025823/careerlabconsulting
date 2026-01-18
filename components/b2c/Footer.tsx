@@ -57,12 +57,13 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="bg-[#020617] pt-16 pb-10 md:pb-10 border-t border-white/5 relative overflow-hidden">
+      <footer className="bg-[#020617] pt-16 pb-24 md:pb-12 border-t border-white/5 relative overflow-hidden">
         <div className="absolute bottom-0 left-0 w-full h-[300px] bg-blue-600/5 blur-[120px] -z-10" />
 
         <div className="max-w-[1400px] mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
             
+            {/* --- LEFT COLUMN --- */}
             <div className="lg:col-span-5 flex flex-col items-start">
               <div className="w-42 h-20 relative mb-4">
                 <img 
@@ -95,92 +96,91 @@ export default function Footer() {
               </div>
             </div>
 
-            <div className="lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-8 pt-4">
+            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 pt-4">
               <div className="space-y-6">
                 <h4 className="text-white text-[10px] font-black uppercase tracking-[0.2em]">Protocols</h4>
                 <ul className="space-y-4 text-slate-500 text-sm font-bold">
-                  <li>
-                    <Link href="/b2c/protocols/neural-lms" className="hover:text-blue-400 transition-colors flex items-center gap-1 group">
-                      Neural LMS <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all" />
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/b2c/protocols/outcomes" className="hover:text-blue-400 transition-colors">Career Outcomes</Link>
-                  </li>
-                  <li>
-                    <Link href="/b2c/protocols/mentorship" className="hover:text-blue-400 transition-colors">Mentorship</Link>
-                  </li>
-                  <li>
-                    <Link href="/b2c/protocols/verify-certificate" className="hover:text-blue-400 transition-colors">Verify Certificate</Link>
-                  </li>
-                  <li>
-                    <Link href="/b2c/protocols/clc-review" className="hover:text-blue-400 transition-colors">CLC Review</Link>
-                  </li>
+                  <li><Link href="/b2c/protocols/neural-lms" className="hover:text-blue-400 transition-colors flex items-center gap-1 group">Neural LMS <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all" /></Link></li>
+                  <li><Link href="/b2c/protocols/outcomes" className="hover:text-blue-400 transition-colors">Career Outcomes</Link></li>
+                  <li><Link href="/b2c/protocols/mentorship" className="hover:text-blue-400 transition-colors">Mentorship</Link></li>
+                  <li><Link href="/b2c/protocols/verify-certificate" className="hover:text-blue-400 transition-colors">Verify Certificate</Link></li>
+                  <li><Link href="/b2c/protocols/clc-review" className="hover:text-blue-400 transition-colors">CLC Review</Link></li>
                 </ul>
               </div>
 
               <div className="space-y-6">
                 <h4 className="text-white text-[10px] font-black uppercase tracking-[0.2em]">Infrastructure</h4>
                 <ul className="space-y-4 text-slate-500 text-sm font-bold">
-                  <li>
-                    <Link href="/b2c/infrastructure/about" className="hover:text-blue-400 transition-colors">About Us</Link>
-                  </li>
-                  <li>
-                    <Link href="/b2c/infrastructure/docs" className="hover:text-blue-400 transition-colors">Documentation</Link>
-                  </li>
-                  <li>
-                    <Link href="/b2c/infrastructure/api" className="hover:text-blue-400 transition-colors">API Access</Link>
-                  </li>
-                  <li>
-                    <Link href="/b2c/infrastructure/status" className="hover:text-blue-400 transition-colors">System Status</Link>
-                  </li>
-                  <li>
-                    <Link href="/b2c/infrastructure/contact" className="hover:text-blue-400 transition-colors">Contact Us</Link>
-                  </li>
+                  <li><Link href="/b2c/infrastructure/about" className="hover:text-blue-400 transition-colors">About Us</Link></li>
+                  <li><Link href="/b2c/infrastructure/docs" className="hover:text-blue-400 transition-colors">Documentation</Link></li>
+                  <li><Link href="/b2c/infrastructure/api" className="hover:text-blue-400 transition-colors">API Access</Link></li>
+                  <li><Link href="/b2c/infrastructure/status" className="hover:text-blue-400 transition-colors">System Status</Link></li>
+                  <li><Link href="/b2c/infrastructure/contact" className="hover:text-blue-400 transition-colors">Contact Us</Link></li>
                 </ul>
               </div>
 
-              <div className="space-y-6 col-span-2 md:col-span-1">
-                <h4 className="text-white text-[10px] font-black uppercase tracking-[0.2em]">Newsletter</h4>
-                <p className="text-slate-500 text-xs mb-4">Subscribe to our secure channel for updates.</p>
-                <div className="relative w-full group">
-                  <input 
-                    type="email" 
-                    placeholder="uplink@email.com" 
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-4 py-3 text-xs text-white focus:outline-none focus:border-blue-500/50 transition-all placeholder:text-slate-600"
-                  />
-                  <button className="absolute right-1.5 top-1.5 bottom-1.5 px-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-[9px] font-black uppercase tracking-widest transition-all">
-                    Join
-                  </button>
+              <div className="space-y-8 col-span-1 sm:col-span-2 md:col-span-1">
+                <div className="space-y-4">
+                    <h4 className="text-white text-[10px] font-black uppercase tracking-[0.2em]">Contact Details</h4>
+                    <div className="space-y-3">
+                        <div className="flex items-start gap-3">
+                            <MapPin className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
+                            <p className="text-slate-400 text-xs leading-relaxed">5th Floor, Cyber Green Part-1, DLF Building No -2, Sector 25, Gurugram, Haryana 122002</p>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <Phone className="w-4 h-4 text-blue-500 shrink-0" />
+                            <a href="tel:+918700236923" className="text-slate-400 text-xs hover:text-white transition-colors">+91 8700236923</a>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <Mail className="w-4 h-4 text-blue-500 shrink-0" />
+                            <a href="mailto:support@careerlabconsulting.com" className="text-slate-400 text-xs hover:text-white transition-colors">support@careerlabconsulting.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="space-y-4">
+                    <h4 className="text-white text-[10px] font-black uppercase tracking-[0.2em]">Newsletter</h4>
+                    <div className="relative w-full group">
+                    <input 
+                        type="email" 
+                        placeholder="uplink@email.com" 
+                        className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-4 py-3 text-xs text-white focus:outline-none focus:border-blue-500/50 transition-all placeholder:text-slate-600"
+                    />
+                    <button className="absolute right-1.5 top-1.5 bottom-1.5 px-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-[9px] font-black uppercase tracking-widest transition-all">
+                        Join
+                    </button>
+                    </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="mb-12">
-            <div className="flex items-center gap-3 mb-8">
+          <div className="mb-16">
+            <div className="flex items-center gap-3 mb-8 border-b border-white/5 pb-4">
               <Globe className="w-5 h-5 text-blue-500" />
-              <h3 className="text-white font-bold text-lg tracking-wide">Global Presence</h3>
+              <h3 className="text-white font-bold text-lg tracking-wide uppercase text-[12px]">Global Presence</h3>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {locations.map((loc, idx) => (
                 <div 
                   key={idx} 
-                  className="group relative bg-white/[0.02] hover:bg-white/[0.04] border border-white/5 hover:border-blue-500/30 rounded-2xl p-5 transition-all duration-300 flex flex-col justify-between h-full"
+                  className="group relative bg-[#0a0f1d]/50 hover:bg-blue-600/5 border border-white/5 hover:border-blue-500/30 rounded-2xl p-6 transition-all duration-500 flex flex-col justify-between h-full backdrop-blur-sm"
                 >
                   <div>
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-blue-400 font-bold text-xs uppercase tracking-wider">{loc.country}</span>
-                      <MapPin className="w-4 h-4 text-slate-600 group-hover:text-blue-400 transition-colors" />
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-blue-400 font-bold text-[10px] uppercase tracking-widest">{loc.country}</span>
+                      <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
+                        <MapPin className="w-4 h-4 text-slate-500 group-hover:text-blue-400" />
+                      </div>
                     </div>
                     
-                    <p className="text-slate-400 text-xs leading-relaxed mb-4 h-12 overflow-hidden line-clamp-3">
+                    <p className="text-slate-400 text-xs leading-relaxed mb-6 min-h-[48px]">
                       {loc.address}
                     </p>
                     
-                    <div className="flex items-center gap-2 text-slate-500 text-xs mb-4">
-                      <Phone className="w-3 h-3" />
+                    <div className="flex items-center gap-2 text-slate-500 text-[11px] mb-6 font-medium">
+                      <Phone className="w-3.5 h-3.5 text-blue-500/50" />
                       <span>{loc.phone}</span>
                     </div>
                   </div>
@@ -189,7 +189,7 @@ export default function Footer() {
                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.address)}`} 
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full py-2 bg-blue-600/10 hover:bg-blue-600 text-blue-400 hover:text-white rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all"
+                    className="flex items-center justify-center gap-2 w-full py-3 bg-white/5 hover:bg-blue-600 text-slate-300 hover:text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border border-white/5 hover:border-transparent group-hover:shadow-[0_0_20px_rgba(37,99,235,0.2)]"
                   >
                     <Navigation className="w-3 h-3" />
                     Get Directions
@@ -217,8 +217,7 @@ export default function Footer() {
         </div>
       </footer>
 
-      {/* --- MOBILE NAVIGATION --- */}
-      <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md h-16 bg-[#0a0f1d]/90 backdrop-blur-xl border border-white/10 rounded-3xl z-[100] md:hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex items-center justify-around px-2">
+      <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-md h-16 bg-[#0a0f1d]/90 backdrop-blur-xl border border-white/10 rounded-3xl z-[100] md:hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex items-center justify-around px-2">
         <Link href="/" className="flex flex-col items-center gap-1 text-slate-500 hover:text-blue-400 transition-colors">
           <Home className="w-5 h-5" />
           <span className="text-[8px] font-bold uppercase">Home</span>

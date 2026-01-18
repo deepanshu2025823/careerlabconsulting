@@ -147,12 +147,10 @@ export default function InternXAI() {
         </div>
       </section>
 
-      {/* --- PRICING SECTION --- */}
       <div id="enroll">
         <PricingSection />
       </div>
 
-      {/* --- ELITE GUARANTEE (Brochure Page 25) --- */}
       <section className="py-20 bg-blue-600 relative overflow-hidden">
         <div className="absolute top-[-20%] right-[-10%] opacity-10">
           <Shield className="w-[500px] h-[500px] text-white" />

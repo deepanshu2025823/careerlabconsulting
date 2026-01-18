@@ -6,7 +6,7 @@ import { Check, Zap, Crown, Terminal, ShieldCheck, Sparkles, Rocket, X, QrCode, 
 const tiers = [
   {
     id: "plan-essential",
-    name: "Essential Plan",
+    name: "Essential",
     price: "₹50,000",
     rawPrice: "50000",
     description: "Build & Own Your First AI Career Asset. Best for first-time AI learners.",
@@ -17,7 +17,7 @@ const tiers = [
   },
   {
     id: "plan-accelerator",
-    name: "Accelerator Plan",
+    name: "Accelerator",
     price: "₹75,000",
     rawPrice: "75000",
     description: "Mentored Growth with AI Proof. Best for career switchers.",
@@ -28,7 +28,7 @@ const tiers = [
   },
   {
     id: "plan-elite",
-    name: "Elite Plan",
+    name: "Elite",
     price: "₹1,00,000",
     rawPrice: "100000",
     description: "Job Guaranteed. Globally Hired. Best for international roles.",
@@ -42,7 +42,7 @@ const tiers = [
 export default function PricingSection() {
   const [showQR, setShowQR] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
-  const [isProcessing, setIsProcessing] = useState(true); // Payment processing state
+  const [isProcessing, setIsProcessing] = useState(true); 
   
   const vpa = "mr.deepanshujoshi@okicici";
   const ownerPhone = "918700236923";
