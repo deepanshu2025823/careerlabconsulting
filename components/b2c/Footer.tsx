@@ -201,7 +201,7 @@ export default function Footer() {
 
           <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-6">
-              <span className="text-[10px] text-slate-600 font-bold uppercase tracking-widest">© {currentYear} Career Lab Consulting</span>
+              <span className="text-[10px] text-slate-600 font-bold uppercase tracking-widest">© 2015 - {new Date().getFullYear()} Career Lab Consulting</span>
               <div className="h-1 w-1 rounded-full bg-slate-800 hidden md:block" />
               <Link href="/privacy" className="text-[10px] text-slate-600 font-bold uppercase tracking-widest hover:text-slate-400 transition-colors">Privacy Policy</Link>
             </div>
