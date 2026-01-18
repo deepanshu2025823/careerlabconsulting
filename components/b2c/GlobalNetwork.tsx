@@ -1,10 +1,21 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from 'framer-motion';
+import { motion, useMotionValue, useTransform, useSpring, AnimatePresence, MotionValue } from 'framer-motion';
 import { X, MapPin, PlayCircle, ArrowRight } from 'lucide-react';
 
-const lmsUsers = [
+// 1. Define the User Interface for TypeScript
+interface User {
+  id: number;
+  name: string;
+  course: string;
+  img: string;
+  lat: number;
+  lng: number;
+  country: string;
+}
+
+const lmsUsers: User[] = [
   { id: 1, name: "Arjun Mehta", course: "Full Stack Dev", img: "https://i.pravatar.cc/150?u=11", lat: 20.59, lng: 78.96, country: "India" },
   { id: 2, name: "Sarah Chen", course: "Data Science", img: "https://i.pravatar.cc/150?u=12", lat: 37.09, lng: -95.71, country: "USA" },
   { id: 3, name: "James Wilson", course: "Cyber Security", img: "https://i.pravatar.cc/150?u=13", lat: 55.37, lng: -3.43, country: "UK" },
@@ -14,7 +25,8 @@ const lmsUsers = [
 ];
 
 export default function GlobalLmsNetwork() {
-  const [selectedUser, setSelectedUser] = useState(null);
+  // 2. Add Type to State
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [mounted, setMounted] = useState(false);
   
   useEffect(() => { setMounted(true); }, []);
@@ -31,7 +43,6 @@ export default function GlobalLmsNetwork() {
 
   return (
     <div className="bg-[#02040a] w-full overflow-x-hidden scroll-smooth">
-      
       <section className="relative h-[80vh] md:h-screen flex flex-col items-center justify-start pt-10 md:pt-16">
         <div className="text-center z-30 px-4">
           <h2 className="text-3xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none">
@@ -50,9 +61,7 @@ export default function GlobalLmsNetwork() {
             onDrag={(_, info) => dragX.set(dragX.get() + info.delta.x)}
             className="absolute inset-0 rounded-full z-40 cursor-grab active:cursor-grabbing"
           />
-
           <div className="absolute inset-[-15px] rounded-full bg-blue-600/5 blur-[40px] md:blur-[80px] pointer-events-none" />
-
           <div className="absolute inset-0 rounded-full z-10 overflow-hidden border border-white/5 shadow-2xl bg-black">
             <motion.div 
               className="absolute inset-0 w-[400%] h-full"
@@ -105,12 +114,11 @@ export default function GlobalLmsNetwork() {
         </AnimatePresence>
       </section>
 
+      {/* CTA Section */}
       <section className="px-4 py-20 bg-[#02040a]">
         <div className="max-w-6xl mx-auto">
           <div className="relative overflow-hidden rounded-[40px] bg-gradient-to-br from-blue-700 via-indigo-900 to-black p-8 md:p-16 flex flex-col lg:flex-row items-center gap-12 border border-white/5 shadow-2xl">
-            
             <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] -mr-48 -mt-48" />
-
             <div className="flex-1 text-center lg:text-left z-10">
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-blue-500/20 text-black text-[10px] font-bold uppercase tracking-widest mb-6">
                 <PlayCircle size={14} /> Free Master Class Series
@@ -130,7 +138,6 @@ export default function GlobalLmsNetwork() {
                 </button>
               </div>
             </div>
-
             <div className="flex-1 w-full z-10">
               <div className="relative group aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-3xl bg-slate-800">
                 <img 
@@ -143,10 +150,6 @@ export default function GlobalLmsNetwork() {
                     <PlayCircle size={40} className="text-white fill-white/20" />
                   </div>
                 </div>
-                <div className="absolute bottom-0 inset-x-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
-                    <p className="text-white font-bold text-sm">Next Class: Introduction to Generative AI</p>
-                    <p className="text-slate-400 text-xs mt-1">Starts in: 02d 14h 45m</p>
-                </div>
               </div>
             </div>
           </div>
@@ -156,7 +159,15 @@ export default function GlobalLmsNetwork() {
   );
 }
 
-function StudentPin({ user, rotation, onClick, active }) {
+// 3. Define props for StudentPin
+interface StudentPinProps {
+    user: User;
+    rotation: MotionValue<number>;
+    onClick: () => void;
+    active: boolean;
+}
+
+function StudentPin({ user, rotation, onClick, active }: StudentPinProps) {
   const [radius, setRadius] = useState(280);
   
   useEffect(() => {
