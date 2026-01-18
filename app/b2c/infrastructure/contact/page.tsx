@@ -17,7 +17,6 @@ export default function ContactPage() {
       <B2CHeader />
 
       <main className="flex-grow pt-32 pb-20">
-        {/* Header Section */}
         <section className="px-4 max-w-7xl mx-auto text-center mb-16">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -34,10 +33,7 @@ export default function ContactPage() {
           </p>
         </section>
 
-        {/* Main Contact Grid */}
         <section className="px-4 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 mb-20">
-          
-          {/* Left Side: Contact Form */}
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -84,15 +80,12 @@ export default function ContactPage() {
             </form>
           </motion.div>
 
-          {/* Right Side: Info & Map */}
           <div className="lg:col-span-5 space-y-6">
-            {/* Contact Cards */}
             <motion.div 
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               className="grid grid-cols-1 gap-4"
             >
-              {/* Address Card */}
               <div className="bg-white/5 border border-white/10 p-6 rounded-3xl flex items-start gap-5 hover:bg-white/[0.08] transition-all group">
                 <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-all shrink-0">
                   <MapPin size={24} />
@@ -105,7 +98,6 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              {/* Multi-Info Card */}
               <div className="bg-white/5 border border-white/10 p-8 rounded-[32px] space-y-6">
                 <a href="tel:08700236923" className="flex items-center gap-4 text-slate-300 hover:text-blue-500 transition-colors group">
                   <Phone size={20} className="text-blue-500" />
@@ -114,7 +106,7 @@ export default function ContactPage() {
                 </a>
                 <a href="mailto:support@careerlabconsulting.com" className="flex items-center gap-4 text-slate-300 hover:text-blue-500 transition-colors group">
                   <Mail size={20} className="text-blue-500" />
-                  <span className="font-bold">support@clc.com</span>
+                  <span className="font-bold">support@careerlabconsulting.com</span>
                   <ArrowRight size={14} className="ml-auto opacity-0 group-hover:opacity-100 transition-all" />
                 </a>
                 <a href="https://careerlabconsulting.com/" target="_blank" className="flex items-center gap-4 text-slate-300 hover:text-blue-500 transition-colors group">
@@ -124,7 +116,6 @@ export default function ContactPage() {
                 </a>
               </div>
 
-              {/* Working Hours */}
               <div className="bg-blue-600/10 border border-blue-500/20 p-6 rounded-3xl flex items-center gap-4">
                 <Clock className="text-blue-400" />
                 <div className="text-xs font-bold text-blue-100">
@@ -133,7 +124,6 @@ export default function ContactPage() {
               </div>
             </motion.div>
 
-            {/* Google Map */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
