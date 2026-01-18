@@ -12,7 +12,6 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   const whatsappNumber = "919810984968";
 
-  // Data from your screenshot
   const locations = [
     {
       country: "Head Quarter (India)",
@@ -64,7 +63,6 @@ export default function Footer() {
         <div className="max-w-[1400px] mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
             
-            {/* --- LEFT COLUMN (Logo, Bio, Socials) --- */}
             <div className="lg:col-span-5 flex flex-col items-start">
               <div className="w-42 h-20 relative mb-4">
                 <img 
@@ -97,9 +95,7 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* --- RIGHT COLUMN (Links, Contact, Subscribe) --- */}
             <div className="lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-8 pt-4">
-              {/* --- PROTOCOLS --- */}
               <div className="space-y-6">
                 <h4 className="text-white text-[10px] font-black uppercase tracking-[0.2em]">Protocols</h4>
                 <ul className="space-y-4 text-slate-500 text-sm font-bold">
@@ -114,13 +110,21 @@ export default function Footer() {
                   <li>
                     <Link href="/b2c/protocols/mentorship" className="hover:text-blue-400 transition-colors">Mentorship</Link>
                   </li>
+                  <li>
+                    <Link href="/b2c/protocols/verify-certificate" className="hover:text-blue-400 transition-colors">Verify Certificate</Link>
+                  </li>
+                  <li>
+                    <Link href="/b2c/protocols/clc-review" className="hover:text-blue-400 transition-colors">CLC Review</Link>
+                  </li>
                 </ul>
               </div>
 
-              {/* --- INFRASTRUCTURE --- */}
               <div className="space-y-6">
                 <h4 className="text-white text-[10px] font-black uppercase tracking-[0.2em]">Infrastructure</h4>
                 <ul className="space-y-4 text-slate-500 text-sm font-bold">
+                  <li>
+                    <Link href="/b2c/infrastructure/about" className="hover:text-blue-400 transition-colors">About Us</Link>
+                  </li>
                   <li>
                     <Link href="/b2c/infrastructure/docs" className="hover:text-blue-400 transition-colors">Documentation</Link>
                   </li>
@@ -130,10 +134,12 @@ export default function Footer() {
                   <li>
                     <Link href="/b2c/infrastructure/status" className="hover:text-blue-400 transition-colors">System Status</Link>
                   </li>
+                  <li>
+                    <Link href="/b2c/infrastructure/contact" className="hover:text-blue-400 transition-colors">Contact Us</Link>
+                  </li>
                 </ul>
               </div>
 
-              {/* --- CONTACT & SUBSCRIBE --- */}
               <div className="space-y-6 col-span-2 md:col-span-1">
                 <h4 className="text-white text-[10px] font-black uppercase tracking-[0.2em]">Newsletter</h4>
                 <p className="text-slate-500 text-xs mb-4">Subscribe to our secure channel for updates.</p>
@@ -151,8 +157,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* --- GLOBAL PRESENCE (GOOGLE MAP STYLE) --- */}
-          {/* This section is added before the copyright line as requested */}
           <div className="mb-12">
             <div className="flex items-center gap-3 mb-8">
               <Globe className="w-5 h-5 text-blue-500" />
@@ -166,25 +170,21 @@ export default function Footer() {
                   className="group relative bg-white/[0.02] hover:bg-white/[0.04] border border-white/5 hover:border-blue-500/30 rounded-2xl p-5 transition-all duration-300 flex flex-col justify-between h-full"
                 >
                   <div>
-                    {/* Header: Country & Icon */}
                     <div className="flex items-center justify-between mb-3">
                       <span className="text-blue-400 font-bold text-xs uppercase tracking-wider">{loc.country}</span>
                       <MapPin className="w-4 h-4 text-slate-600 group-hover:text-blue-400 transition-colors" />
                     </div>
                     
-                    {/* Address */}
                     <p className="text-slate-400 text-xs leading-relaxed mb-4 h-12 overflow-hidden line-clamp-3">
                       {loc.address}
                     </p>
                     
-                    {/* Phone */}
                     <div className="flex items-center gap-2 text-slate-500 text-xs mb-4">
                       <Phone className="w-3 h-3" />
                       <span>{loc.phone}</span>
                     </div>
                   </div>
 
-                  {/* Google Maps Link Button */}
                   <a 
                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.address)}`} 
                     target="_blank"
@@ -199,7 +199,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* --- COPYRIGHT & STATUS BAR --- */}
           <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-6">
               <span className="text-[10px] text-slate-600 font-bold uppercase tracking-widest">© {currentYear} Career Lab Consulting</span>
