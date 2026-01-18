@@ -1,9 +1,26 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Check, Zap, Crown, Terminal, ShieldCheck, Sparkles, Rocket, X, QrCode, MessageCircle, Loader2 } from 'lucide-react';
+import { Check, Zap, Crown, Terminal, ShieldCheck, Sparkles, Rocket, X, QrCode, MessageCircle, Loader2, LucideIcon } from 'lucide-react';
 
-const tiers = [
+// Define the structure for Tier and Plan for full TypeScript support
+interface Tier {
+  id: string;
+  name: string;
+  price: string;
+  rawPrice: string;
+  description: string;
+  features: string[];
+  cta: string;
+  highlight: boolean;
+  icon: LucideIcon;
+}
+
+interface SelectedPlan extends Tier {
+  upiLink: string;
+}
+
+const tiers: Tier[] = [
   {
     id: "plan-essential",
     name: "Essential",
@@ -41,7 +58,7 @@ const tiers = [
 
 export default function PricingSection() {
   const [showQR, setShowQR] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [selectedPlan, setSelectedPlan] = useState<SelectedPlan | null>(null);
   const [isProcessing, setIsProcessing] = useState(true); 
   
   const vpa = "mr.deepanshujoshi@okicici";
@@ -52,7 +69,9 @@ export default function PricingSection() {
       document.body.style.overflow = showQR ? 'hidden' : 'unset';
     }
     
-    let timer;
+    // FIX: Added explicit type for the timer to pass Vercel Build checks
+    let timer: ReturnType<typeof setTimeout> | undefined;
+
     if (showQR) {
       setIsProcessing(true);
       // Simulate payment detection (10 seconds delay)
@@ -63,21 +82,21 @@ export default function PricingSection() {
 
     return () => {
       if (typeof document !== 'undefined') document.body.style.overflow = 'unset';
-      clearTimeout(timer);
+      if (timer) clearTimeout(timer);
     };
   }, [showQR]);
 
-  const handlePayment = (plan) => {
+  const handlePayment = (tier: Tier) => {
     const name = "InternX AI";
-    const note = `Enrollment for ${plan.name}`;
-    const upiLink = `upi://pay?pa=${vpa}&pn=${encodeURIComponent(name)}&am=${plan.rawPrice}&cu=INR&tn=${encodeURIComponent(note)}`;
+    const note = `Enrollment for ${tier.name}`;
+    const upiLink = `upi://pay?pa=${vpa}&pn=${encodeURIComponent(name)}&am=${tier.rawPrice}&cu=INR&tn=${encodeURIComponent(note)}`;
 
     if (typeof window !== 'undefined') {
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       if (isMobile) {
         window.location.href = upiLink;
       }
-      setSelectedPlan({ ...plan, upiLink });
+      setSelectedPlan({ ...tier, upiLink });
       setShowQR(true);
     }
   };
@@ -135,17 +154,15 @@ export default function PricingSection() {
         </div>
       </div>
 
-      {/* UPI QR & DYNAMIC CONFIRMATION MODAL */}
       {showQR && selectedPlan && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/95 backdrop-blur-md" onClick={() => setShowQR(false)} role="presentation" />
+          <div className="absolute inset-0 bg-black/95 backdrop-blur-md" onClick={() => setShowQR(false)} />
           
-          <div className="relative bg-[#0f172a] border border-blue-500/30 p-8 rounded-[2.5rem] max-w-md w-full text-center shadow-2xl animate-in fade-in zoom-in duration-300">
+          <div className="relative bg-[#0f172a] border border-blue-500/30 p-8 rounded-[2.5rem] max-w-md w-full text-center shadow-2xl">
             <button 
               type="button"
               onClick={() => setShowQR(false)} 
-              className="absolute top-6 right-6 text-slate-400 hover:text-white transition-colors p-2 outline-none"
-              aria-label="Close"
+              className="absolute top-6 right-6 text-slate-400 hover:text-white transition-colors p-2"
             >
               <X className="w-6 h-6" />
             </button>
@@ -168,7 +185,7 @@ export default function PricingSection() {
               />
             </div>
 
-            <div className="min-h-[120px] flex flex-col items-center justify-center transition-all duration-500">
+            <div className="min-h-[120px] flex flex-col items-center justify-center">
               {isProcessing ? (
                 <div className="flex flex-col items-center gap-3 animate-pulse">
                   <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
@@ -176,7 +193,7 @@ export default function PricingSection() {
                   <p className="text-slate-500 text-[9px]">Scan the QR and complete payment in your app</p>
                 </div>
               ) : (
-                <div className="w-full space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                <div className="w-full space-y-4">
                   <div className="bg-green-500/10 border border-green-500/20 p-4 rounded-2xl">
                     <div className="flex items-center justify-center gap-2 text-green-400 mb-3">
                       <Check className="w-4 h-4" />
@@ -185,7 +202,7 @@ export default function PricingSection() {
                     
                     <button 
                       onClick={confirmOnWhatsApp}
-                      className="w-full py-4 bg-green-600 hover:bg-green-500 text-white rounded-xl font-black text-[11px] uppercase tracking-widest flex items-center justify-center gap-2 transition-all shadow-lg shadow-green-900/40 hover:scale-[1.02] active:scale-95"
+                      className="w-full py-4 bg-green-600 hover:bg-green-500 text-white rounded-xl font-black text-[11px] uppercase tracking-widest flex items-center justify-center gap-2 transition-all"
                     >
                       <MessageCircle className="w-4 h-4" /> I have paid, Confirm Now
                     </button>
