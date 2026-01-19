@@ -4,23 +4,40 @@ import React from 'react';
 import { Shield, Zap, Globe, Lock, CheckCircle2 } from 'lucide-react';
 
 export default function TrustSection() {
+  // Yahan maine generic logos ke bajaye actual PNG URLs ka structure ready kar diya hai
   const logos = [
-    "Google", "Amazon", "Microsoft", "Meta", "Tesla", "Adobe", "OpenAI", "Nvidia"
+    { name: "Google", url: "https://cdn-icons-png.flaticon.com/512/2991/2991148.png" },
+    { name: "Amazon", url: "https://cdn-icons-png.flaticon.com/512/5968/5968202.png" },
+    { name: "Microsoft", url: "https://cdn-icons-png.flaticon.com/512/732/732221.png" },
+    { name: "Meta", url: "https://cdn-icons-png.flaticon.com/512/6033/6033716.png" },
+    { name: "Tesla", url: "https://cdn-icons-png.flaticon.com/512/5969/5969031.png" },
+    { name: "Adobe", url: "https://cdn-icons-png.flaticon.com/512/732/732172.png" },
+    { name: "Nvidia", url: "https://cdn-icons-png.flaticon.com/512/5969/5969193.png" }
   ];
 
   return (
     <section className="py-20 md:py-32 bg-[#020617] relative overflow-hidden">
       <div className="absolute top-1/2 left-0 w-[300px] h-[300px] bg-blue-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+      
       <div className="max-w-7xl mx-auto px-6 md:px-10 relative z-10">
         <div className="text-center mb-20 md:mb-32">
-          <p className="text-blue-500 font-mono text-[10px] md:text-xs tracking-[0.3em] uppercase mb-10">
+          <p className="text-blue-500 font-mono text-[10px] md:text-xs tracking-[0.3em] uppercase mb-12">
             Trusted by Industry Leaders
           </p>
-          <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8 md:gap-x-20 opacity-30">
+          
+          {/* Logos Grid with Images */}
+          <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-10 md:gap-x-20 opacity-40 hover:opacity-100 transition-opacity duration-500">
             {logos.map((logo) => (
-              <span key={logo} className="text-xl md:text-4xl font-black text-white hover:opacity-100 transition-opacity cursor-default tracking-tighter">
-                {logo}
-              </span>
+              <div key={logo.name} className="group flex items-center gap-3">
+                <img 
+                  src={logo.url} 
+                  alt={logo.name} 
+                  className="h-8 md:h-10 w-auto object-contain grayscale invert hover:grayscale-0 hover:invert-0 transition-all duration-300"
+                />
+                <span className="hidden md:block text-xl font-bold text-white tracking-tighter">
+                  {logo.name}
+                </span>
+              </div>
             ))}
           </div>
         </div>
@@ -103,7 +120,6 @@ export default function TrustSection() {
               </div>
             </div>
           </div>
-
         </div>
       </div>
       
