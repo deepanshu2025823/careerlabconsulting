@@ -63,7 +63,7 @@ export default function MentorshipSection() {
                   <div className="absolute top-0 right-0 p-3 md:p-5">
                     <Zap className="w-4 h-4 md:w-5 md:h-5 text-blue-400 animate-pulse" />
                   </div>
-                  <h3 className="text-4xl md:text-5xl font-black text-white mb-1 tracking-tighter">98%</h3>
+                  <h3 className="text-4xl md:text-5xl font-black text-white mb-1 tracking-tighter">88%</h3>
                   <p className="text-blue-400 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em]">Placement Rate</p>
                   
                   <div className="mt-6 md:mt-8 flex -space-x-2 md:-space-x-3">
