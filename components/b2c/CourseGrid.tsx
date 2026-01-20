@@ -3,9 +3,8 @@
 import React, { useState } from 'react';
 import { Play, Star, Users, ArrowRight, Download, X } from 'lucide-react';
 
-// Updated data to match InternX Domains
 const courseData = {
-  "Top Courses": [
+  "Top Internship": [
     {
       title: "InternX-AI: Autonomous Agent Deployment",
       duration: "4-10 MONTHS",
@@ -98,10 +97,10 @@ const courseData = {
 type TabName = keyof typeof courseData;
 
 export default function CourseGrid() {
-  const [activeTab, setActiveTab] = useState<TabName>("Top Courses");
+  const [activeTab, setActiveTab] = useState<TabName>("Top Internship");
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
-  const tabs: TabName[] = ['Top Courses', 'Technology & AI', 'Web3 & Blockchain', 'Security & Cloud'];
+  const tabs: TabName[] = ['Top Internship', 'Technology & AI', 'Web3 & Blockchain', 'Security & Cloud'];
 
   return (
     <section className="py-16 md:py-24 bg-[#020617] relative">

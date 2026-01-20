@@ -3,10 +3,12 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  Mail, Phone, MapPin, Globe, Send, 
-  MessageSquare, Clock, ArrowRight, ShieldCheck,
-  User, Smartphone, Map, GraduationCap
+  Mail, Phone, MapPin, Send, 
+  MessageSquare, User, Map, Users
 } from 'lucide-react';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css'; // Standard styles
+
 import B2CHeader from '@/components/b2c/B2CHeader';
 import Footer from '@/components/b2c/Footer';
 
@@ -16,7 +18,7 @@ export default function ContactPage() {
     email: '',
     phone: '',
     city: '',
-    experience: 'Fresher',
+    persona: 'Student/Fresher',
     protocol: 'Data Analytics Protocol',
     message: ''
   });
@@ -31,7 +33,7 @@ export default function ContactPage() {
                  `*📧 Email:* ${formData.email}%0A` +
                  `*📞 Phone:* ${formData.phone}%0A` +
                  `*📍 City:* ${formData.city}%0A` +
-                 `*🎓 Experience:* ${formData.experience}%0A` +
+                 `*🎭 Persona:* ${formData.persona}%0A` +
                  `*📚 Protocol:* ${formData.protocol}%0A` +
                  `*💬 Message:* ${formData.message}`;
 
@@ -43,8 +45,43 @@ export default function ContactPage() {
     <div className="min-h-screen bg-[#020617] text-white flex flex-col selection:bg-blue-500/30">
       <B2CHeader />
 
+      {/* Custom styles for Phone Input to match your UI */}
+      <style jsx global>{`
+        .react-tel-input .form-control {
+          width: 100% !important;
+          background: rgba(255, 255, 255, 0.05) !important;
+          border: 1px solid rgba(255, 255, 255, 0.1) !important;
+          border-radius: 1rem !important;
+          height: 60px !important;
+          color: white !important;
+          padding-left: 58px !important;
+          font-size: 16px !important;
+        }
+        .react-tel-input .flag-dropdown {
+          background: transparent !important;
+          border: none !important;
+          border-radius: 1rem 0 0 1rem !important;
+          padding-left: 8px !important;
+        }
+        .react-tel-input .selected-flag:hover, 
+        .react-tel-input .selected-flag:focus {
+          background: rgba(255, 255, 255, 0.05) !important;
+        }
+        .react-tel-input .country-list {
+          background: #0f172a !important;
+          color: white !important;
+          border: 1px solid rgba(255, 255, 255, 0.1) !important;
+          border-radius: 12px !important;
+        }
+        .react-tel-input .country-list .country:hover {
+          background: rgba(59, 130, 246, 0.2) !important;
+        }
+        .react-tel-input .country-list .country.highlight {
+          background: #3b82f6 !important;
+        }
+      `}</style>
+
       <main className="flex-grow pt-32 pb-20">
-        {/* Header */}
         <section className="px-4 max-w-7xl mx-auto text-center mb-16">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -74,31 +111,41 @@ export default function ContactPage() {
                 <div className="space-y-2">
                   <label className="text-[10px] font-black uppercase text-slate-500 ml-1 tracking-[0.2em]">Full Name</label>
                   <div className="relative">
-                    <User className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
+                    <User className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500 z-10" size={18} />
                     <input required type="text" placeholder="John Doe" className="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-6 py-4 outline-none focus:border-blue-500 focus:bg-white/[0.07] transition-all" onChange={(e) => setFormData({...formData, name: e.target.value})} />
                   </div>
                 </div>
                 <div className="space-y-2">
                   <label className="text-[10px] font-black uppercase text-slate-500 ml-1 tracking-[0.2em]">Email Address</label>
                   <div className="relative">
-                    <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
+                    <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500 z-10" size={18} />
                     <input required type="email" placeholder="john@example.com" className="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-6 py-4 outline-none focus:border-blue-500 focus:bg-white/[0.07] transition-all" onChange={(e) => setFormData({...formData, email: e.target.value})} />
                   </div>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Updated Phone Field with Flag */}
                 <div className="space-y-2">
                   <label className="text-[10px] font-black uppercase text-slate-500 ml-1 tracking-[0.2em]">Phone Number</label>
-                  <div className="relative">
-                    <Smartphone className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
-                    <input required type="tel" placeholder="+91 00000 00000" className="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-6 py-4 outline-none focus:border-blue-500 focus:bg-white/[0.07] transition-all" onChange={(e) => setFormData({...formData, phone: e.target.value})} />
+                  <div className="relative phone-container">
+                    <PhoneInput
+                      country={'in'}
+                      value={formData.phone}
+                      onChange={(phone) => setFormData({...formData, phone: phone})}
+                      inputProps={{
+                        required: true,
+                        name: 'phone'
+                      }}
+                      containerClass="!w-full"
+                      buttonClass="!bg-transparent !border-none"
+                    />
                   </div>
                 </div>
                 <div className="space-y-2">
                   <label className="text-[10px] font-black uppercase text-slate-500 ml-1 tracking-[0.2em]">Current City</label>
                   <div className="relative">
-                    <Map className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
+                    <Map className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500 z-10" size={18} />
                     <input required type="text" placeholder="e.g. Gurugram" className="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-6 py-4 outline-none focus:border-blue-500 focus:bg-white/[0.07] transition-all" onChange={(e) => setFormData({...formData, city: e.target.value})} />
                   </div>
                 </div>
@@ -106,14 +153,18 @@ export default function ContactPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase text-slate-500 ml-1 tracking-[0.2em]">Experience Level</label>
+                  <label className="text-[10px] font-black uppercase text-slate-500 ml-1 tracking-[0.2em]">Your Persona</label>
                   <div className="relative">
-                    <GraduationCap className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
-                    <select className="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-6 py-4 outline-none focus:border-blue-500 appearance-none cursor-pointer" onChange={(e) => setFormData({...formData, experience: e.target.value})}>
-                      <option className="bg-[#020617]">Fresher</option>
-                      <option className="bg-[#020617]">0-2 Years</option>
-                      <option className="bg-[#020617]">2-5 Years</option>
-                      <option className="bg-[#020617]">5+ Years</option>
+                    <Users className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500 z-10" size={18} />
+                    <select 
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-6 py-4 outline-none focus:border-blue-500 appearance-none cursor-pointer" 
+                      onChange={(e) => setFormData({...formData, persona: e.target.value})}
+                      value={formData.persona}
+                    >
+                      <option className="bg-[#020617]" value="Student/Fresher">Student/Fresher</option>
+                      <option className="bg-[#020617]" value="Tech Professional">Tech Professional</option>
+                      <option className="bg-[#020617]" value="Non Tech Professional">Non Tech Professional</option>
+                      <option className="bg-[#020617]" value="Housewife">Housewife</option>
                     </select>
                   </div>
                 </div>
@@ -138,6 +189,7 @@ export default function ContactPage() {
             </form>
           </motion.div>
 
+          {/* Right Column (Info Card & Map) */}
           <div className="lg:col-span-5 space-y-8">
             <div className="bg-white/5 border border-white/10 p-8 rounded-[40px] space-y-6">
               <div className="flex items-start gap-4">
@@ -146,7 +198,7 @@ export default function ContactPage() {
               </div>
               <div className="h-px bg-white/10" />
               <a href={`tel:${OWNER_PHONE}`} className="flex items-center gap-4 text-slate-300 hover:text-blue-500 transition-colors">
-                <Phone className="text-blue-500" /> 08700236923
+                <Phone className="text-blue-500" /> +91 8700236923
               </a>
               <a href="mailto:support@careerlabconsulting.com" className="flex items-center gap-4 text-slate-300 hover:text-blue-500 transition-colors">
                 <Mail className="text-blue-500" size={20} /> support@careerlabconsulting.com
@@ -155,7 +207,7 @@ export default function ContactPage() {
 
             <div className="rounded-[40px] overflow-hidden border border-white/10 h-[350px] shadow-3xl relative">
               <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3506.223391312041!2d77.0867!3d28.4878!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDI5JzE2LjEiTiA3N8KwMDUnMTIuMSJF!5e0!3m2!1sen!2sin!4v1625560000000!5m2!1sen!2sin" 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3507.034568600125!2d77.08630717616186!3d28.478479691689212!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d191630000001%3A0xf69f06a928956e17!2sDLF%20Cyber%20City%2C%20Gurugram!5e0!3m2!1sen!2sin!4v1700000000000" 
                 width="100%" height="100%" 
                 style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) brightness(0.7)' }} 
                 allowFullScreen loading="lazy"

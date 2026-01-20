@@ -1,14 +1,15 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Check, Zap, Crown, Terminal, ShieldCheck, Sparkles, Rocket, X, QrCode, MessageCircle, Loader2, LucideIcon } from 'lucide-react';
+import { Check, Zap, Crown, Terminal, ShieldCheck, Sparkles, Rocket, X, QrCode, MessageCircle, Loader2, LucideIcon, Globe } from 'lucide-react';
 
-// Define the structure for Tier and Plan for full TypeScript support
 interface Tier {
   id: string;
   name: string;
-  price: string;
-  rawPrice: string;
+  priceINR: string;
+  rawPriceINR: string;
+  priceUSD: string;
+  rawPriceUSD: string;
   description: string;
   features: string[];
   cta: string;
@@ -24,39 +25,46 @@ const tiers: Tier[] = [
   {
     id: "plan-essential",
     name: "Essential",
-    price: "₹50,000",
-    rawPrice: "50000",
+    priceINR: "₹50,000",
+    rawPriceINR: "50000",
+    priceUSD: "$599",
+    rawPriceUSD: "599",
     description: "Build & Own Your First AI Career Asset. Best for first-time AI learners.",
     features: ["1 Real AI Project", "ResumeNFT + GitHub Proof", "Group Mentorship", "Avg CTC: ₹10-12 LPA"],
-    cta: "Enroll via UPI",
+    cta: "Enroll Now",
     highlight: false,
     icon: Terminal
   },
   {
     id: "plan-accelerator",
     name: "Accelerator",
-    price: "₹75,000",
-    rawPrice: "75000",
+    priceINR: "₹75,000",
+    rawPriceINR: "75000",
+    priceUSD: "$899",
+    rawPriceUSD: "899",
     description: "Mentored Growth with AI Proof. Best for career switchers.",
     features: ["2 Real AI Projects", "1-on-1 Mentorship", "Mock Interviews", "Avg CTC: ₹15-20 LPA"],
-    cta: "Enroll via UPI",
+    cta: "Enroll Now",
     highlight: false,
     icon: Rocket
   },
   {
     id: "plan-elite",
     name: "Elite",
-    price: "₹1,00,000",
-    rawPrice: "100000",
+    priceINR: "₹1,00,000",
+    rawPriceINR: "100000",
+    priceUSD: "$1,199",
+    rawPriceUSD: "1199",
     description: "Job Guaranteed. Globally Hired. Best for international roles.",
     features: ["100% Job Guarantee", "3 Real AI Projects", "Weekly 1-on-1", "Avg CTC: ₹30-50 LPA"],
-    cta: "Enroll via UPI",
+    cta: "Enroll Now",
     highlight: true,
     icon: Crown
   }
 ];
 
 export default function PricingSection() {
+  const [currency, setCurrency] = useState<'INR' | 'USD'>('INR');
   const [showQR, setShowQR] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<SelectedPlan | null>(null);
   const [isProcessing, setIsProcessing] = useState(true); 
@@ -69,12 +77,10 @@ export default function PricingSection() {
       document.body.style.overflow = showQR ? 'hidden' : 'unset';
     }
     
-    // FIX: Added explicit type for the timer to pass Vercel Build checks
     let timer: ReturnType<typeof setTimeout> | undefined;
 
     if (showQR) {
       setIsProcessing(true);
-      // Simulate payment detection (10 seconds delay)
       timer = setTimeout(() => {
         setIsProcessing(false);
       }, 10000); 
@@ -87,9 +93,16 @@ export default function PricingSection() {
   }, [showQR]);
 
   const handlePayment = (tier: Tier) => {
+    if (currency === 'USD') {
+        // Logic for International users (e.g., redirect to Stripe or WhatsApp for invoice)
+        const message = `Hello InternX AI Team,\n\nI want to enroll in the *${tier.name}* plan (${tier.priceUSD}). I am an international student. Please guide me with the payment link.`;
+        window.open(`https://wa.me/${ownerPhone}?text=${encodeURIComponent(message)}`, '_blank');
+        return;
+    }
+
     const name = "InternX AI";
     const note = `Enrollment for ${tier.name}`;
-    const upiLink = `upi://pay?pa=${vpa}&pn=${encodeURIComponent(name)}&am=${tier.rawPrice}&cu=INR&tn=${encodeURIComponent(note)}`;
+    const upiLink = `upi://pay?pa=${vpa}&pn=${encodeURIComponent(name)}&am=${tier.rawPriceINR}&cu=INR&tn=${encodeURIComponent(note)}`;
 
     if (typeof window !== 'undefined') {
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -103,7 +116,8 @@ export default function PricingSection() {
 
   const confirmOnWhatsApp = () => {
     if (!selectedPlan) return;
-    const message = `Hello InternX AI Team,\n\nI have completed the payment for the *${selectedPlan.name}* (${selectedPlan.price}).\n\nPlease verify my enrollment.\n\nThank you!`;
+    const priceText = currency === 'INR' ? selectedPlan.priceINR : selectedPlan.priceUSD;
+    const message = `Hello InternX AI Team,\n\nI have completed the payment for the *${selectedPlan.name}* (${priceText}).\n\nPlease verify my enrollment.\n\nThank you!`;
     const whatsappUrl = `https://wa.me/${ownerPhone}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -121,6 +135,18 @@ export default function PricingSection() {
           <h2 className="text-3xl md:text-6xl font-black text-white mb-6 tracking-tighter uppercase leading-tight">
             Start Your <span className="italic text-slate-500 font-serif">Evolution</span>
           </h2>
+
+          {/* CURRENCY SWITCHER */}
+          <div className="flex items-center justify-center gap-4 mt-8">
+            <span className={`text-xs font-bold ${currency === 'INR' ? 'text-white' : 'text-slate-500'}`}>INR</span>
+            <button 
+                onClick={() => setCurrency(currency === 'INR' ? 'USD' : 'INR')}
+                className="w-14 h-7 bg-white/5 border border-white/10 rounded-full relative p-1 transition-all"
+            >
+                <div className={`w-5 h-5 bg-blue-500 rounded-full transition-all duration-300 transform ${currency === 'USD' ? 'translate-x-7' : 'translate-x-0'}`} />
+            </button>
+            <span className={`text-xs font-bold ${currency === 'USD' ? 'text-white' : 'text-slate-500'}`}>USD</span>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -129,7 +155,9 @@ export default function PricingSection() {
               <div className="mb-8">
                 <tier.icon className={`w-12 h-12 mb-6 ${tier.highlight ? 'text-blue-400' : 'text-slate-500'}`} />
                 <h3 className="text-2xl font-black text-white mb-2 uppercase">{tier.name}</h3>
-                <p className="text-4xl font-black text-white tracking-tight">{tier.price}</p>
+                <p className="text-4xl font-black text-white tracking-tight">
+                    {currency === 'INR' ? tier.priceINR : tier.priceUSD}
+                </p>
                 <p className="text-slate-500 text-xs mt-4 leading-relaxed">{tier.description}</p>
               </div>
 
@@ -147,13 +175,14 @@ export default function PricingSection() {
                 onClick={() => handlePayment(tier)}
                 className={`w-full py-4 rounded-2xl font-black uppercase tracking-widest text-[11px] flex items-center justify-center gap-2 transition-all active:scale-95 ${tier.highlight ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/20' : 'bg-white/5 hover:bg-white/10 text-white border border-white/10'}`}
               >
-                {tier.cta} <Zap className="w-4 h-4" />
+                {currency === 'INR' ? 'Enroll via UPI' : 'Enroll Internationally'} <Zap className="w-4 h-4" />
               </button>
             </div>
           ))}
         </div>
       </div>
 
+      {/* UPI QR Modal (Only for INR) */}
       {showQR && selectedPlan && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/95 backdrop-blur-md" onClick={() => setShowQR(false)} />

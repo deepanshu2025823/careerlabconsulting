@@ -5,11 +5,11 @@ import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 
 const mediaNews = [
-  { id: 1, title: "CLC Tops Data Science Training Rankings", source: "BW BUSINESSWORLD", desc: "Recognized as a leader in classroom training space." },
-  { id: 2, title: "107th Training Campus Opens in India", source: "THE TIMES OF INDIA", desc: "Strengthening nationwide presence for analytics education." },
-  { id: 3, title: "Footprint Expands to Middle East", source: "Hindustan Times", desc: "New Dubai campus to launch by August 2023." },
+  { id: 1, title: "CLC Tops InternX Training Rankings:", source: "BW BUSINESSWORLD", desc: "Recognized as a leader in Online Training Space." },
+  { id: 2, title: "107th Training 119th AI Agents Opens in India.", source: "THE TIMES OF INDIA", desc: "Strengthening nationwide presence for analytics education." },
+  { id: 3, title: "Footprint Expands to Middle East", source: "Hindustan Times", desc: "New Dubai Center to launch by August 2023." },
   { id: 4, title: "Curriculum Ranked Most Industry-Relevant", source: "The Print", desc: "IAF ranking testament to CLC's understanding of market demands." },
-  { id: 5, title: "Global Recognition in Analytics", source: "Business Standard", desc: "CLC recognized for world-class professional training modules." }
+  { id: 5, title: "Global Recognition in Intenships", source: "Business Standard", desc: "CLC recognized for world-class professional training modules." }
 ];
 
 export default function MediaPresence() {

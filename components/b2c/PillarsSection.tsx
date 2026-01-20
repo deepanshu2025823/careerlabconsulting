@@ -1,97 +1,173 @@
 'use client';
 
 import React from 'react';
-import { CheckCircle2, Star, Users2, ArrowUpRight } from 'lucide-react';
+import { 
+  CheckCircle2, 
+  Star, 
+  Users2, 
+  ArrowUpRight, 
+  Briefcase, 
+  Globe2, 
+  Lightbulb, 
+  Trophy 
+} from 'lucide-react';
 
 const pillars = [
+  // Pillar 1
   {
-    category: "School of Technology and AI",
-    title: "Shape the Technological Landscape of Tomorrow",
-    desc: "Embark on a journey into the future at Career Lab. We nurture minds with cutting-edge professional training in Data Science, AI, and Cybersecurity.",
+    category: "Center of Technology and AI",
+    title: "Shape the Technological Landscape",
+    desc: "Embark on a journey into the future at Career Lab Consulting. We nurture minds with cutting-edge professional training in Data Science, AI, and Cybersecurity.",
     image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800",
     stats: [
-      { label: "Students", value: "15,000+", icon: CheckCircle2 },
-      { label: "Trainers", value: "1,500+", icon: Star },
+      { label: "Students", value: "15k+", icon: CheckCircle2 },
+      { label: "Trainers", value: "1.5k+", icon: Star },
       { label: "Partners", value: "350+", icon: Users2 },
     ],
     accent: "from-blue-600 to-cyan-500"
   },
+  // Pillar 2
   {
     category: "Learning Management System",
-    title: "The Beating Heart of Strategic Education",
-    desc: "We don't just cultivate leaders; we tailor expertise to meet the demands of a dynamic business landscape with real-world insights.",
-    image: "https://img.freepik.com/free-photo/empty-modern-office-business-entrepreneur-with-laptop_482257-91248.jpg",
+    title: "Strategic Education Hub",
+    desc: "We don't just cultivate leaders; we tailor expertise to meet the demands of a dynamic business landscape with real-world insights and adaptive learning modules.",
+    image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&q=80&w=800",
     stats: [
-      { label: "Students", value: "1,500+", icon: CheckCircle2 },
-      { label: "Trainers", value: "718+", icon: Star },
-      { label: "Partners", value: "350+", icon: Users2 },
+      { label: "Users", value: "50k+", icon: CheckCircle2 },
+      { label: "Courses", value: "120+", icon: Star },
+      { label: "Uptime", value: "99.9%", icon: Users2 },
     ],
     accent: "from-purple-600 to-blue-500"
+  },
+  // Pillar 3
+  {
+    category: "Corporate Excellence",
+    title: "Leadership & Strategy",
+    desc: "Empowering organizations through high-impact corporate training. We bridge the gap between potential and performance for Fortune 500 companies.",
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800",
+    stats: [
+      { label: "Companies", value: "200+", icon: Briefcase },
+      { label: "Executives", value: "5k+", icon: Users2 },
+      { label: "Growth", value: "10X", icon: Trophy },
+    ],
+    accent: "from-emerald-600 to-teal-500"
+  },
+  // Pillar 4
+  {
+    category: "Innovation Lab",
+    title: "Research & Development",
+    desc: "A dedicated space for experimenting with emerging technologies. From Blockchain to Quantum Computing, we stay ahead of the curve.",
+    image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=800",
+    stats: [
+      { label: "Projects", value: "85+", icon: Lightbulb },
+      { label: "Patents", value: "12", icon: CheckCircle2 },
+      { label: "Experts", value: "45+", icon: Star },
+    ],
+    accent: "from-amber-600 to-orange-500"
+  },
+  // Pillar 5
+  {
+    category: "Talent Acquisition",
+    title: "Career Placement Services",
+    desc: "Connecting top-tier talent with industry giants. Our recruitment drives ensure that our graduates land their dream roles instantly.",
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800",
+    stats: [
+      { label: "Placed", value: "12k+", icon: Briefcase },
+      { label: "Avg Hike", value: "60%", icon: ArrowUpRight },
+      { label: "Clients", value: "400+", icon: Users2 },
+    ],
+    accent: "from-pink-600 to-rose-500"
+  },
+  // Pillar 6
+  {
+    category: "Global Certification",
+    title: "International Partnerships",
+    desc: "Validating skills on a global scale. Our certifications are recognized across borders, opening doors to international career opportunities.",
+    image: "https://images.unsplash.com/photo-1529400971008-f566de0e6dfc?auto=format&fit=crop&q=80&w=800",
+    stats: [
+      { label: "Countries", value: "25+", icon: Globe2 },
+      { label: "Alumni", value: "100k", icon: Users2 },
+      { label: "Badges", value: "50+", icon: Star },
+    ],
+    accent: "from-indigo-600 to-violet-500"
   }
 ];
 
 export default function PillarsSection() {
   return (
-    <section className="py-16 md:py-24 bg-[#020617] relative overflow-hidden">
+    <section className="py-16 md:py-32 bg-[#020617] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-5 md:px-6 relative z-10">
         
-        <div className="text-center mb-12 md:mb-20">
-          <span className="text-blue-500 font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase text-[9px] md:text-[10px] block mb-3">Why Choose Us</span>
-          <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter leading-tight">
-            Our Pillars of <br className="block md:hidden" /> 
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400 italic"> Excellence</span>
+        {/* Header Section */}
+        <div className="text-center mb-16 md:mb-32">
+          <span className="text-blue-500 font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase text-[9px] md:text-[10px] block mb-3 animate-fade-in">
+            Why Choose Us
+          </span>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tighter leading-tight">
+            Our Six Pillars of <br className="block md:hidden" /> 
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-emerald-400 italic"> Excellence</span>
           </h2>
         </div>
 
-        <div className="space-y-20 md:space-y-32">
+        {/* Pillars Loop */}
+        <div className="space-y-24 md:space-y-40">
           {pillars.map((pillar, idx) => (
             <div 
               key={idx} 
-              className={`flex flex-col ${idx % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-8 md:gap-12 lg:gap-20`}
+              className={`flex flex-col ${idx % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-10 md:gap-16 lg:gap-24`}
             >
+              
+              {/* Image Side */}
               <div className="w-full lg:w-1/2 group relative">
-                <div className={`absolute -inset-2 md:-inset-4 bg-gradient-to-tr ${pillar.accent} opacity-20 blur-2xl group-hover:opacity-30 transition-opacity duration-500`} />
-                <div className="relative rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl aspect-[16/10] md:aspect-[4/3]">
+                {/* Glow Effect behind image */}
+                <div className={`absolute -inset-2 md:-inset-4 bg-gradient-to-tr ${pillar.accent} opacity-20 blur-2xl group-hover:opacity-40 transition-opacity duration-700`} />
+                
+                <div className="relative rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl aspect-[16/10] md:aspect-[4/3] transform transition-transform duration-700 hover:scale-[1.02]">
                   <img 
                     src={pillar.image} 
                     alt={pillar.category} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                    className="w-full h-full object-cover scale-100 group-hover:scale-110 transition-transform duration-1000 ease-out" 
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  
+                  {/* Category Tag on Image */}
                   <div className="absolute bottom-4 left-4 md:bottom-8 md:left-8">
-                    <div className="px-3 py-1 md:px-4 md:py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-[9px] md:text-xs font-bold uppercase tracking-widest">
+                    <div className="px-3 py-1 md:px-5 md:py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] md:text-xs font-bold uppercase tracking-widest shadow-lg">
                       {pillar.category}
                     </div>
                   </div>
                 </div>
               </div>
 
+              {/* Text Side */}
               <div className="w-full lg:w-1/2 space-y-6 md:space-y-8 text-center lg:text-left">
                 <div className="space-y-4">
-                  <h3 className="text-2xl md:text-3xl font-black text-white leading-tight tracking-tight uppercase">
-                    {pillar.category}
+                  <h3 className="text-2xl md:text-4xl font-black text-white leading-tight tracking-tight uppercase">
+                    {pillar.title}
                   </h3>
-                  <p className="text-slate-400 text-sm md:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
+                  <p className="text-slate-400 text-sm md:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium">
                     {pillar.desc}
                   </p>
                 </div>
 
-                <div className="grid grid-cols-3 gap-2 md:gap-4 pt-2">
+                {/* Stats Grid - FIXED: Removed lg:items-start to ensure centering */}
+                <div className="grid grid-cols-3 gap-3 md:gap-6 pt-2 border-t border-white/5 mt-6">
                   {pillar.stats.map((stat, sIdx) => (
-                    <div key={sIdx} className="space-y-1 md:space-y-2 flex flex-col items-center lg:items-start">
-                      <div className="flex items-center gap-1.5 md:gap-2">
-                        <stat.icon className="w-3 h-3 md:w-4 md:h-4 text-blue-500" />
-                        <span className="text-lg md:text-2xl font-black text-white">{stat.value}</span>
+                    <div key={sIdx} className="pt-4 space-y-1 md:space-y-2 flex flex-col items-center group/stat">
+                      <div className="flex items-center gap-1.5 md:gap-2 text-white">
+                        <stat.icon className={`w-4 h-4 md:w-5 md:h-5 text-transparent bg-clip-text bg-gradient-to-r ${pillar.accent}`} />
+                        <span className="text-lg md:text-2xl font-black">{stat.value}</span>
                       </div>
-                      <p className="text-[8px] md:text-[10px] text-slate-500 font-bold uppercase tracking-wider leading-none">
+                      <p className="text-[9px] md:text-[10px] text-center text-slate-500 font-bold uppercase tracking-widest leading-none group-hover/stat:text-slate-300 transition-colors">
                         {stat.label}
                       </p>
                     </div>
                   ))}
                 </div>
 
-                <div className="pt-2">
-                  <button className="group w-full md:w-auto flex items-center justify-center gap-3 px-8 py-4 rounded-xl md:rounded-2xl bg-blue-600 text-white font-black text-[10px] md:text-xs uppercase tracking-widest hover:bg-blue-500 transition-all active:scale-95 shadow-lg shadow-blue-600/20">
+                {/* CTA Button */}
+                <div className="pt-4">
+                  <button className={`group w-full md:w-auto flex items-center justify-center gap-3 px-8 py-4 rounded-xl md:rounded-2xl bg-gradient-to-r ${pillar.accent} text-white font-black text-[10px] md:text-xs uppercase tracking-widest hover:brightness-110 transition-all active:scale-95 shadow-lg shadow-blue-900/20`}>
                     Know More <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </button>
                 </div>
@@ -101,8 +177,11 @@ export default function PillarsSection() {
         </div>
       </div>
 
-      <div className="absolute top-1/4 -left-64 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-blue-600/5 md:bg-blue-600/10 blur-[80px] md:blur-[150px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-1/4 -right-64 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-cyan-600/5 md:bg-cyan-600/10 blur-[80px] md:blur-[150px] rounded-full pointer-events-none" />
+     <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          <div className="absolute top-[10%] -left-[10%] w-[40%] h-[20%] bg-blue-600/10 blur-[120px] rounded-full" />
+          <div className="absolute top-[40%] -right-[10%] w-[40%] h-[20%] bg-purple-600/10 blur-[120px] rounded-full" />
+          <div className="absolute bottom-[10%] left-[20%] w-[40%] h-[20%] bg-emerald-600/10 blur-[120px] rounded-full" />
+      </div>
     </section>
   );
 }

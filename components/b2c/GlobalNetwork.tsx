@@ -1,10 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, useMotionValue, useTransform, useSpring, AnimatePresence, MotionValue } from 'framer-motion';
-import { X, MapPin, PlayCircle, ArrowRight } from 'lucide-react';
+import { X, MapPin } from 'lucide-react';
 
-// 1. Define the User Interface for TypeScript
 interface User {
   id: number;
   name: string;
@@ -25,58 +24,85 @@ const lmsUsers: User[] = [
 ];
 
 export default function GlobalLmsNetwork() {
-  // 2. Add Type to State
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [mounted, setMounted] = useState(false);
+  const isDragging = useRef(false);
+  const isHovered = useRef(false);
   
-  useEffect(() => { setMounted(true); }, []);
-
   const dragX = useMotionValue(0);
-  const rotation = useSpring(useTransform(dragX, (value) => value / 2.5), {
-    stiffness: 40,
-    damping: 25
-  });
 
-  const textureX = useTransform(rotation, (r) => `${(r * 2.5) % 100}%`); 
+  const rotation = useSpring(dragX, { 
+    stiffness: 25, 
+    damping: 35,
+    restDelta: 0.001 
+  });
+  
+  const backgroundPos = useTransform(rotation, (r) => `${(r / 10) % 100}% center`);
+
+  useEffect(() => {
+    setMounted(true);
+    let controls: number;
+    
+    const speed = 0.12; 
+
+    const step = () => {
+      if (!isDragging.current && !isHovered.current && !selectedUser) {
+        dragX.set(dragX.get() - speed);
+      }
+      controls = requestAnimationFrame(step);
+    };
+
+    controls = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(controls);
+  }, [dragX, selectedUser]);
 
   if (!mounted) return <div className="min-h-screen bg-[#02040a]" />;
 
   return (
-    <div className="bg-[#02040a] w-full overflow-x-hidden scroll-smooth">
-      <section className="relative h-[80vh] md:h-screen flex flex-col items-center justify-start pt-10 md:pt-16">
-        <div className="text-center z-30 px-4">
-          <h2 className="text-3xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none">
-            Global <span className="text-blue-500 italic">Learners</span>
-          </h2>
-          <div className="flex items-center justify-center gap-2 mt-2">
-            <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-            <p className="text-slate-500 text-[10px] md:text-xs font-bold uppercase tracking-[0.15em]">Live Community Hub</p>
-          </div>
+    <div className="bg-[#02040a] w-full min-h-screen overflow-hidden flex flex-col font-sans selection:bg-blue-500/30">
+      <section className="relative flex-1 flex flex-col items-center justify-center p-4">
+        
+        <div className="text-center z-30 mb-8 select-none">
+          <motion.h2 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter"
+          >
+            Global <span className="text-blue-500 italic">Network</span>
+          </motion.h2>
+          <p className="text-slate-500 text-[10px] uppercase tracking-widest mt-2">Live Community Map</p>
         </div>
 
-        <div className="relative w-[280px] h-[280px] sm:w-[380px] sm:h-[380px] md:w-[580px] md:h-[580px] mt-10 flex items-center justify-center">
+        <div 
+          className="relative w-[300px] h-[300px] sm:w-[450px] sm:h-[450px] md:w-[580px] md:h-[580px] flex items-center justify-center"
+          onMouseEnter={() => isHovered.current = true}
+          onMouseLeave={() => isHovered.current = false}
+        >
+          
           <motion.div 
             drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            onDrag={(_, info) => dragX.set(dragX.get() + info.delta.x)}
+            onDragStart={() => isDragging.current = true}
+            onDragEnd={() => isDragging.current = false}
+            onDrag={(_, info) => dragX.set(dragX.get() + info.delta.x * 0.5)}
             className="absolute inset-0 rounded-full z-40 cursor-grab active:cursor-grabbing"
           />
-          <div className="absolute inset-[-15px] rounded-full bg-blue-600/5 blur-[40px] md:blur-[80px] pointer-events-none" />
-          <div className="absolute inset-0 rounded-full z-10 overflow-hidden border border-white/5 shadow-2xl bg-black">
+          
+          <div className="absolute inset-0 rounded-full z-10 overflow-hidden border border-white/10 shadow-[0_0_100px_rgba(0,120,255,0.15)] bg-[#000814]">
             <motion.div 
-              className="absolute inset-0 w-[400%] h-full"
+              className="absolute inset-0 w-full h-full pointer-events-none opacity-80"
               style={{ 
                 backgroundImage: 'url("https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Blue_Marble_2002.png/2560px-Blue_Marble_2002.png")', 
-                backgroundSize: '50% 100%', 
-                backgroundRepeat: 'repeat-x',
-                x: textureX,
-                filter: 'brightness(1.1) contrast(1.1)'
+                backgroundSize: 'cover', 
+                backgroundRepeat: 'repeat',
+                backgroundPosition: backgroundPos,
+                filter: 'brightness(1.1) contrast(1.2) saturate(1.2)'
               }} 
             />
-            <div className="absolute inset-0 shadow-[inset_-30px_-10px_60px_rgba(0,0,0,0.9),inset_10px_10px_40px_rgba(255,255,255,0.05)] md:shadow-[inset_-50px_-30px_120px_rgba(0,0,0,1),inset_30px_20px_80px_rgba(255,255,255,0.1)] rounded-full pointer-events-none" />
+            <div className="absolute inset-0 shadow-[inset_-50px_-20px_100px_rgba(0,0,0,1),inset_30px_20px_80px_rgba(255,255,255,0.05)] rounded-full pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-black/40 via-transparent to-white/5 pointer-events-none" />
           </div>
 
-          <div className="absolute inset-0 z-20 pointer-events-none perspective-[1000px] md:perspective-[1500px]">
+          <div className="absolute inset-0 z-20 pointer-events-none" style={{ perspective: '2000px' }}>
             {lmsUsers.map((user) => (
               <StudentPin 
                 key={user.id} 
@@ -92,103 +118,60 @@ export default function GlobalLmsNetwork() {
         <AnimatePresence>
           {selectedUser && (
             <motion.div 
-              initial={{ opacity: 0, y: 20, scale: 0.9 }} 
-              animate={{ opacity: 1, y: 0, scale: 1 }} 
-              exit={{ opacity: 0, y: 20, scale: 0.9 }}
-              className="absolute bottom-10 md:bottom-20 z-50 w-[90%] md:w-full max-w-md bg-slate-900/80 backdrop-blur-2xl border border-white/10 p-4 md:p-5 rounded-3xl flex items-center gap-4 shadow-2xl"
+              initial={{ opacity: 0, scale: 0.9, y: 20 }} 
+              animate={{ opacity: 1, scale: 1, y: 0 }} 
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="absolute bottom-10 z-50 px-4"
             >
-              <img src={selectedUser.img} className="w-12 h-12 md:w-16 md:h-16 rounded-2xl border-2 border-blue-500 object-cover" alt="" />
-              <div className="flex-1 overflow-hidden">
-                <h4 className="text-white font-bold text-sm md:text-lg truncate">{selectedUser.name}</h4>
-                <p className="text-blue-400 text-[10px] md:text-xs font-black uppercase tracking-widest truncate">{selectedUser.course}</p>
-                <div className="flex items-center gap-1 mt-1">
-                    <MapPin size={12} className="text-red-500" />
-                    <span className="text-slate-400 text-[10px]">{selectedUser.country}</span>
-                </div>
-              </div>
-              <button onClick={() => setSelectedUser(null)} className="p-2 hover:bg-white/10 rounded-full transition-colors">
-                <X size={20} className="text-slate-400" />
-              </button>
+               <div className="bg-slate-900/90 backdrop-blur-2xl border border-white/20 p-4 rounded-3xl flex items-center gap-4 shadow-[0_20px_50px_rgba(0,0,0,0.5)] min-w-[300px]">
+                  <img src={selectedUser.img} className="w-14 h-14 rounded-2xl border-2 border-blue-500 object-cover shadow-lg" alt="" />
+                  <div className="flex-1">
+                    <h4 className="text-white font-bold text-lg leading-tight">{selectedUser.name}</h4>
+                    <p className="text-blue-400 text-[10px] font-bold uppercase tracking-widest">{selectedUser.course}</p>
+                    <div className="flex items-center gap-1 mt-1 text-slate-400 text-xs">
+                        <MapPin size={12} className="text-red-500" /> {selectedUser.country}
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => setSelectedUser(null)} 
+                    className="p-2 hover:bg-white/10 rounded-full transition-colors"
+                  >
+                    <X size={20} className="text-slate-400" />
+                  </button>
+               </div>
             </motion.div>
           )}
         </AnimatePresence>
-      </section>
-
-      {/* CTA Section */}
-      <section className="px-4 py-20 bg-[#02040a]">
-        <div className="max-w-6xl mx-auto">
-          <div className="relative overflow-hidden rounded-[40px] bg-gradient-to-br from-blue-700 via-indigo-900 to-black p-8 md:p-16 flex flex-col lg:flex-row items-center gap-12 border border-white/5 shadow-2xl">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] -mr-48 -mt-48" />
-            <div className="flex-1 text-center lg:text-left z-10">
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-blue-500/20 text-black text-[10px] font-bold uppercase tracking-widest mb-6">
-                <PlayCircle size={14} /> Free Master Class Series
-              </span>
-              <h3 className="text-4xl md:text-6xl font-black text-white mb-6 leading-[0.9] tracking-tighter">
-                ELEVATE YOUR <br /> <span className="text-black italic">CAREER PATH.</span>
-              </h3>
-              <p className="text-white text-sm md:text-lg mb-8 max-w-xl leading-relaxed">
-                Join thousands of students at the Boston Institute of Analytics. Experience our premium curriculum firsthand with zero cost.
-              </p>
-              <div className="flex flex-col sm:flex-row items-center gap-4">
-                <button className="w-full sm:w-auto px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-widest rounded-2xl transition-all flex items-center justify-center gap-3 shadow-xl shadow-blue-600/20 active:scale-95">
-                  Start For Free <ArrowRight size={20} />
-                </button>
-                <button className="w-full sm:w-auto px-8 py-4 bg-white/5 hover:bg-white/10 text-white font-bold rounded-2xl transition-all border border-white/10">
-                  View Curriculum
-                </button>
-              </div>
-            </div>
-            <div className="flex-1 w-full z-10">
-              <div className="relative group aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-3xl bg-slate-800">
-                <img 
-                  src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80" 
-                  className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" 
-                  alt="Training"
-                />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform cursor-pointer">
-                    <PlayCircle size={40} className="text-white fill-white/20" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </section>
     </div>
   );
 }
 
-// 3. Define props for StudentPin
-interface StudentPinProps {
-    user: User;
-    rotation: MotionValue<number>;
-    onClick: () => void;
-    active: boolean;
-}
-
-function StudentPin({ user, rotation, onClick, active }: StudentPinProps) {
-  const [radius, setRadius] = useState(280);
+function StudentPin({ user, rotation, onClick, active }: { user: User, rotation: MotionValue<number>, onClick: () => void, active: boolean }) {
+  const [radius, setRadius] = useState(300);
   
   useEffect(() => {
     const updateSize = () => {
-      if (typeof window !== 'undefined') {
-        if (window.innerWidth < 640) setRadius(140);
-        else if (window.innerWidth < 1024) setRadius(190);
-        else setRadius(290);
-      }
+      if (window.innerWidth < 640) setRadius(150);
+      else if (window.innerWidth < 1024) setRadius(225);
+      else setRadius(290);
     };
     updateSize();
     window.addEventListener('resize', updateSize);
     return () => window.removeEventListener('resize', updateSize);
   }, []);
 
-  const x = useTransform(rotation, (rot) => Math.sin((user.lng + rot) * (Math.PI / 180)) * radius);
-  const z = useTransform(rotation, (rot) => Math.cos((user.lng + rot) * (Math.PI / 180)) * radius);
-  const y = (user.lat * (radius / 90)) * -1;
+  const angleRad = useTransform(rotation, (rot) => {
+    // Formula to place markers based on Longitude
+    return (user.lng + rot - 180) * (Math.PI / 180);
+  });
 
-  const opacity = useTransform(z, [-radius, -radius/2, 0, radius], [0, 0, 0.4, 1]);
-  const scale = useTransform(z, [0, radius], [0.6, active ? 1.4 : 1]);
+  const x = useTransform(angleRad, (a) => Math.sin(a) * radius);
+  const z = useTransform(angleRad, (a) => Math.cos(a) * radius);
+  const y = Math.sin(user.lat * (Math.PI / 180)) * -radius;
+
+  const opacity = useTransform(z, [-50, 100], [0, 1]);
+  const scale = useTransform(z, [0, radius], [0.5, active ? 1.3 : 1]);
 
   return (
     <motion.div
@@ -197,11 +180,13 @@ function StudentPin({ user, rotation, onClick, active }: StudentPinProps) {
       onClick={(e) => { e.stopPropagation(); onClick(); }}
     >
       <div className="relative -translate-x-1/2 -translate-y-1/2 cursor-pointer group">
-        <div className={`absolute inset-0 rounded-full transition-all duration-700 ${active ? 'bg-blue-500/40 blur-xl scale-150' : ''}`} />
-        <div className={`relative w-10 h-10 md:w-16 md:h-16 rounded-full border-2 transition-all duration-500 overflow-hidden ${active ? 'border-blue-400 ring-4 ring-blue-500/20' : 'border-white/20 bg-black shadow-lg shadow-black/50'}`}>
-          <img src={user.img} alt="" className="w-full h-full object-cover transition-transform group-hover:scale-110" />
+        <div className={`absolute inset-0 rounded-full transition-all duration-700 ${active ? 'bg-blue-500/60 blur-2xl scale-150' : 'group-hover:bg-blue-400/20 blur-lg'}`} />
+        
+        <div className={`relative w-10 h-10 md:w-14 md:h-14 rounded-full border-2 transition-all duration-300 shadow-2xl overflow-hidden ${active ? 'border-blue-400 scale-110' : 'border-white/30 bg-black group-hover:border-blue-500 group-hover:scale-105'}`}>
+          <img src={user.img} alt="" className="w-full h-full object-cover" />
         </div>
-        <div className="absolute -top-0.5 -right-0.5 w-3 h-3 md:w-4 md:h-4 bg-green-500 rounded-full border-2 md:border-[3px] border-[#02040a] z-50 shadow-sm" />
+
+        <div className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-[#02040a] shadow-lg" />
       </div>
     </motion.div>
   );
