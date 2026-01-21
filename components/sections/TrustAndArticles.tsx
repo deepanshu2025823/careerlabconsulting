@@ -11,7 +11,7 @@ const TrustAndArticles = () => {
     { title: 'Off-the-shelf AI platform or Custom AI Agent solution?', img: 'https://vstorm.co/app/uploads/2025/03/Off-the-shelf-platform-article-thumbnail-graphic-2.png' },
     { title: 'Choosing the right LLM model for the job', img: 'https://vstorm.co/app/uploads/2025/03/cover-choosing-LLM.png' },
     { title: 'What is Retrieval-Augmented Generation (RAG) for LLMs', img: 'https://vstorm.co/app/uploads/2024/04/Vstorm-operating-5-1.jpg' },
-    { title: 'Vstorm: Leader in LLMs solutions recognized by Deloitte...', img: 'https://vstorm.co/app/uploads/2025/02/Deloitte-pdf.jpg' },
+    { title: 'CLC: Leader in LLMs solutions recognized by Deloitte...', img: 'https://img.freepik.com/free-photo/career-progression-promotion-achievement-success-concept_53876-120915.jpg' },
   ];
 
   return (

@@ -39,7 +39,7 @@ export default function Footer() {
     },
     {
       country: "Dubai",
-      city: "UAE",
+      city: "United Arab Emirates",
       address: "R308 BUILDING - Office-403 - Al Mankhool - Dubai - United Arab Emirates",
       phone: "+971 52 400 9232"
     },
@@ -111,6 +111,7 @@ export default function Footer() {
                   <li><Link href="/b2c/protocols/outcomes" className="hover:text-blue-400 transition-colors">Career Outcomes</Link></li>
                   <li><Link href="/b2c/protocols/mentorship" className="hover:text-blue-400 transition-colors">Mentorship</Link></li>
                   <li><Link href="/b2c/protocols/verify-certificate" className="hover:text-blue-400 transition-colors">Verify Certificate</Link></li>
+                  <li><Link href="/b2c/protocols/clc-review" className="hover:text-blue-400 transition-colors">CLC Reviews</Link></li>
                 </ul>
               </div>
 
@@ -118,6 +119,7 @@ export default function Footer() {
                 <h4 className="text-white text-[11px] font-black uppercase tracking-[0.25em] opacity-80">Infrastructure</h4>
                 <ul className="space-y-4 text-slate-400 text-sm font-semibold">
                   <li><Link href="/b2c/infrastructure/about" className="hover:text-blue-400 transition-colors">About Us</Link></li>
+                  <li><Link href="/b2c/infrastructure/api" className="hover:text-blue-400 transition-colors">API</Link></li>
                   <li><Link href="/b2c/infrastructure/docs" className="hover:text-blue-400 transition-colors">Documentation</Link></li>
                   <li><Link href="/b2c/infrastructure/status" className="hover:text-blue-400 transition-colors flex items-center gap-2">Status <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" /></Link></li>
                   <li><Link href="/b2c/infrastructure/contact" className="hover:text-blue-400 transition-colors">Contact Us</Link></li>

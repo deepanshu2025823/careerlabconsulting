@@ -34,7 +34,7 @@ const locations = [
   { country: "Branch Office (India)", city: "Bengaluru", address: "21, Raheja Towers, Mahatma Gandhi Rd, Craig Park Layout, Ashok Nagar, Bengaluru, Karnataka 560001", phone: "+91 8700236923" },
   { country: "USA", city: "San Francisco", address: "128 Geary St, San Francisco California 94108, United States", phone: "+1 (212) 814-6245" },
   { country: "United Kingdom", city: "London", address: "2nd Floor, 23 Great Portland Street, London", phone: "+44 7888873245" },
-  { country: "Dubai", city: "UAE", address: "R308 BUILDING - Office-403 - Al Mankhool - Dubai - United Arab Emirates", phone: "+971 52 400 9232" },
+  { country: "Dubai", city: "United Arab Emirates", address: "R308 BUILDING - Office-403 - Al Mankhool - Dubai - United Arab Emirates", phone: "+971 52 400 9232" },
   { country: "Singapore", city: "Singapore", address: "TripleOne Somerset, 111 Somerset Road, #04-01, Singapore, 238164", phone: "+65 6815 1432" },
   { country: "South Africa", city: "Cape Town", address: "3, Deneb House, 371 Browning Road, Cape Town, Western Cape, 7872, South Africa", phone: "+27 8755063412" },
   { country: "Germany", city: "Berlin", address: "Grünberger Str. 54, 10245 Berlin, Germany", phone: "+49 30 51588345" }

@@ -14,7 +14,7 @@ const stories = [
     metric1: { value: "45%", label: "reduction in hiring cost" },
     metric2: { value: "98.2%", label: "client satisfaction rate" },
     image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&q=80",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" // Replace with your actual case study video
+    videoUrl: "https://videocdn.cdnpk.net/videos/cddb02d1-16c4-5626-ae40-64a8066a412f/horizontal/previews/clear/large.mp4?token=exp=1768987700~hmac=0332071bb8f8a356965508a7929ec55208fea679424274d4d4c2b87beec52dd3" 
   },
   {
     id: 2,
@@ -23,7 +23,7 @@ const stories = [
     metric1: { value: "120%", label: "increase in lead volume" },
     metric2: { value: "3.5x", label: "ROI in first quarter" },
     image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+    videoUrl: "https://videocdn.cdnpk.net/videos/3225a2e8-6132-5b47-857a-89863ddd26d7/horizontal/previews/clear/large.mp4?token=exp=1768987520~hmac=cba68afb636d8c2ebe7b77e1a2c35dc090562e14674fef9f9e91d203cfe09bdf"
   }
 ];
 

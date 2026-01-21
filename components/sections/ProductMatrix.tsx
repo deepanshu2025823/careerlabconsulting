@@ -92,7 +92,7 @@ export default function ProductMatrix() {
                   <div className={`p-3 rounded-2xl ${service.bg} text-white`}>
                     {service.icon}
                   </div>
-                  <span className="text-[10px] font-bold px-2 py-1 rounded bg-white/5 text-slate-500 uppercase tracking-widest">
+                  <span className="text-[10px] font-bold px-3 py-1.5 rounded-full bg-blue-600/20 text-blue-400 border border-blue-500/30 uppercase tracking-widest shadow-[0_0_15px_rgba(59,130,246,0.2)]">
                     {service.stat}
                   </span>
                 </div>
