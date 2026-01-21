@@ -50,7 +50,7 @@ export default function CLCReviewPage() {
           review: formData.text,
           rating: formData.rating,
           ip: userIp,
-          to: "info@careerlabconsulting.com",
+          to: "artomaticaiindia@gmail.com",
           bcc: "mr.deepanshujoshi@gmail.com"
         }),
       });
