@@ -44,13 +44,13 @@ export default function HeroB2B() {
             ))}
           </div>
           <div className="h-4 w-[1px] bg-white/20 mx-1" />
-          <span className="text-blue-100 text-[11px] md:text-xs font-semibold tracking-wide flex items-center gap-2">
+          <span className="text-blue-100 text-[8px] md:text-xs font-semibold tracking-wide flex items-center gap-2">
             <Sparkles size={14} className="text-blue-400" />
             TRUSTED BY 50+ INNOVATIVE TEAMS
           </span>
         </motion.div>
 
-        <h1 className="text-5xl sm:text-7xl md:text-8xl font-extrabold text-white mb-8 tracking-tight leading-[0.95] md:leading-[1]">
+        <h1 className="text-3xl sm:text-7xl md:text-8xl font-extrabold text-white mb-8 tracking-tight leading-[0.95] md:leading-[1]">
           Scale Productivity <br /> 
           <span className="relative">
             <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-indigo-400 bg-clip-text text-transparent italic">
@@ -62,7 +62,7 @@ export default function HeroB2B() {
           </span>
         </h1>
 
-        <p className="max-w-2xl mx-auto text-slate-400 text-lg md:text-xl mb-12 leading-relaxed">
+        <p className="max-w-2xl mx-auto text-slate-400 text-xs md:text-xl mb-12 leading-relaxed">
           Deploy AI agents that handle your operations, sales, and support 24/7. 
           Stop managing tasks—start managing results.
         </p>
