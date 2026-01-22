@@ -12,7 +12,9 @@ export default function ApplyClient() {
   });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -99,9 +101,10 @@ ${form.message}
                 <option>Data Engineer</option>
                 <option>AI Engineer</option>
                 <option>Cloud & AI Engineer</option>
-                <option>Cybersecurity</option>
-                <option>Product & Growth</option>
-                <option>Robotics & IoT</option>
+                <option>Cyber Security Expert</option>
+                <option>AI Product Manager</option>
+                <option>Robotics & IoT Engineer</option>
+                <option>XR & AI Developer</option>
               </select>
             </div>
 
