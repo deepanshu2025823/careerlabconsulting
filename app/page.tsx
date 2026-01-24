@@ -17,7 +17,7 @@ import Footer from "@/components/sections/Footer";
 export default function B2BHome() {
   return (
     <main className="min-h-screen bg-[#020617] selection:bg-blue-500/30">
-      <Navbar portal="B2B" />
+      <Navbar />
       <HeroB2B />
       <ProductMatrix />
       <FeatureGrid />
