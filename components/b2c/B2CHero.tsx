@@ -35,8 +35,8 @@ export default function B2CHero() {
             </motion.div>
 
             <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white leading-[1.1] md:leading-[0.95] mb-6 tracking-tighter">
-              Learning Be <br/>
-              <span className="text-blue-500 italic">On Deployment.</span>
+              Learning Beyond <br/>
+              <span className="text-blue-500 italic">Deployment.</span>
             </h1>
 
             <p className="text-slate-400 text-base md:text-xl mb-10 max-w-md leading-relaxed">
