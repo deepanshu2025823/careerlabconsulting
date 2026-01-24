@@ -413,7 +413,7 @@ export default function Navbar() {
                 <div key={menu} className="h-full flex items-center" 
                   onMouseEnter={() => handleMenuEnter(menu)} 
                   onMouseLeave={() => setActiveMenu(null)}>
-                  <button className={`flex items-center gap-2 text-[10px] font-bold uppercase tracking-[2px] transition-all hover:text-white ${activeMenu === menu ? 'text-blue-400' : 'text-slate-400'}`}>
+                  <button className={`flex items-center gap-2 text-[10px] font-bold uppercase tracking-[2px] transition-all hover:text-white ${activeMenu === menu ? 'text-blue-400' : 'text-slate'}`}>
                     {menu} <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${activeMenu === menu ? 'rotate-180' : ''}`} />
                   </button>
                   {activeMenu === menu && (
@@ -425,16 +425,16 @@ export default function Navbar() {
                 </div>
               ))}
               
-              <Link href="/freelance" className="px-1 text-[10px] font-bold uppercase tracking-[2px] text-slate-400 hover:text-white transition-all">
+              <Link href="/freelance" className="px-1 text-[10px] font-bold uppercase tracking-[2px] text-slate hover:text-white transition-all">
                 Freelance
               </Link>
-              <Link href="/job-portal" className="px-1 text-[10px] font-bold uppercase tracking-[2px] text-slate-400 hover:text-white transition-all">
+              <Link href="/job-portal" className="px-1 text-[10px] font-bold uppercase tracking-[2px] text-slate hover:text-white transition-all">
                 Job Portal
               </Link>
-              <Link href="/case-studies" className="px-1 text-[10px] font-bold uppercase tracking-[2px] text-slate-400 hover:text-white transition-all">
+              <Link href="/case-studies" className="px-1 text-[10px] font-bold uppercase tracking-[2px] text-slate hover:text-white transition-all">
                 Case Studies
               </Link>
-              <Link href="/insights" className="px-1 text-[10px] font-bold uppercase tracking-[2px] text-slate-400 hover:text-white transition-all">
+              <Link href="/insights" className="px-1 text-[10px] font-bold uppercase tracking-[2px] text-slate hover:text-white transition-all">
                 Insights
               </Link>
             </div>
