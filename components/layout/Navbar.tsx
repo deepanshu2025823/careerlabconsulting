@@ -408,7 +408,7 @@ export default function Navbar() {
               <img src="/logo.png" alt="CLC Logo" className="h-7 w-auto" />
             </Link>
 
-            <div className="hidden xl:flex items-center gap-8 h-full">
+            <div className="hidden xl:flex items-center gap-6 h-full">
               {['products', 'services', 'industries'].map((menu) => (
                 <div key={menu} className="h-full flex items-center" 
                   onMouseEnter={() => handleMenuEnter(menu)} 
@@ -425,16 +425,16 @@ export default function Navbar() {
                 </div>
               ))}
               
-              <Link href="/freelance" className="px-4 py-2 text-[10px] font-bold uppercase tracking-[2px] text-slate-400 hover:text-white transition-all">
+              <Link href="/freelance" className="px-1 text-[10px] font-bold uppercase tracking-[2px] text-slate-400 hover:text-white transition-all">
                 Freelance
               </Link>
-              <Link href="/job-portal" className="px-4 py-2 text-[10px] font-bold uppercase tracking-[2px] text-slate-400 hover:text-white transition-all">
+              <Link href="/job-portal" className="px-1 text-[10px] font-bold uppercase tracking-[2px] text-slate-400 hover:text-white transition-all">
                 Job Portal
               </Link>
-              <Link href="/case-studies" className="px-4 py-2 text-[10px] font-bold uppercase tracking-[2px] text-slate-400 hover:text-white transition-all">
+              <Link href="/case-studies" className="px-1 text-[10px] font-bold uppercase tracking-[2px] text-slate-400 hover:text-white transition-all">
                 Case Studies
               </Link>
-              <Link href="/insights" className="px-4 py-2 text-[10px] font-bold uppercase tracking-[2px] text-slate-400 hover:text-white transition-all">
+              <Link href="/insights" className="px-1 text-[10px] font-bold uppercase tracking-[2px] text-slate-400 hover:text-white transition-all">
                 Insights
               </Link>
             </div>
