@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowRight, Play, Target, Award, CheckCircle2, 
   Sparkles, X, MapPin, Cpu, Zap, Activity,
-  Globe, Code, MessageSquare, ShieldCheck
+  Globe, Code, MessageSquare, ShieldCheck, Hash, TrendingUp
 } from 'lucide-react';
 
 const OWNER_PHONE = "918700236923";
@@ -13,26 +13,30 @@ const OWNER_PHONE = "918700236923";
 interface Student {
   name: string;
   batch: string;
+  batchNumber: string; 
   country: string;
   id: string;
-  img: string;
   progress: string;
   rank: string;
   score: string;
+  performanceScore: string; 
   skill: string;
   projects: string;
   uptime: string;
+  img: string;
 }
 
 const students: Student[] = [
   { 
     name: "Aryan Sharma", 
     batch: "Advanced AI", 
+    batchNumber: "B-26/01",
     country: "India", 
     id: "IX-2026-IN-1024", 
     img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200", 
     progress: "88%", 
     rank: "#42", 
+    performanceScore: "94.2",
     score: "A+",
     skill: "LLM Orchestration",
     projects: "7 Active Nodes",
@@ -41,11 +45,13 @@ const students: Student[] = [
   { 
     name: "Sarah Jenkins", 
     batch: "Neural Ops", 
+    batchNumber: "B-26/04",
     country: "USA", 
     id: "IX-2026-US-8821", 
     img: "https://images.unsplash.com/photo-1610462679603-785caa71c4b9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fFNhcmFoJTIwSmVua2luc3xlbnwwfHwwfHx8MA%3D%3D", 
     progress: "94%", 
     rank: "#12", 
+    performanceScore: "98.5",
     score: "S",
     skill: "Model Quantization",
     projects: "12 Edge Deployments",
@@ -54,11 +60,13 @@ const students: Student[] = [
   { 
     name: "Omar Al-Zayed", 
     batch: "Agentic Systems", 
+    batchNumber: "B-26/02",
     country: "Dubai", 
     id: "IX-2026-DXB-4402", 
     img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200", 
     progress: "76%", 
     rank: "#108", 
+    performanceScore: "82.1",
     score: "B+",
     skill: "Autonomous Logic",
     projects: "4 Logic Chains",
@@ -73,9 +81,10 @@ export default function B2CHero() {
 
   useEffect(() => {
     if (!selectedProfile) {
+      // Changed to 20 seconds (20000ms)
       const timer = setInterval(() => {
         setIndex((prev) => (prev + 1) % students.length);
-      }, 4000);
+      }, 20000); 
       return () => clearInterval(timer);
     }
   }, [selectedProfile]);
@@ -138,11 +147,12 @@ export default function B2CHero() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                className="w-full max-w-[420px] bg-[#0a0f1d]/80 backdrop-blur-2xl border border-white/10 rounded-[3rem] p-8 shadow-2xl relative"
+                // Increased width from 420px to 500px for better fit
+                className="w-full max-w-[500px] bg-[#0a0f1d]/80 backdrop-blur-2xl border border-white/10 rounded-[3rem] p-8 shadow-2xl relative"
               >
                 <div className="flex items-center justify-between mb-8">
                   <div className="px-3 py-1 bg-white/5 border border-white/10 rounded-lg">
-                    <span className="text-blue-400 text-[9px] font-black uppercase tracking-tighter">ENROLLMENT: {activeStudent.id}</span>
+                    <span className="text-blue-400 text-[10px] font-black uppercase tracking-tighter">ENROLLMENT ID: {activeStudent.id}</span>
                   </div>
                   <div className="flex items-center gap-1.5 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
                     <Activity size={10} className="text-emerald-500 animate-pulse" />
@@ -158,7 +168,7 @@ export default function B2CHero() {
                     </div>
                   </div>
                   <div className="flex-1 text-left">
-                    <h3 className="text-white font-black text-2xl tracking-tight">{activeStudent.name}</h3>
+                    <h3 className="text-white font-black text-3xl tracking-tight">{activeStudent.name}</h3>
                     <div className="flex items-center gap-2 mt-1">
                       <MapPin size={12} className="text-slate-500" />
                       <p className="text-slate-400 text-xs font-bold uppercase">{activeStudent.country}</p>
@@ -170,27 +180,38 @@ export default function B2CHero() {
                   <div className="p-2 bg-blue-600/20 rounded-xl"><Cpu className="text-blue-400 w-5 h-5" /></div>
                   <div className="text-left">
                     <p className="text-[9px] text-blue-400 font-black uppercase tracking-widest">Specialized Skill</p>
-                    <p className="text-white font-bold text-sm">{activeStudent.skill}</p>
+                    <p className="text-white font-bold text-base">{activeStudent.skill}</p>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 mb-8">
-                  <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-5 text-left">
+                <div className="grid grid-cols-3 gap-4 mb-8">
+                  <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-4 text-left">
                     <Target className="w-5 h-5 text-blue-400 mb-2" />
-                    <p className="text-slate-500 text-[9px] font-black uppercase mb-1">Success Rate</p>
-                    <p className="text-white font-black text-2xl">{activeStudent.progress}</p>
+                    <p className="text-slate-500 text-[8px] font-black uppercase mb-1">Success</p>
+                    <p className="text-white font-black text-xl">{activeStudent.progress}</p>
                   </div>
-                  <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-5 text-left">
+                  <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-4 text-left">
+                    <TrendingUp className="w-5 h-5 text-purple-400 mb-2" />
+                    <p className="text-slate-500 text-[8px] font-black uppercase mb-1">Perf. Score</p>
+                    <p className="text-white font-black text-xl">{activeStudent.performanceScore}</p>
+                  </div>
+                  <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-4 text-left">
                     <Award className="w-5 h-5 text-emerald-400 mb-2" />
-                    <p className="text-slate-500 text-[9px] font-black uppercase mb-1">Global Grade</p>
-                    <p className="text-white font-black text-2xl">{activeStudent.score}</p>
+                    <p className="text-slate-500 text-[8px] font-black uppercase mb-1">Grade</p>
+                    <p className="text-white font-black text-xl">{activeStudent.score}</p>
                   </div>
                 </div>
 
                 <div className="pt-6 border-t border-white/5 flex items-center justify-between">
-                   <div className="text-left">
-                      <div className="text-blue-500 font-black text-3xl tracking-tighter">{activeStudent.rank}</div>
-                      <div className="text-[9px] text-slate-500 font-black uppercase tracking-widest">Global Rank</div>
+                   <div className="flex gap-6">
+                      <div className="text-left">
+                        <div className="text-blue-500 font-black text-2xl tracking-tighter">{activeStudent.rank}</div>
+                        <div className="text-[8px] text-slate-500 font-black uppercase tracking-widest">Batch Rank</div>
+                      </div>
+                      <div className="text-left border-l border-white/10 pl-6">
+                        <div className="text-white font-black text-2xl tracking-tighter">{activeStudent.batchNumber}</div>
+                        <div className="text-[8px] text-slate-500 font-black uppercase tracking-widest">Batch No.</div>
+                      </div>
                    </div>
                    <button 
                     onClick={() => setSelectedProfile(activeStudent)}
@@ -227,7 +248,7 @@ export default function B2CHero() {
                        <h2 className="text-3xl font-black text-white">{selectedProfile.name}</h2>
                        <ShieldCheck size={22} className="text-blue-500" />
                     </div>
-                    <p className="text-blue-400 font-bold uppercase text-[10px] tracking-[0.2em] mb-4">LMS Verified Specialist • {selectedProfile.batch}</p>
+                    <p className="text-blue-400 font-bold uppercase text-[10px] tracking-[0.2em] mb-4">LMS Verified Specialist • {selectedProfile.batch} ({selectedProfile.batchNumber})</p>
                     <div className="flex flex-wrap gap-2">
                       {["Python", "PyTorch", "GCP", selectedProfile.skill].map(tag => (
                         <span key={tag} className="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-slate-400 text-[9px] font-bold uppercase tracking-wider">{tag}</span>
@@ -236,20 +257,25 @@ export default function B2CHero() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-                  <div className="bg-[#0f172a] p-5 rounded-3xl border border-white/5 text-center">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+                  <div className="bg-[#0f172a] p-4 rounded-3xl border border-white/5 text-center">
                     <Globe size={20} className="text-blue-500 mx-auto mb-2" />
-                    <p className="text-slate-500 text-[8px] font-black uppercase">Node Uptime</p>
-                    <p className="text-white font-black text-xl">{selectedProfile.uptime}</p>
+                    <p className="text-slate-500 text-[7px] font-black uppercase">Uptime</p>
+                    <p className="text-white font-black text-lg">{selectedProfile.uptime}</p>
                   </div>
-                  <div className="bg-[#0f172a] p-5 rounded-3xl border border-white/5 text-center">
+                  <div className="bg-[#0f172a] p-4 rounded-3xl border border-white/5 text-center">
                     <Code size={20} className="text-purple-500 mx-auto mb-2" />
-                    <p className="text-slate-500 text-[8px] font-black uppercase">Total Nodes</p>
-                    <p className="text-white font-black text-xl">{selectedProfile.projects}</p>
+                    <p className="text-slate-500 text-[7px] font-black uppercase">Nodes</p>
+                    <p className="text-white font-black text-lg">{selectedProfile.projects}</p>
                   </div>
-                  <div className="bg-[#0f172a] p-5 rounded-3xl border border-white/5 text-center">
-                    <CheckCircle2 size={20} className="text-emerald-500 mx-auto mb-2" />
-                    <p className="text-slate-500 text-[8px] font-black uppercase">LMS Status</p>
+                  <div className="bg-[#0f172a] p-4 rounded-3xl border border-white/5 text-center">
+                    <Hash size={20} className="text-emerald-500 mx-auto mb-2" />
+                    <p className="text-slate-500 text-[7px] font-black uppercase">ID</p>
+                    <p className="text-white font-black text-[10px] mt-1 uppercase">{selectedProfile.id.split('-').pop()}</p>
+                  </div>
+                  <div className="bg-[#0f172a] p-4 rounded-3xl border border-white/5 text-center">
+                    <CheckCircle2 size={20} className="text-blue-400 mx-auto mb-2" />
+                    <p className="text-slate-500 text-[7px] font-black uppercase">Status</p>
                     <p className="text-white font-black text-[10px] mt-1 uppercase">Certified</p>
                   </div>
                 </div>
@@ -281,4 +307,4 @@ export default function B2CHero() {
       </AnimatePresence>
     </section>
   );
-}
+}   
