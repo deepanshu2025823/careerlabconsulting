@@ -10,7 +10,21 @@ import {
 
 const OWNER_PHONE = "918700236923";
 
-const students = [
+interface Student {
+  name: string;
+  batch: string;
+  country: string;
+  id: string;
+  img: string;
+  progress: string;
+  rank: string;
+  score: string;
+  skill: string;
+  projects: string;
+  uptime: string;
+}
+
+const students: Student[] = [
   { 
     name: "Aryan Sharma", 
     batch: "Advanced AI", 
@@ -29,7 +43,7 @@ const students = [
     batch: "Neural Ops", 
     country: "USA", 
     id: "IX-2026-US-8821", 
-    img: "https://images.unsplash.com/photo-1610462679603-785caa71c4b9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fFNhcmFoJTIwSmVua2luc3xlbnwwfHwwfHx8MA%3D%3D", 
+    img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200", 
     progress: "94%", 
     rank: "#12", 
     score: "S",
@@ -54,7 +68,7 @@ const students = [
 
 export default function B2CHero() {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
-  const [selectedProfile, setSelectedProfile] = useState(null);
+  const [selectedProfile, setSelectedProfile] = useState<Student | null>(null);
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -143,7 +157,7 @@ export default function B2CHero() {
                       <Zap size={14} className="text-white" />
                     </div>
                   </div>
-                  <div>
+                  <div className="flex-1 text-left">
                     <h3 className="text-white font-black text-2xl tracking-tight">{activeStudent.name}</h3>
                     <div className="flex items-center gap-2 mt-1">
                       <MapPin size={12} className="text-slate-500" />
@@ -154,19 +168,19 @@ export default function B2CHero() {
 
                 <div className="mb-8 p-4 bg-blue-600/5 border border-blue-500/10 rounded-2xl flex items-center gap-4">
                   <div className="p-2 bg-blue-600/20 rounded-xl"><Cpu className="text-blue-400 w-5 h-5" /></div>
-                  <div>
+                  <div className="text-left">
                     <p className="text-[9px] text-blue-400 font-black uppercase tracking-widest">Specialized Skill</p>
                     <p className="text-white font-bold text-sm">{activeStudent.skill}</p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 mb-8">
-                  <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-5">
+                  <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-5 text-left">
                     <Target className="w-5 h-5 text-blue-400 mb-2" />
                     <p className="text-slate-500 text-[9px] font-black uppercase mb-1">Success Rate</p>
                     <p className="text-white font-black text-2xl">{activeStudent.progress}</p>
                   </div>
-                  <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-5">
+                  <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-5 text-left">
                     <Award className="w-5 h-5 text-emerald-400 mb-2" />
                     <p className="text-slate-500 text-[9px] font-black uppercase mb-1">Global Grade</p>
                     <p className="text-white font-black text-2xl">{activeStudent.score}</p>
@@ -174,7 +188,7 @@ export default function B2CHero() {
                 </div>
 
                 <div className="pt-6 border-t border-white/5 flex items-center justify-between">
-                   <div>
+                   <div className="text-left">
                       <div className="text-blue-500 font-black text-3xl tracking-tighter">{activeStudent.rank}</div>
                       <div className="text-[9px] text-slate-500 font-black uppercase tracking-widest">Global Rank</div>
                    </div>
@@ -182,7 +196,7 @@ export default function B2CHero() {
                     onClick={() => setSelectedProfile(activeStudent)}
                     className="px-6 py-3 bg-white text-black text-[10px] font-black uppercase rounded-2xl hover:bg-blue-600 hover:text-white transition-all shadow-lg"
                    >
-                      View Profile
+                     View Profile
                    </button>
                 </div>
               </motion.div>
@@ -205,7 +219,7 @@ export default function B2CHero() {
             >
               <button onClick={() => setSelectedProfile(null)} className="absolute top-6 right-6 text-slate-500 hover:text-white z-20 p-2 bg-white/5 rounded-full transition-colors"><X /></button>
               
-              <div className="p-8 md:p-12">
+              <div className="p-8 md:p-12 text-left">
                 <div className="flex flex-col md:flex-row gap-8 items-start mb-10">
                   <img src={selectedProfile.img} className="w-32 h-32 rounded-[2.5rem] border-4 border-blue-600/20 object-cover shadow-2xl" alt="" />
                   <div className="flex-1">
@@ -260,7 +274,7 @@ export default function B2CHero() {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsVideoOpen(false)} className="absolute inset-0 bg-black/95 backdrop-blur-xl" />
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="relative w-full max-w-4xl aspect-video bg-black rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
               <button onClick={() => setIsVideoOpen(false)} className="absolute top-4 right-4 z-10 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors"><X size={24} /></button>
-              <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" className="w-full h-full" allow="autoplay" allowFullScreen />
+              <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" className="w-full h-full border-none" allow="autoplay" allowFullScreen />
             </motion.div>
           </div>
         )}
