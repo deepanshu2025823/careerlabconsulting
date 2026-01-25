@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Check, Zap, Crown, Terminal, ShieldCheck, Sparkles, Loader2, LucideIcon, CreditCard, X, TrendingUp } from 'lucide-react';
+import { Check, Zap, Crown, Terminal, ShieldCheck, Sparkles, Loader2, LucideIcon, CreditCard, X, TrendingUp, Building2 } from 'lucide-react';
 import Script from 'next/script';
 
 interface Tier {
@@ -122,16 +122,28 @@ export default function PricingSection() {
                 <tier.icon className={`w-14 h-14 mb-8 ${tier.highlight ? 'text-blue-400' : 'text-slate-500'}`} />
                 <h3 className="text-4xl font-black uppercase mb-2">{tier.name}</h3>
                 <p className="text-blue-400 font-bold text-sm tracking-widest uppercase mb-6">{tier.duration} Program</p>
+                
                 <div className="flex flex-col gap-1">
                   <span className="text-6xl font-black tracking-tighter">{tier.priceINR}</span>
                   <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-3 mt-3 flex items-center gap-2">
                     <TrendingUp className="w-4 h-4 text-blue-400" />
                     <span className="text-blue-300 text-sm font-bold uppercase">{tier.targetCTC}</span>
                   </div>
-                  <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-3 mt-2">
-                    <span className="text-green-400 text-sm font-bold flex items-center gap-2 italic">
+                  
+                  <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-4 mt-2">
+                    <span className="text-green-400 text-sm font-bold flex items-center gap-2 italic mb-3">
                       <Zap className="w-4 h-4 fill-green-400" /> {tier.emiText}
                     </span>
+                    <div className="border-t border-green-500/10 pt-3">
+                        <p className="text-[9px] uppercase tracking-widest text-slate-500 font-bold mb-2">Approved EMI Partners:</p>
+                        <div className="flex flex-wrap gap-3 opacity-60 grayscale hover:grayscale-0 transition-all">
+                            <span className="text-[10px] font-black border border-white/10 px-2 py-1 rounded">HDFC</span>
+                            <span className="text-[10px] font-black border border-white/10 px-2 py-1 rounded">ICICI</span>
+                            <span className="text-[10px] font-black border border-white/10 px-2 py-1 rounded">BAJAJ</span>
+                            <span className="text-[10px] font-black border border-white/10 px-2 py-1 rounded">PROPEL</span>
+                            <span className="text-[10px] font-black border border-white/10 px-2 py-1 rounded">SHIPLEY</span>
+                        </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -149,7 +161,7 @@ export default function PricingSection() {
                 <button onClick={() => makePayment(tier, 'Full')} disabled={!!loadingId} className="w-full py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] flex items-center justify-center gap-3 transition-all bg-blue-600 hover:bg-blue-500 text-white shadow-lg">
                   {loadingId === `${tier.id}-Full` ? <Loader2 className="animate-spin w-4 h-4" /> : <CreditCard className="w-4 h-4" />} Full Payment
                 </button>
-                <button onClick={() => makePayment(tier, 'EMI')} disabled={!!loadingId} className="w-full py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] flex items-center justify-center gap-3 transition-all bg-white/5 hover:bg-white/10 border border-white/20 text-white">
+                <button onClick={() => makePayment(tier, 'EMI')} disabled={!!loadingId} className="w-full py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] flex items-center justify-center gap-3 transition-all bg-white/5 hover:bg-white/10 border border-white/20 text-white shadow-inner">
                   {loadingId === `${tier.id}-EMI` ? <Loader2 className="animate-spin w-4 h-4" /> : <Zap className="w-4 h-4 text-green-400" />} Pay via EMI (Monthly)
                 </button>
               </div>
@@ -159,38 +171,43 @@ export default function PricingSection() {
 
         <div className="mt-20 border-t border-white/10 pt-20">
           <div className="text-center mb-12">
-            <h3 className="text-3xl font-black uppercase tracking-tighter mb-4">InternX Learning vs <span className="text-slate-500 italic font-serif">Traditional Learning</span></h3>
-            <p className="text-slate-400 text-sm">Why 1,200+ learners chose us over traditional bootcamps.</p>
+            <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4">InternX <span className="text-slate-500 italic font-serif">vs</span> Typical Bootcamps</h3>
+            <p className="text-slate-400 text-sm">Comparison based on market hiring standards.</p>
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+          <div className="overflow-x-auto rounded-3xl border border-white/10">
+            <table className="w-full text-left border-collapse bg-white/[0.01]">
               <thead>
                 <tr className="border-b border-white/10 bg-white/5">
-                  <th className="p-4 text-[10px] uppercase font-black text-slate-500">Feature</th>
-                  <th className="p-4 text-[10px] uppercase font-black text-blue-400">InternX-AI</th>
-                  <th className="p-4 text-[10px] uppercase font-black text-slate-500">Typical Bootcamps</th>
+                  <th className="p-6 text-[10px] uppercase font-black text-slate-500">Hiring Metric</th>
+                  <th className="p-6 text-[10px] uppercase font-black text-blue-400">InternX-AI (CLC)</th>
+                  <th className="p-6 text-[10px] uppercase font-black text-slate-500">Typical Bootcamps</th>
                 </tr>
               </thead>
               <tbody className="text-sm">
                 <tr className="border-b border-white/5">
-                  <td className="p-4 font-bold text-slate-300">Project Type</td>
-                  <td className="p-4 text-blue-400 flex items-center gap-2 font-bold"><Check size={14} /> Real Startup Projects</td>
-                  <td className="p-4 text-slate-600 flex items-center gap-2"><X size={14} /> Simulated / Fake</td>
+                  <td className="p-6 font-bold text-slate-300">Curriculum Focus</td>
+                  <td className="p-6 text-blue-400 font-bold italic">Agentic AI & LLM Workflows</td>
+                  <td className="p-6 text-slate-500">Generic Full-Stack / Data Science</td>
                 </tr>
                 <tr className="border-b border-white/5">
-                  <td className="p-4 font-bold text-slate-300">Proof of Work</td>
-                  <td className="p-4 text-blue-400 flex items-center gap-2 font-bold"><Check size={14} /> ResumeNFT + GitHub</td>
-                  <td className="p-4 text-slate-600 flex items-center gap-2"><X size={14} /> Simple Certificate</td>
+                  <td className="p-6 font-bold text-slate-300">Project Quality</td>
+                  <td className="p-6 text-blue-400 font-bold flex items-center gap-2"><Check size={14} /> Real Global Startup Assets</td>
+                  <td className="p-6 text-slate-600 flex items-center gap-2"><X size={14} /> Generic Capstone (Dummy)</td>
                 </tr>
                 <tr className="border-b border-white/5">
-                  <td className="p-4 font-bold text-slate-300">Job Guarantee</td>
-                  <td className="p-4 text-blue-400 flex items-center gap-2 font-bold"><Check size={14} /> Legal Signed Agreement</td>
-                  <td className="p-4 text-slate-600 flex items-center gap-2"><X size={14} /> Conditional / No</td>
+                  <td className="p-6 font-bold text-slate-300">Proof of Work</td>
+                  <td className="p-6 text-blue-400 font-bold flex items-center gap-2"><Check size={14} /> ResumeNFT + Blockchain Verify</td>
+                  <td className="p-6 text-slate-600 flex items-center gap-2"><X size={14} /> Paper/PDF Certificate Only</td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="p-6 font-bold text-slate-300">Hiring Network</td>
+                  <td className="p-6 text-blue-400 font-bold flex items-center gap-2"><Check size={14} /> HireX Ecosystem (Global)</td>
+                  <td className="p-6 text-slate-600 flex items-center gap-2"><X size={14} /> Local Job Portal Access</td>
                 </tr>
                 <tr>
-                  <td className="p-4 font-bold text-slate-300">Agentic AI Workflows</td>
-                  <td className="p-4 text-blue-400 flex items-center gap-2 font-bold"><Check size={14} /> GPT + LangChain + Zapier</td>
-                  <td className="p-4 text-slate-600 flex items-center gap-2"><X size={14} /> Theory Only</td>
+                  <td className="p-6 font-bold text-slate-300">Job Security</td>
+                  <td className="p-6 text-blue-400 font-bold flex items-center gap-2"><Check size={14} /> Legal Signed Guarantee</td>
+                  <td className="p-6 text-slate-600 flex items-center gap-2"><X size={14} /> No Legal Accountability</td>
                 </tr>
               </tbody>
             </table>
@@ -198,15 +215,9 @@ export default function PricingSection() {
         </div>
 
         <div className="mt-20 flex flex-col items-center gap-6">
-            <div className="flex items-center gap-8 opacity-30 grayscale">
-                <span className="text-[10px] font-bold tracking-widest uppercase italic">Cards</span>
-                <span className="text-[10px] font-bold tracking-widest uppercase italic">NetBanking</span>
-                <span className="text-[10px] font-bold tracking-widest uppercase italic">UPI</span>
-                <span className="text-[10px] font-bold tracking-widest uppercase italic">EMI</span>
-            </div>
             <div className="flex items-center gap-3 px-6 py-2.5 rounded-full bg-white/5 border border-white/10">
                 <ShieldCheck className="w-4 h-4 text-blue-500" />
-                <span className="text-[10px] uppercase font-bold tracking-widest text-slate-400 italic">InternX-AI Secure SSL Encryption</span>
+                <span className="text-[10px] uppercase font-bold tracking-widest text-slate-400 italic">InternX-AI Secure SSL Encryption | PCI-DSS Compliant</span>
             </div>
         </div>
       </div>
