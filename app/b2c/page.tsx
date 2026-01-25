@@ -17,6 +17,7 @@ import MentorshipSection from '@/components/b2c/MentorshipSection';
 import AlumniSuccess from '@/components/b2c/AlumniSuccess';
 import FAQSection from '@/components/b2c/FAQSection';
 import PricingSection from '@/components/b2c/PricingSection';
+import { Analytics } from '@vercel/analytics/next';
 import Footer from '@/components/b2c/Footer';
 import { ArrowRight, Brain, Shield, Database, LayoutPanelTop, Box } from 'lucide-react';
 
@@ -24,7 +25,7 @@ export default function B2CPage() {
   return (
     <main className="min-h-screen bg-[#020617]">
       <B2CHeader />
-      
+      <Analytics />
       <div className="pt-20">
         <B2CHero />
         <CourseGrid />
