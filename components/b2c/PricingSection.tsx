@@ -1,25 +1,21 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Check, Zap, Crown, Terminal, ShieldCheck, Sparkles, Loader2, LucideIcon, CreditCard, X, TrendingUp, Building2 } from 'lucide-react';
+import { 
+  Check, Zap, Crown, Terminal, ShieldCheck, Sparkles, 
+  Loader2, CreditCard, X, TrendingUp 
+} from 'lucide-react';
 import Script from 'next/script';
 
-interface Tier {
-  id: string;
-  name: string;
-  duration: string;
-  priceINR: string;
-  rawAmount: number; 
-  emiAmount: number; 
-  emiText: string;
-  description: string;
-  features: string[];
-  highlight: boolean;
-  icon: LucideIcon;
-  targetCTC: string;
-}
+const partners = [
+  { name: "HDFC", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/HDFC_Bank_Logo.svg/960px-HDFC_Bank_Logo.svg.png" },
+  { name: "ICICI", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/ICICI_Bank_Logo.svg/3840px-ICICI_Bank_Logo.svg.png" },
+  { name: "Bajaj Finance", logo: "https://i.logos-download.com/104038/25954-og-3eb91e8f96281f00288cb76528c38928.png/Bajaj_Finserv_Logo_og.png" },
+  { name: "Propel", logo: "https://contact.pepsico.com/files/propel/brands/1675181018/Propel_Small%20Use%20Logo%20Blue%20Orange_RGB@2x.png" },
+  { name: "ShopSe", logo: "https://framerusercontent.com/images/rmJzwShQEM78IdCVmymj1i9K7M.svg?width=1343&height=300" }
+];
 
-const tiers: Tier[] = [
+const tiers = [
   {
     id: "plan-foundation",
     name: "Foundation",
@@ -65,43 +61,48 @@ const tiers: Tier[] = [
 ];
 
 export default function PricingSection() {
-  const [loadingId, setLoadingId] = useState<string | null>(null);
+  const [loadingId, setLoadingId] = useState(null);
   const ownerPhone = "918700236923";
 
-  const handlePaymentSuccess = async (response: any, tier: Tier, type: string) => {
+  const handlePaymentSuccess = async (response, tier, type) => {
     const amountPaid = type === 'EMI Plan' ? "₹5,208 (EMI Start)" : tier.priceINR;
     const waMessage = `*New Enrollment Confirmation*%0A%0A*Plan:* ${tier.name}%0A*Type:* ${type}%0A*Amount:* ${amountPaid}%0A*Payment ID:* ${response.razorpay_payment_id}`;
     const whatsappUrl = `https://wa.me/${ownerPhone}?text=${waMessage}`;
 
     try {
-      await fetch('/api/send-email', {
+      await fetch('/api/send-confirmation', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ planName: tier.name, amount: amountPaid, paymentId: response.razorpay_payment_id, type: type }),
       });
       window.open(whatsappUrl, '_blank');
-      alert(`Success! Enrollment details sent to owner.`);
     } catch (err) { console.error(err); }
   };
 
-  const makePayment = async (tier: Tier, paymentType: 'Full' | 'EMI') => {
+  const makePayment = async (tier, paymentType) => {
     const actionId = `${tier.id}-${paymentType}`;
     setLoadingId(actionId);
+    
     const options = {
       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
       amount: paymentType === 'EMI' ? tier.emiAmount : tier.rawAmount,
       currency: "INR",
       name: "InternX AI",
       description: paymentType === 'EMI' ? `EMI - ${tier.name}` : `Full - ${tier.name}`,
-      handler: (res: any) => handlePaymentSuccess(res, tier, paymentType === 'Full' ? 'Full Payment' : 'EMI Plan'),
+      handler: (res) => handlePaymentSuccess(res, tier, paymentType === 'Full' ? 'Full Payment' : 'EMI Plan'),
       theme: { color: paymentType === 'Full' ? "#3b82f6" : "#10b981" },
     };
-    new (window as any).Razorpay(options).open();
+    
+    if (window.Razorpay) {
+      new window.Razorpay(options).open();
+    } else {
+      alert("Razorpay SDK not loaded. Please check your internet.");
+    }
     setLoadingId(null);
   };
 
   return (
-    <section className="py-20 md:py-32 bg-[#020617] text-white font-sans">
+    <section className="py-20 md:py-32 bg-[#020617] text-white font-sans overflow-hidden">
       <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
 
       <div className="max-w-6xl mx-auto px-6">
@@ -134,15 +135,19 @@ export default function PricingSection() {
                     <span className="text-green-400 text-sm font-bold flex items-center gap-2 italic mb-3">
                       <Zap className="w-4 h-4 fill-green-400" /> {tier.emiText}
                     </span>
-                    <div className="border-t border-green-500/10 pt-3">
-                        <p className="text-[9px] uppercase tracking-widest text-slate-500 font-bold mb-2">Approved EMI Partners:</p>
-                        <div className="flex flex-wrap gap-3 opacity-60 grayscale hover:grayscale-0 transition-all">
-                            <span className="text-[10px] font-black border border-white/10 px-2 py-1 rounded">HDFC</span>
-                            <span className="text-[10px] font-black border border-white/10 px-2 py-1 rounded">ICICI</span>
-                            <span className="text-[10px] font-black border border-white/10 px-2 py-1 rounded">BAJAJ</span>
-                            <span className="text-[10px] font-black border border-white/10 px-2 py-1 rounded">PROPEL</span>
-                            <span className="text-[10px] font-black border border-white/10 px-2 py-1 rounded">SHIPLEY</span>
+                    <div className="border-t border-green-500/10 pt-4">
+                        <div className="grid grid-cols-5 gap-3 items-center opacity-80 hover:opacity-100 transition-all duration-500">
+                           {partners.map((p) => (
+                             <img 
+                               key={p.name} 
+                               src={p.logo} 
+                               alt={p.name} 
+                               title={p.name} 
+                               className="h-10 w-auto object-contain mx-auto bg-white p-1 rounded-sm" 
+                             />
+                           ))}
                         </div>
+                        <p className="text-[7px] uppercase font-black tracking-[0.2em] text-center text-slate-600 mt-4 italic">No-Cost EMI Approved Partners</p>
                     </div>
                   </div>
                 </div>
@@ -158,11 +163,19 @@ export default function PricingSection() {
               </div>
 
               <div className="flex flex-col gap-4 mt-auto">
-                <button onClick={() => makePayment(tier, 'Full')} disabled={!!loadingId} className="w-full py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] flex items-center justify-center gap-3 transition-all bg-blue-600 hover:bg-blue-500 text-white shadow-lg">
+                <button 
+                  onClick={() => makePayment(tier, 'Full')} 
+                  disabled={!!loadingId} 
+                  className="w-full py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] flex items-center justify-center gap-3 transition-all bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/20 disabled:opacity-50"
+                >
                   {loadingId === `${tier.id}-Full` ? <Loader2 className="animate-spin w-4 h-4" /> : <CreditCard className="w-4 h-4" />} Full Payment
                 </button>
-                <button onClick={() => makePayment(tier, 'EMI')} disabled={!!loadingId} className="w-full py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] flex items-center justify-center gap-3 transition-all bg-white/5 hover:bg-white/10 border border-white/20 text-white shadow-inner">
-                  {loadingId === `${tier.id}-EMI` ? <Loader2 className="animate-spin w-4 h-4" /> : <Zap className="w-4 h-4 text-green-400" />} Pay via EMI (Monthly)
+                <button 
+                  onClick={() => makePayment(tier, 'EMI')} 
+                  disabled={!!loadingId} 
+                  className="w-full py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] flex items-center justify-center gap-3 transition-all bg-white/5 hover:bg-white/10 border border-white/20 text-white group disabled:opacity-50"
+                >
+                  {loadingId === `${tier.id}-EMI` ? <Loader2 className="animate-spin w-4 h-4" /> : <Zap className="w-4 h-4 text-green-400 group-hover:scale-125 transition-transform" />} Pay via EMI (Monthly)
                 </button>
               </div>
             </div>
@@ -171,53 +184,48 @@ export default function PricingSection() {
 
         <div className="mt-20 border-t border-white/10 pt-20">
           <div className="text-center mb-12">
-            <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4">InternX <span className="text-slate-500 italic font-serif">vs</span> Typical Bootcamps</h3>
-            <p className="text-slate-400 text-sm">Comparison based on market hiring standards.</p>
+            <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4">InternX Learning <span className="text-slate-500 italic font-serif">vs</span> Traditional Learning</h3>
+            <p className="text-slate-400 text-sm italic font-medium tracking-wide uppercase">Breaking the theory-based education cycle.</p>
           </div>
-          <div className="overflow-x-auto rounded-3xl border border-white/10">
-            <table className="w-full text-left border-collapse bg-white/[0.01]">
+          <div className="overflow-x-auto rounded-[2.5rem] border border-white/10 bg-white/[0.01] backdrop-blur-sm">
+            <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="border-b border-white/10 bg-white/5">
-                  <th className="p-6 text-[10px] uppercase font-black text-slate-500">Hiring Metric</th>
-                  <th className="p-6 text-[10px] uppercase font-black text-blue-400">InternX-AI (CLC)</th>
-                  <th className="p-6 text-[10px] uppercase font-black text-slate-500">Typical Bootcamps</th>
+                  <th className="p-6 text-[10px] uppercase font-black text-slate-500">Benchmark Metric</th>
+                  <th className="p-6 text-[10px] uppercase font-black text-blue-400 tracking-widest underline decoration-2 underline-offset-8">InternX Learning</th>
+                  <th className="p-6 text-[10px] uppercase font-black text-slate-500">Traditional Learning</th>
                 </tr>
               </thead>
-              <tbody className="text-sm">
-                <tr className="border-b border-white/5">
-                  <td className="p-6 font-bold text-slate-300">Curriculum Focus</td>
-                  <td className="p-6 text-blue-400 font-bold italic">Agentic AI & LLM Workflows</td>
-                  <td className="p-6 text-slate-500">Generic Full-Stack / Data Science</td>
+              <tbody className="text-sm font-medium">
+                <tr className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                  <td className="p-6 text-slate-300">Core Curriculum</td>
+                  <td className="p-6 text-blue-400 italic">Agentic AI & LLM Workflows</td>
+                  <td className="p-6 text-slate-500">Full-Stack / Legacy Data Science</td>
                 </tr>
-                <tr className="border-b border-white/5">
-                  <td className="p-6 font-bold text-slate-300">Project Quality</td>
-                  <td className="p-6 text-blue-400 font-bold flex items-center gap-2"><Check size={14} /> Real Global Startup Assets</td>
-                  <td className="p-6 text-slate-600 flex items-center gap-2"><X size={14} /> Generic Capstone (Dummy)</td>
+                <tr className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                  <td className="p-6 text-slate-300">Project Quality</td>
+                  <td className="p-6 text-blue-400 flex items-center gap-2"><Check size={14} /> Live Global Startup Assets</td>
+                  <td className="p-6 text-slate-600 flex items-center gap-2"><X size={14} /> Dummy Capstones / Local CMS</td>
                 </tr>
-                <tr className="border-b border-white/5">
-                  <td className="p-6 font-bold text-slate-300">Proof of Work</td>
-                  <td className="p-6 text-blue-400 font-bold flex items-center gap-2"><Check size={14} /> ResumeNFT + Blockchain Verify</td>
-                  <td className="p-6 text-slate-600 flex items-center gap-2"><X size={14} /> Paper/PDF Certificate Only</td>
+                <tr className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                  <td className="p-6 text-slate-300">Verification System</td>
+                  <td className="p-6 text-blue-400 flex items-center gap-2"><Check size={14} /> ResumeNFT (On-Chain Proof)</td>
+                  <td className="p-6 text-slate-600 flex items-center gap-2"><X size={14} /> Basic Paper/PDF Certificates</td>
                 </tr>
-                <tr className="border-b border-white/5">
-                  <td className="p-6 font-bold text-slate-300">Hiring Network</td>
-                  <td className="p-6 text-blue-400 font-bold flex items-center gap-2"><Check size={14} /> HireX Ecosystem (Global)</td>
-                  <td className="p-6 text-slate-600 flex items-center gap-2"><X size={14} /> Local Job Portal Access</td>
-                </tr>
-                <tr>
-                  <td className="p-6 font-bold text-slate-300">Job Security</td>
-                  <td className="p-6 text-blue-400 font-bold flex items-center gap-2"><Check size={14} /> Legal Signed Guarantee</td>
-                  <td className="p-6 text-slate-600 flex items-center gap-2"><X size={14} /> No Legal Accountability</td>
+                <tr className="hover:bg-white/[0.02] transition-colors">
+                  <td className="p-6 text-slate-300">Career Accountability</td>
+                  <td className="p-6 text-blue-400 flex items-center gap-2"><Check size={14} /> Legal Signed Job Guarantee</td>
+                  <td className="p-6 text-slate-600 flex items-center gap-2"><X size={14} /> Soft "Placement Assistance"</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
 
-        <div className="mt-20 flex flex-col items-center gap-6">
-            <div className="flex items-center gap-3 px-6 py-2.5 rounded-full bg-white/5 border border-white/10">
+        <div className="mt-20 flex justify-center">
+            <div className="flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 border border-white/10 shadow-2xl backdrop-blur-md">
                 <ShieldCheck className="w-4 h-4 text-blue-500" />
-                <span className="text-[10px] uppercase font-bold tracking-widest text-slate-400 italic">InternX-AI Secure SSL Encryption | PCI-DSS Compliant</span>
+                <span className="text-[10px] uppercase font-bold tracking-widest text-slate-400 italic">InternX-AI Secure SSL | PCI-DSS Compliant Gateway</span>
             </div>
         </div>
       </div>
