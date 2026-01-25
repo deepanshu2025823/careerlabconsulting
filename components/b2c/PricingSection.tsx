@@ -159,7 +159,7 @@ export default function PricingSection() {
 
         <div className="mt-20 border-t border-white/10 pt-20">
           <div className="text-center mb-12">
-            <h3 className="text-3xl font-black uppercase tracking-tighter mb-4">InternX-AI vs <span className="text-slate-500 italic font-serif">Others</span></h3>
+            <h3 className="text-3xl font-black uppercase tracking-tighter mb-4">InternX Learning vs <span className="text-slate-500 italic font-serif">Traditional Learning</span></h3>
             <p className="text-slate-400 text-sm">Why 1,200+ learners chose us over traditional bootcamps.</p>
           </div>
           <div className="overflow-x-auto">
