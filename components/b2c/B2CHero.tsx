@@ -1,165 +1,136 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  MessageCircle, Play, Sparkles, X, 
-  BookOpen, Clock, ChevronRight, 
-  Layers, CheckCircle2, Layout, Video 
+  ArrowRight, Play, Target, Award, CheckCircle2, 
+  Sparkles, X, MapPin, BookOpen, Clock, Layers 
 } from 'lucide-react';
 
 const OWNER_PHONE = "918700236923";
 
+const students = [
+  { name: "Aryan Sharma", batch: "Advanced AI", country: "India", id: "CLC-IN-1024", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100", progress: "65%", rank: "1.2k", score: "A+" },
+  { name: "Sarah Jenkins", batch: "Neural Ops", country: "USA", id: "CLC-US-8821", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100", progress: "82%", rank: "0.8k", score: "S" },
+  { name: "Omar Al-Zayed", batch: "Agentic Systems", country: "Dubai", id: "CLC-DXB-4402", img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=100", progress: "45%", rank: "2.1k", score: "B+" },
+  { name: "Marcus Thorne", batch: "Core AI", country: "Germany", id: "CLC-DE-3119", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=100", progress: "91%", rank: "0.3k", score: "A++" },
+  { name: "Chen Wei", batch: "Neural Ops", country: "Singapore", id: "CLC-SG-7721", img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=100", progress: "74%", rank: "1.1k", score: "A" }
+];
+
 export default function B2CHero() {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % students.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const s = students[index];
 
   return (
-    <section className="relative min-h-screen pt-10 pb-12 md:py-24 overflow-hidden bg-[#020617] flex items-center">
+    <section className="relative min-h-screen pt-10 pb-12 md:pt-5 md:pb-20 overflow-hidden bg-[#020617] flex items-center">
       
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-[-5%] right-[-5%] w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-blue-600/10 blur-[80px] md:blur-[120px] rounded-full" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:30px_30px] md:bg-[size:40px_40px]"></div>
+        <div className="absolute top-[-10%] right-[-10%] w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-blue-600/20 blur-[100px] md:blur-[150px] rounded-full animate-pulse" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
       </div>
 
-      <div className="max-w-[1400px] mx-auto px-5 md:px-10 relative z-10 w-full">
-        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+      <div className="max-w-[1400px] mx-auto px-6 relative z-10 w-full">
+        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           
-          <div className="w-full lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left">
-            <motion.div 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-blue-400" />
-              <span className="text-blue-400 text-[11px] font-bold uppercase tracking-[0.15em]">AI-Driven Learning</span>
-            </motion.div>
+          <div className="w-full lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left order-1">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/[0.03] border border-white/10 mb-8 backdrop-blur-md">
+              <Sparkles className="w-3 h-3 text-blue-400" />
+              <span className="text-blue-400 text-[10px] font-black uppercase tracking-[0.2em]">Next Cohort: Jan 2026</span>
+              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse ml-1" />
+            </div>
 
-            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white leading-[1.1] md:leading-[0.95] mb-6 tracking-tighter">
-              Learning Beyond <br/>
-              <span className="text-blue-500 italic">Deployment.</span>
+            <h1 className="text-4xl sm:text-6xl md:text-8xl font-black text-white leading-[0.95] mb-8 tracking-tighter">
+              <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40">BEYOND</span> <br/> 
+              <span className="relative inline-block italic text-blue-400">
+                LEARNING.
+                <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 300 12" fill="none"><path d="M1 9.5C50.5 3.5 150.5 1.5 299 9.5" stroke="#3b82f6" strokeWidth="3" strokeLinecap="round"/></svg>
+              </span> <br/>
+              DEPLOYMENT.
             </h1>
 
-            <p className="text-slate-400 text-base md:text-xl mb-10 max-w-md leading-relaxed">
-              Don't just watch. Deploy. Experience the first <span className="text-white font-semibold">Active-LMS</span> for Autonomous AI development.
+            <p className="text-slate-400 text-base md:text-xl mb-10 max-w-md leading-relaxed font-medium">
+              Don't just watch tutorials. Deploy <span className="text-white font-bold underline decoration-blue-500/50">Autonomous Agents</span> and <span className="text-white font-bold underline decoration-cyan-500/50">Neural Protocols</span>.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row gap-5 w-full sm:w-auto">
               <button 
                 onClick={() => window.open(`https://wa.me/${OWNER_PHONE}`, '_blank')}
-                className="px-8 py-4.5 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl font-bold transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20 active:scale-95"
+                className="relative px-10 py-5 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl font-black uppercase text-xs tracking-[0.2em] transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(37,99,235,0.4)] flex items-center justify-center gap-3 group overflow-hidden"
               >
-                Join Now <MessageCircle className="w-5 h-5" />
+                Connect Now <ArrowRight className="w-4 h-4" />
               </button>
-              <button 
-                onClick={() => setIsVideoOpen(true)}
-                className="px-8 py-4.5 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-2xl font-bold transition-all flex items-center justify-center gap-2 active:scale-95"
-              >
-                <Play className="w-4 h-4 fill-white" /> Demo
+              <button onClick={() => setIsVideoOpen(true)} className="px-10 py-5 bg-white/[0.03] hover:bg-white/[0.08] text-white border border-white/10 rounded-2xl font-black uppercase text-xs tracking-widest transition-all flex items-center justify-center gap-3 backdrop-blur-md">
+                <Play className="w-4 h-4 fill-white" /> Watch Demo
               </button>
             </div>
           </div>
 
-          <div className="w-full lg:col-span-7 flex justify-center lg:justify-end mt-8 lg:mt-0">
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="w-full max-w-[640px] bg-[#0a0f1d] rounded-[2.5rem] border border-white/10 shadow-[0_40px_80px_-15px_rgba(0,0,0,0.7)] overflow-hidden"
-            >
-              <div className="p-5 md:p-7 border-b border-white/5 bg-white/[0.01] flex justify-between items-center">
-                <div className="flex items-center gap-3 md:gap-4">
-                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white font-black text-sm shadow-inner">JD</div>
-                  <div>
-                    <h4 className="text-white font-bold text-sm md:text-base">Aryan's Workspace</h4>
-                    <p className="text-blue-400 text-[10px] font-black uppercase tracking-widest">Advanced AI Cohort</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 bg-emerald-500/10 px-3 py-1.5 rounded-xl border border-emerald-500/20">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="text-emerald-500 text-[10px] font-black uppercase">Live</span>
-                </div>
-              </div>
-
-              <div className="p-5 md:p-8">
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-8">
-                  {[
-                    { label: 'Progress', val: '68%', icon: Layout, color: 'text-blue-400' },
-                    { label: 'Modules', val: '12/18', icon: BookOpen, color: 'text-purple-400' },
-                    { label: 'Streak', val: '14 Days', icon: Clock, color: 'text-orange-400', hideOnMobile: true },
-                  ].map((stat, i) => (
-                    <div key={i} className={`bg-white/[0.03] border border-white/5 rounded-2xl p-4 md:p-5 ${stat.hideOnMobile ? 'hidden md:block' : ''}`}>
-                      <stat.icon className={`w-4 h-4 ${stat.color} mb-3`} />
-                      <div className="text-white font-black text-xl md:text-2xl mb-1">{stat.val}</div>
-                      <div className="text-slate-500 text-[10px] font-bold uppercase tracking-wider">{stat.label}</div>
-                    </div>
-                  ))}
-                  <div className="md:hidden bg-white/[0.03] border border-white/5 rounded-2xl p-4 flex items-center justify-between col-span-2">
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4 text-orange-400" />
-                      <span className="text-slate-500 text-[10px] font-bold uppercase">Daily Streak</span>
-                    </div>
-                    <span className="text-white font-black">14 Days 🔥</span>
-                  </div>
-                </div>
-
-                <div className="mb-8">
-                  <div className="flex items-center justify-between mb-4 px-1">
-                    <h5 className="text-white text-[11px] font-black uppercase tracking-[0.2em] flex items-center gap-2">
-                      <Layers className="w-4 h-4 text-blue-500" /> Active Learning
-                    </h5>
-                  </div>
-                  <div className="bg-gradient-to-br from-blue-600/10 to-transparent border border-blue-500/20 rounded-[2rem] p-6 group hover:bg-blue-600/[0.08] transition-all cursor-pointer">
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                      <div className="flex-1">
-                        <h6 className="text-white font-bold text-lg mb-1 group-hover:text-blue-400 transition-colors">Neural Multi-Agent Systems</h6>
-                        <p className="text-slate-400 text-sm mb-5 leading-relaxed">Frameworks: LangGraph, AutoGPT & CrewaAI</p>
-                        <div className="flex items-center gap-4">
-                           <button className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-blue-500 transition-all">
-                             <Video className="w-3.5 h-3.5" /> Resume
-                           </button>
-                           <span className="text-slate-500 text-xs font-medium">42 mins left</span>
-                        </div>
-                      </div>
-                      <div className="relative w-20 h-20 self-center md:self-auto">
-                         <svg className="w-full h-full -rotate-90">
-                           <circle cx="40" cy="40" r="34" stroke="currentColor" strokeWidth="6" fill="transparent" className="text-white/5" />
-                           <motion.circle 
-                             cx="40" cy="40" r="34" stroke="currentColor" strokeWidth="6" fill="transparent" 
-                             className="text-blue-500" 
-                             strokeDasharray={213.6} 
-                             initial={{ strokeDashoffset: 213.6 }}
-                             animate={{ strokeDashoffset: 213.6 * (1 - 0.65) }}
-                             transition={{ duration: 1.5, ease: "easeOut" }}
-                           />
-                         </svg>
-                         <div className="absolute inset-0 flex items-center justify-center flex-col">
-                            <span className="text-white font-black text-sm">65%</span>
-                         </div>
+          <div className="w-full lg:col-span-7 flex justify-center lg:justify-end order-2">
+            <AnimatePresence mode="wait">
+              <motion.div 
+                key={index}
+                initial={{ opacity: 0, x: 100, scale: 0.9 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: -100, scale: 0.9 }}
+                transition={{ duration: 0.5, ease: "anticipate" }}
+                className="w-full max-w-[500px] bg-[#0a0f1d]/90 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-6 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.6)]"
+              >
+                <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }} className="flex items-center justify-between mb-8">
+                  <div className="flex items-center gap-4">
+                    <img src={s.img} className="w-14 h-14 rounded-2xl object-cover border-2 border-blue-500/50" alt="Student" />
+                    <div>
+                      <h3 className="text-white font-bold text-lg">{s.name}</h3>
+                      <div className="flex items-center gap-2">
+                        <MapPin size={10} className="text-blue-400" />
+                        <p className="text-slate-500 text-[9px] font-black uppercase tracking-widest">{s.country} • {s.id}</p>
                       </div>
                     </div>
                   </div>
-                </div>
-
-                <div>
-                  <h5 className="text-white text-[11px] font-black uppercase tracking-[0.2em] mb-4 px-1">Upcoming Tasks</h5>
-                  <div className="space-y-3">
-                    {[
-                      { title: 'Setup Vector Database', due: 'Today', status: 'pending' },
-                      { title: 'Fine-tune Llama 3 Node', due: 'Tomorrow', status: 'completed' }
-                    ].map((task, i) => (
-                      <div key={i} className="flex items-center justify-between p-4 bg-white/[0.02] border border-white/5 rounded-2xl hover:border-white/10 transition-all group">
-                        <div className="flex items-center gap-4">
-                          <div className={`w-6 h-6 rounded-lg border flex items-center justify-center transition-colors ${task.status === 'completed' ? 'bg-emerald-500/20 border-emerald-500/40' : 'bg-white/5 border-white/10 group-hover:border-blue-500/50'}`}>
-                            {task.status === 'completed' && <CheckCircle2 className="w-4 h-4 text-emerald-500" />}
-                          </div>
-                          <span className={`text-sm md:text-base ${task.status === 'completed' ? 'text-slate-500 line-through' : 'text-slate-200 font-semibold'}`}>{task.title}</span>
-                        </div>
-                        <span className={`text-[10px] font-black px-2 py-1 rounded-md ${task.due === 'Today' ? 'bg-orange-500/10 text-orange-500' : 'bg-white/5 text-slate-500'}`}>{task.due}</span>
-                      </div>
-                    ))}
+                  <div className="bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 flex items-center gap-1.5">
+                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    <span className="text-emerald-500 text-[9px] font-black uppercase">Syncing</span>
                   </div>
-                </div>
-              </div>
-            </motion.div>
+                </motion.div>
+
+                <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }} className="grid grid-cols-2 gap-4 mb-6">
+                  <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-5">
+                    <Target className="w-5 h-5 text-blue-400 mb-3" />
+                    <p className="text-slate-500 text-[8px] font-black uppercase mb-1">Deployment</p>
+                    <p className="text-white font-black text-xl">{s.progress}</p>
+                  </div>
+                  <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-5">
+                    <Award className="w-5 h-5 text-emerald-400 mb-3" />
+                    <p className="text-slate-500 text-[8px] font-black uppercase mb-1">Batch</p>
+                    <p className="text-white font-black text-[11px] leading-tight">{s.batch}</p>
+                  </div>
+                </motion.div>
+
+                <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.4 }} className="pt-6 border-t border-white/5 flex items-center justify-between px-2">
+                   <div>
+                      <div className="text-white font-black text-2xl tracking-tighter">{s.rank}</div>
+                      <div className="text-[8px] text-slate-500 font-black uppercase tracking-widest">Global Rank</div>
+                   </div>
+                   <div className="w-px h-8 bg-white/10" />
+                   <div>
+                      <div className="text-blue-500 font-black text-2xl tracking-tighter">{s.score}</div>
+                      <div className="text-[8px] text-slate-500 font-black uppercase tracking-widest">Sync Score</div>
+                   </div>
+                   <div className="w-px h-8 bg-white/10" />
+                   <button className="px-4 py-2 bg-blue-600/10 border border-blue-600/20 text-blue-400 text-[9px] font-black uppercase rounded-xl">
+                      View Node
+                   </button>
+                </motion.div>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </div>
@@ -168,11 +139,9 @@ export default function B2CHero() {
         {isVideoOpen && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsVideoOpen(false)} className="absolute inset-0 bg-black/95 backdrop-blur-xl" />
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="relative w-full max-w-4xl aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl border border-white/10">
-              <button onClick={() => setIsVideoOpen(false)} className="absolute top-4 right-4 z-10 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors">
-                <X size={24} />
-              </button>
-              <iframe src="https://videocdn.cdnpk.net/videos/74dc5baf-f258-413a-a58d-c37d649610f9/horizontal/previews/clear/large.mp4?token=exp=1769272110~hmac=da8364c15cd4cec070ff1a4941f081dd8c478f40cc4bb8791e61ca433eb41626" className="w-full h-full" allow="autoplay; encrypted-media" allowFullScreen />
+            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="relative w-full max-w-4xl aspect-video bg-black rounded-3xl overflow-hidden border border-white/10">
+              <button onClick={() => setIsVideoOpen(false)} className="absolute top-4 right-4 z-10 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors"><X size={24} /></button>
+              <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" className="w-full h-full" allow="autoplay" allowFullScreen />
             </motion.div>
           </div>
         )}
