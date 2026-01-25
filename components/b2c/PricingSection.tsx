@@ -72,10 +72,10 @@ const tiers: Tier[] = [
     rawAmount: 24999900,
     emiAmount: 520800, 
     emiText: "EMI starts from: 5208 INR",
-    description: "Top-tier program for international roles with legal job guarantee.",
+    description: "Top-tier program for international roles with legal job.",
     targetCTC: "Avg CTC: ₹30-50 LPA",
     features: [
-      "100% Legal Job Guarantee (Signed)",
+      "100% Legal Job (Signed)",
       "Weekly 1-on-1 Expert Mentoring",
       "3+ Global Showcase Projects",
       "3 Premium Bonus Internships",
