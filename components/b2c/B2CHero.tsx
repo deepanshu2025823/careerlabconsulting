@@ -81,7 +81,6 @@ export default function B2CHero() {
 
   useEffect(() => {
     if (!selectedProfile) {
-      // Changed to 20 seconds (20000ms)
       const timer = setInterval(() => {
         setIndex((prev) => (prev + 1) % students.length);
       }, 20000); 
@@ -147,7 +146,6 @@ export default function B2CHero() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                // Increased width from 420px to 500px for better fit
                 className="w-full max-w-[500px] bg-[#0a0f1d]/80 backdrop-blur-2xl border border-white/10 rounded-[3rem] p-8 shadow-2xl relative"
               >
                 <div className="flex items-center justify-between mb-8">
