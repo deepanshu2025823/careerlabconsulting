@@ -7,6 +7,33 @@ import {
 } from 'lucide-react';
 import Script from 'next/script';
 
+interface RazorpayResponse {
+  razorpay_payment_id: string;
+  razorpay_order_id?: string;
+  razorpay_signature?: string;
+}
+
+interface Tier {
+  id: string;
+  name: string;
+  duration: string;
+  priceINR: string;
+  rawAmount: number;
+  emiAmount: number;
+  emiText: string;
+  description: string;
+  targetCTC: string;
+  features: string[];
+  highlight: boolean;
+  icon: any; 
+}
+
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
+
 const partners = [
   { name: "HDFC", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/HDFC_Bank_Logo.svg/960px-HDFC_Bank_Logo.svg.png" },
   { name: "ICICI", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/ICICI_Bank_Logo.svg/3840px-ICICI_Bank_Logo.svg.png" },
@@ -15,7 +42,7 @@ const partners = [
   { name: "ShopSe", logo: "https://framerusercontent.com/images/rmJzwShQEM78IdCVmymj1i9K7M.svg?width=1343&height=300" }
 ];
 
-const tiers = [
+const tiers: Tier[] = [
   {
     id: "plan-foundation",
     name: "Foundation",
@@ -61,10 +88,10 @@ const tiers = [
 ];
 
 export default function PricingSection() {
-  const [loadingId, setLoadingId] = useState(null);
+  const [loadingId, setLoadingId] = useState<string | null>(null);
   const ownerPhone = "918700236923";
 
-  const handlePaymentSuccess = async (response, tier, type) => {
+  const handlePaymentSuccess = async (response: RazorpayResponse, tier: Tier, type: string) => {
     const amountPaid = type === 'EMI Plan' ? "₹5,208 (EMI Start)" : tier.priceINR;
     const waMessage = `*New Enrollment Confirmation*%0A%0A*Plan:* ${tier.name}%0A*Type:* ${type}%0A*Amount:* ${amountPaid}%0A*Payment ID:* ${response.razorpay_payment_id}`;
     const whatsappUrl = `https://wa.me/${ownerPhone}?text=${waMessage}`;
@@ -73,13 +100,20 @@ export default function PricingSection() {
       await fetch('/api/send-confirmation', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ planName: tier.name, amount: amountPaid, paymentId: response.razorpay_payment_id, type: type }),
+        body: JSON.stringify({ 
+          planName: tier.name, 
+          amount: amountPaid, 
+          paymentId: response.razorpay_payment_id, 
+          type: type 
+        }),
       });
       window.open(whatsappUrl, '_blank');
-    } catch (err) { console.error(err); }
+    } catch (err) { 
+      console.error(err); 
+    }
   };
 
-  const makePayment = async (tier, paymentType) => {
+  const makePayment = async (tier: Tier, paymentType: 'Full' | 'EMI') => {
     const actionId = `${tier.id}-${paymentType}`;
     setLoadingId(actionId);
     
@@ -89,7 +123,7 @@ export default function PricingSection() {
       currency: "INR",
       name: "InternX AI",
       description: paymentType === 'EMI' ? `EMI - ${tier.name}` : `Full - ${tier.name}`,
-      handler: (res) => handlePaymentSuccess(res, tier, paymentType === 'Full' ? 'Full Payment' : 'EMI Plan'),
+      handler: (res: RazorpayResponse) => handlePaymentSuccess(res, tier, paymentType === 'Full' ? 'Full Payment' : 'EMI Plan'),
       theme: { color: paymentType === 'Full' ? "#3b82f6" : "#10b981" },
     };
     
