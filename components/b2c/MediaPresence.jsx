@@ -14,7 +14,7 @@ const mediaNews = [
   },
   { 
     id: 2, 
-    title: "107th Training 119th AI Agents Opens in India.", 
+    title: "119th Training AI Agents opens in india.", 
     source: "THE TIMES OF INDIA", 
     logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQps8ve-lA2zYqKa6DA_-em5XLdgScm0h24Q&s",
     desc: "Strengthening nationwide presence for analytics education." 
