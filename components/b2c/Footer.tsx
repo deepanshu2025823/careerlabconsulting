@@ -2,15 +2,23 @@
 
 import React from 'react';
 import { 
-  Github, Twitter, Linkedin, Mail, ArrowUpRight, 
-  Home, Layout, CreditCard, HelpCircle, MapPin, 
-  Phone, Navigation, Globe
+  Twitter, Linkedin, Facebook, Instagram, Youtube, Mail, 
+  ArrowUpRight, Home, Layout, CreditCard, HelpCircle, 
+  MapPin, Phone, Navigation, Globe 
 } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const whatsappNumber = "919810984968";
+
+  const socialLinks = [
+    { Icon: Linkedin, href: "https://www.linkedin.com/company/38144534", label: "LinkedIn" },
+    { Icon: Facebook, href: "https://www.facebook.com/careerlabconsultingofficial", label: "Facebook" },
+    { Icon: Instagram, href: "https://www.instagram.com/careerlabconsultingofficial", label: "Instagram" },
+    { Icon: Twitter, href: "https://x.com/CareerLabConsul", label: "Twitter" },
+    { Icon: Youtube, href: "https://www.youtube.com/@careerlabconsulting4691", label: "YouTube" },
+  ];
 
   const locations = [
     {
@@ -39,7 +47,7 @@ export default function Footer() {
     },
     {
       country: "Dubai",
-      city: "United Arab Emirates",
+      city: "UAE",
       address: "R308 BUILDING - Office-403 - Al Mankhool - Dubai - United Arab Emirates",
       phone: "+971 52 400 9232"
     },
@@ -66,7 +74,7 @@ export default function Footer() {
   return (
     <>
       <footer className="bg-[#020617] pt-20 pb-24 md:pb-12 border-t border-white/5 relative overflow-hidden">
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[400px] bg-blue-600/10 blur-[140px] -z-10" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[400px] bg-blue-600/10 blur-[140px] pointer-events-none -z-10" />
 
         <div className="max-w-[1400px] mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20">
@@ -75,27 +83,27 @@ export default function Footer() {
               <div className="w-48 h-16 relative mb-6">
                 <img 
                   src="/logo.png" 
-                  alt="Career Lab Consulting" 
+                  alt="Career Lab Consulting Logo" 
+                  width={192}
+                  height={64}
+                  loading="lazy"
                   className="w-full h-full object-contain filter drop-shadow-[0_0_15px_rgba(59,130,246,0.3)]"
                 />
               </div>
               
               <p className="text-slate-400 text-sm max-w-sm leading-relaxed font-medium mb-10">
-                Advancing human potential through neural-integrated learning. Join our elite cohort of engineers shipping the future of technology.
+                Career Lab Consulting ka LMS ek smart learning platform hai jo students aur professionals ko industry-ready skills, expert-led courses, assessments, aur progress tracking ke saath career growth me help karta hai—anytime, anywhere learning ke liye designed.
               </p>
 
-              <div className="flex gap-4">
-                {[
-                  { Icon: Github, href: "https://github.com" },
-                  { Icon: Twitter, href: "https://twitter.com" },
-                  { Icon: Linkedin, href: "https://linkedin.com" },
-                  { Icon: Mail, href: "mailto:support@careerlabconsulting.com" }
-                ].map((social, i) => (
+              <div className="flex flex-wrap gap-3">
+                {socialLinks.map((social, i) => (
                   <Link 
                     key={i} 
                     href={social.href} 
                     target="_blank"
-                    className="w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-blue-600 hover:border-blue-500 transition-all duration-300"
+                    rel="noopener noreferrer"
+                    aria-label={social.label}
+                    className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-blue-600 hover:border-blue-500 transition-all duration-300"
                   >
                     <social.Icon className="w-5 h-5" />
                   </Link>
@@ -128,40 +136,40 @@ export default function Footer() {
             </div>
 
             <div className="lg:col-span-4 flex flex-col gap-8">
-                <div className="p-6 rounded-3xl bg-gradient-to-br from-blue-600/10 to-transparent border border-blue-500/20 backdrop-blur-md">
-                    <h4 className="text-white text-[11px] font-black uppercase tracking-[0.25em] mb-6">Contact Hub</h4>
-                    <div className="space-y-5">
-                        <div className="flex items-start gap-4 group">
-                            <div className="w-10 h-10 rounded-xl bg-blue-600/20 flex items-center justify-center shrink-0 group-hover:bg-blue-600 transition-colors">
-                                <MapPin className="w-5 h-5 text-blue-400 group-hover:text-white" />
-                            </div>
-                            <p className="text-slate-300 text-base leading-relaxed font-bold">DLF Cyber City, 5th Floor, Cyber Green-2, Sec-25, Gurugram, Haryana - 122002</p>
-                        </div>
-                        <a href="tel:+918700236923" className="flex items-center gap-4 group">
-                            <div className="w-10 h-10 rounded-xl bg-blue-600/20 flex items-center justify-center shrink-0 group-hover:bg-blue-600 transition-colors">
-                                <Phone className="w-5 h-5 text-blue-400 group-hover:text-white" />
-                            </div>
-                            <span className="text-slate-300 text-base font-bold group-hover:text-blue-400 transition-colors">+91 870023 6923</span>
-                        </a>
-                        <a href="mailto:info@careerlabconsulting.com" className="flex items-center gap-4 group">
-                            <div className="w-10 h-10 rounded-xl bg-blue-600/20 flex items-center justify-center shrink-0 group-hover:bg-blue-600 transition-colors">
-                                <Mail className="w-5 h-5 text-blue-400 group-hover:text-white" />
-                            </div>
-                            <span className="text-slate-300 text-base font-bold break-all group-hover:text-blue-400 transition-colors">info@careerlabconsulting.com</span>
-                        </a>
+              <div className="p-6 rounded-3xl bg-gradient-to-br from-blue-600/10 to-transparent border border-blue-500/20 backdrop-blur-md">
+                <h4 className="text-white text-[11px] font-black uppercase tracking-[0.25em] mb-6">Contact Hub</h4>
+                <div className="space-y-5">
+                  <div className="flex items-start gap-4 group">
+                    <div className="w-10 h-10 rounded-xl bg-blue-600/20 flex items-center justify-center shrink-0 group-hover:bg-blue-600 transition-colors">
+                      <MapPin className="w-5 h-5 text-blue-400 group-hover:text-white" />
                     </div>
+                    <p className="text-slate-300 text-sm leading-relaxed font-bold">DLF Cyber City, 5th Floor, Cyber Green-2, Sec-25, Gurugram, Haryana - 122002</p>
+                  </div>
+                  <a href="tel:+918700236923" className="flex items-center gap-4 group">
+                    <div className="w-10 h-10 rounded-xl bg-blue-600/20 flex items-center justify-center shrink-0 group-hover:bg-blue-600 transition-colors">
+                      <Phone className="w-5 h-5 text-blue-400 group-hover:text-white" />
+                    </div>
+                    <span className="text-slate-300 text-sm font-bold group-hover:text-blue-400 transition-colors">+91 870023 6923</span>
+                  </a>
+                  <a href="mailto:info@careerlabconsulting.com" className="flex items-center gap-4 group">
+                    <div className="w-10 h-10 rounded-xl bg-blue-600/20 flex items-center justify-center shrink-0 group-hover:bg-blue-600 transition-colors">
+                      <Mail className="w-5 h-5 text-blue-400 group-hover:text-white" />
+                    </div>
+                    <span className="text-slate-300 text-sm font-bold break-all group-hover:text-blue-400 transition-colors">info@careerlabconsulting.com</span>
+                  </a>
                 </div>
+              </div>
 
-                <div className="relative group">
-                    <input 
-                        type="email" 
-                        placeholder="Subscribe to insights..." 
-                        className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-5 py-4 text-xs text-white focus:outline-none focus:border-blue-500/50 transition-all placeholder:text-slate-600"
-                    />
-                    <button className="absolute right-2 top-2 bottom-2 px-5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-lg shadow-blue-600/20">
-                        Join
-                    </button>
-                </div>
+              <div className="relative group">
+                <input 
+                  type="email" 
+                  placeholder="Subscribe to insights..." 
+                  className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-5 py-4 text-xs text-white focus:outline-none focus:border-blue-500/50 transition-all placeholder:text-slate-600"
+                />
+                <button className="absolute right-2 top-2 bottom-2 px-5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-lg shadow-blue-600/20">
+                  Join
+                </button>
+              </div>
             </div>
           </div>
 
@@ -169,11 +177,11 @@ export default function Footer() {
             <div className="flex items-center justify-between mb-10 border-b border-white/10 pb-6">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 rounded-full bg-blue-600/10 flex items-center justify-center">
-                    <Globe className="w-5 h-5 text-blue-500" />
+                  <Globe className="w-5 h-5 text-blue-500" />
                 </div>
                 <div>
-                    <h3 className="text-white font-black text-sm tracking-widest uppercase">Global Presence</h3>
-                    <p className="text-slate-500 text-[10px] font-bold uppercase tracking-wider mt-1">Operating across 8 primary tech hubs</p>
+                  <h3 className="text-white font-black text-sm tracking-widest uppercase">Global Presence</h3>
+                  <p className="text-slate-500 text-[10px] font-bold uppercase tracking-wider mt-1">Operating across 8 primary tech hubs</p>
                 </div>
               </div>
             </div>
@@ -196,12 +204,12 @@ export default function Footer() {
                     </div>
                   </div>
                   
-                  <p className="text-slate-400 text-sm leading-relaxed mb-8 flex-grow font-medium">
+                  <p className="text-slate-400 text-xs leading-relaxed mb-8 flex-grow font-medium">
                     {loc.address}
                   </p>
                   
                   <div className="space-y-4">
-                    <div className="flex items-center gap-3 text-slate-300 text-sm font-bold">
+                    <div className="flex items-center gap-3 text-slate-300 text-xs font-bold">
                         <Phone className="w-4 h-4 text-blue-500" />
                         <span>{loc.phone}</span>
                     </div>
@@ -251,6 +259,8 @@ export default function Footer() {
         <Link 
           href={`https://wa.me/${whatsappNumber}`}
           target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Contact on WhatsApp"
           className="relative -top-6 w-16 h-16 bg-emerald-500 rounded-full border-[6px] border-[#020617] flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300"
         >
           <svg viewBox="0 0 24 24" className="w-8 h-8 text-white fill-current" xmlns="http://www.w3.org/2000/svg">
