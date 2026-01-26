@@ -2,6 +2,7 @@ import Navbar from "@/components/layout/Navbar";
 import HeroB2B from "@/components/sections/HeroB2B";
 import ProductMatrix from "@/components/sections/ProductMatrix";
 import FeatureGrid from "@/components/sections/FeatureGrid";
+import CompanyJourney from "@/components/sections/CompanyJourney";
 import TrustSection from "@/components/sections/TrustSection";
 import ExecutionFlow from "@/components/sections/ExecutionFlow"; 
 import SuccessStories from "@/components/sections/SuccessStories";
@@ -23,6 +24,7 @@ export default function B2BHome() {
       <ProductMatrix />
       <B2BPricingSection />
       <FeatureGrid />
+      <CompanyJourney />
       <TrustSection />
       <ExecutionFlow /> 
       <SuccessStories />

@@ -6,6 +6,7 @@ import B2CHero from '@/components/b2c/B2CHero';
 import LMSPreview from '@/components/b2c/LMSPreview'; 
 import CourseGrid from '@/components/b2c/CourseGrid';
 import StatsSection from '@/components/b2c/StatsSection';
+import CompanyJourney from '@/components/sections/CompanyJourney';
 import AdvantagesSection from '@/components/b2c/AdvantagesSection';
 import PillarsSection from '@/components/b2c/PillarsSection';
 import GlobalNetwork from '@/components/b2c/GlobalNetwork';
@@ -31,6 +32,7 @@ export default function B2CPage() {
         <CourseGrid />
         <LMSPreview />
         <StatsSection />
+        <CompanyJourney />
         <AdvantagesSection />
         <PillarsSection />
         <GlobalNetwork />
