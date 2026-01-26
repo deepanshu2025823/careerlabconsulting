@@ -5,19 +5,22 @@ import "./globals.css";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-  display: "swap", 
+  display: "swap",
+  preload: true,
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
   display: "swap",
+  preload: true,
 });
 
 export const viewport: Viewport = {
   themeColor: "#000000", 
   width: "device-width",
   initialScale: 1,
+  viewportFit: "cover",
 };
 
 export const metadata: Metadata = {
@@ -32,12 +35,17 @@ export const metadata: Metadata = {
     description: "Expert B2B and B2C Career & Business Solutions.",
     type: "website",
   },
+  alternates: {
+    canonical: "/",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}>
+      <body 
+        className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans min-h-screen`}
+      >
         {children}
       </body>
     </html>
