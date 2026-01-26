@@ -124,7 +124,7 @@ export default function B2CHeader() {
       <header className="fixed top-0 left-0 right-0 z-[100] bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/10">
         <div className="max-w-[1400px] mx-auto px-4 h-20 flex items-center justify-between">
           <div className="flex items-center gap-12">
-            <Link href="/b2c" className="relative w-[150px] h-[40px]">
+            <Link href="/" className="relative w-[150px] h-[40px]">
               <Image src="/logo.png" alt="Career Lab Logo" fill className="object-contain" priority />
             </Link>
 
