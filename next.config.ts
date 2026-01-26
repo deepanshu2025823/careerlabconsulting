@@ -4,7 +4,16 @@ const nextConfig: NextConfig = {
   compress: true,
   images: {
     formats: ['image/avif', 'image/webp'],
-    remotePatterns: [{ protocol: 'https', hostname: 'images.unsplash.com' }],
+    remotePatterns: [
+      { 
+        protocol: 'https', 
+        hostname: 'images.unsplash.com' 
+      }, 
+      { 
+        protocol: 'https', 
+        hostname: 'plus.unsplash.com' 
+      }
+    ],
   },
   experimental: {
     optimizePackageImports: [

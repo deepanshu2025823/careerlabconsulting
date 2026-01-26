@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowRight, Play, Target, Award, CheckCircle2, 
@@ -30,7 +31,7 @@ const students: Student[] = [
   { 
     name: "Aryan Sharma", 
     batch: "Advanced AI", 
-    batchNumber: "B-26/01",
+    batchNumber: "CLC/24-25/1016",
     country: "India", 
     id: "IX-2026-IN-1024", 
     img: "https://plus.unsplash.com/premium_photo-1682089892133-556bde898f2c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW5kaWFuJTIwYm95fGVufDB8fDB8fHww", 
@@ -45,7 +46,7 @@ const students: Student[] = [
   { 
     name: "Priya Patel", 
     batch: "Neural Ops", 
-    batchNumber: "B-26/04",
+    batchNumber: "CLC/24-25/1017",
     country: "India", 
     id: "IX-2026-IN-8821", 
     img: "https://images.unsplash.com/photo-1622049605334-72e1e4432346?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aW5kaWFuJTIwZ2lybHxlbnwwfHwwfHx8MA%3D%3D", 
@@ -60,7 +61,7 @@ const students: Student[] = [
   { 
     name: "Ishaan Verma", 
     batch: "Agentic Systems", 
-    batchNumber: "B-26/02",
+    batchNumber: "CLC/24-25/1018",
     country: "India", 
     id: "IX-2026-IN-4402", 
     img: "https://plus.unsplash.com/premium_photo-1661713385270-83f8d2ad6b21?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8aW5kaWFuJTIwYm95fGVufDB8fDB8fHww", 
@@ -79,33 +80,36 @@ export default function B2CHero() {
   const [selectedProfile, setSelectedProfile] = useState<Student | null>(null);
   const [index, setIndex] = useState(0);
 
+  // Optimization: Pause rotation if user is interacting (hovering or modal open)
   useEffect(() => {
-    if (!selectedProfile) {
+    if (!selectedProfile && !isVideoOpen) {
       const timer = setInterval(() => {
         setIndex((prev) => (prev + 1) % students.length);
       }, 8000); 
       return () => clearInterval(timer);
     }
-  }, [selectedProfile]);
+  }, [selectedProfile, isVideoOpen]);
 
   const activeStudent = students[index];
 
-  const handleWhatsAppConnect = (studentName = "the cohort") => {
+  const handleWhatsAppConnect = useCallback((studentName = "the cohort") => {
     const message = encodeURIComponent(`Hi, I'm interested in the Jan 2026 Cohort. I just saw ${studentName}'s profile on the dashboard.`);
     window.open(`https://wa.me/${OWNER_PHONE}?text=${message}`, '_blank');
-  };
+  }, []);
 
   return (
     <section className="relative min-h-screen pt-20 pb-12 md:pt-10 md:pb-20 overflow-hidden bg-[#020617] flex items-center">
       
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-[-10%] right-[-10%] w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-blue-600/15 blur-[100px] md:blur-[150px] rounded-full animate-pulse" />
+      {/* Background - Optimized with will-change for GPU acceleration */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute top-[-10%] right-[-10%] w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-blue-600/15 blur-[100px] md:blur-[150px] rounded-full animate-pulse will-change-transform" />
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
       </div>
 
       <div className="max-w-[1400px] mx-auto px-6 relative z-10 w-full">
         <div className="flex flex-col lg:grid lg:grid-cols-12 gap-12 items-center">
           
+          {/* Left Content */}
           <div className="w-full lg:col-span-6 flex flex-col items-center lg:items-start text-center lg:text-left order-1">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/[0.03] border border-white/10 mb-8 backdrop-blur-md">
               <Sparkles className="w-3 h-3 text-blue-400" />
@@ -139,6 +143,7 @@ export default function B2CHero() {
             </div>
           </div>
 
+          {/* Right Card - Animated */}
           <div className="w-full lg:col-span-6 flex justify-center order-2">
             <AnimatePresence mode="wait">
               <motion.div 
@@ -146,6 +151,7 @@ export default function B2CHero() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
                 className="w-full max-w-[500px] bg-[#0a0f1d]/80 backdrop-blur-2xl border border-white/10 rounded-[3rem] p-8 shadow-2xl relative"
               >
                 <div className="flex items-center justify-between mb-8">
@@ -159,14 +165,21 @@ export default function B2CHero() {
                 </div>
 
                 <div className="flex items-center gap-5 mb-8">
-                  <div className="relative">
-                    <img src={activeStudent.img} className="w-20 h-20 rounded-3xl object-cover border-2 border-blue-500/30 shadow-lg" alt={activeStudent.name} />
+                  <div className="relative shrink-0">
+                    <Image 
+                      src={activeStudent.img} 
+                      alt={activeStudent.name}
+                      width={80}
+                      height={80}
+                      className="w-20 h-20 rounded-3xl object-cover border-2 border-blue-500/30 shadow-lg"
+                      priority={true} 
+                    />
                     <div className="absolute -bottom-2 -right-2 bg-blue-600 p-1.5 rounded-xl border-4 border-[#0a0f1d]">
                       <Zap size={14} className="text-white" />
                     </div>
                   </div>
-                  <div className="flex-1 text-left">
-                    <h3 className="text-white font-black text-3xl tracking-tight">{activeStudent.name}</h3>
+                  <div className="flex-1 text-left min-w-0">
+                    <h3 className="text-white font-black text-3xl tracking-tight truncate">{activeStudent.name}</h3>
                     <div className="flex items-center gap-2 mt-1">
                       <MapPin size={12} className="text-slate-500" />
                       <p className="text-slate-400 text-xs font-bold uppercase">{activeStudent.country}</p>
@@ -178,7 +191,7 @@ export default function B2CHero() {
                   <div className="p-2 bg-blue-600/20 rounded-xl"><Cpu className="text-blue-400 w-5 h-5" /></div>
                   <div className="text-left">
                     <p className="text-[9px] text-blue-400 font-black uppercase tracking-widest">Specialized Skill</p>
-                    <p className="text-white font-bold text-base">{activeStudent.skill}</p>
+                    <p className="text-white font-bold text-base truncate">{activeStudent.skill}</p>
                   </div>
                 </div>
 
@@ -201,22 +214,22 @@ export default function B2CHero() {
                 </div>
 
                 <div className="pt-6 border-t border-white/5 flex items-center justify-between">
-                   <div className="flex gap-6">
+                    <div className="flex gap-6">
                       <div className="text-left">
-                        <div className="text-blue-500 font-black text-2xl tracking-tighter">{activeStudent.rank}</div>
+                        <div className="text-blue-500 font-black text-1xl tracking-tighter">{activeStudent.rank}</div>
                         <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Batch Rank</div>
                       </div>
                       <div className="text-left border-l border-white/10 pl-6">
-                        <div className="text-white font-black text-2xl tracking-tighter">{activeStudent.batchNumber}</div>
+                        <div className="text-white font-black text-1xl tracking-tighter">{activeStudent.batchNumber}</div>
                         <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Batch No.</div>
                       </div>
-                   </div>
-                   <button 
-                    onClick={() => setSelectedProfile(activeStudent)}
-                    className="px-6 py-3 bg-white text-black text-[10px] font-black uppercase rounded-2xl hover:bg-blue-600 hover:text-white transition-all shadow-lg"
-                   >
-                     View Profile
-                   </button>
+                    </div>
+                    <button 
+                     onClick={() => setSelectedProfile(activeStudent)}
+                     className="px-6 py-3 bg-white text-black text-[10px] font-black uppercase rounded-2xl hover:bg-blue-600 hover:text-white transition-all shadow-lg"
+                    >
+                      View Profile
+                    </button>
                 </div>
               </motion.div>
             </AnimatePresence>
@@ -224,6 +237,7 @@ export default function B2CHero() {
         </div>
       </div>
 
+      {/* Modal - Details */}
       <AnimatePresence>
         {selectedProfile && (
           <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
@@ -240,11 +254,19 @@ export default function B2CHero() {
               
               <div className="p-8 md:p-12 text-left">
                 <div className="flex flex-col md:flex-row gap-8 items-start mb-10">
-                  <img src={selectedProfile.img} className="w-32 h-32 rounded-[2.5rem] border-4 border-blue-600/20 object-cover shadow-2xl" alt="" />
+                  <div className="relative shrink-0">
+                    <Image 
+                        src={selectedProfile.img} 
+                        alt={selectedProfile.name}
+                        width={128}
+                        height={128}
+                        className="w-32 h-32 rounded-[2.5rem] border-4 border-blue-600/20 object-cover shadow-2xl"
+                    />
+                  </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                       <h2 className="text-3xl font-black text-white">{selectedProfile.name}</h2>
-                       <ShieldCheck size={22} className="text-blue-500" />
+                        <h2 className="text-3xl font-black text-white">{selectedProfile.name}</h2>
+                        <ShieldCheck size={22} className="text-blue-500" />
                     </div>
                     <p className="text-blue-400 font-bold uppercase text-[10px] tracking-[0.2em] mb-4">LMS Verified Specialist • {selectedProfile.batch} ({selectedProfile.batchNumber})</p>
                     <div className="flex flex-wrap gap-2">
@@ -292,13 +314,20 @@ export default function B2CHero() {
         )}
       </AnimatePresence>
 
+      {/* Video Modal - Optimized */}
       <AnimatePresence>
         {isVideoOpen && (
           <div className="fixed inset-0 z-[120] flex items-center justify-center p-4">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsVideoOpen(false)} className="absolute inset-0 bg-black/95 backdrop-blur-xl" />
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="relative w-full max-w-4xl aspect-video bg-black rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
               <button onClick={() => setIsVideoOpen(false)} className="absolute top-4 right-4 z-10 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors"><X size={24} /></button>
-              <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" className="w-full h-full border-none" allow="autoplay" allowFullScreen />
+              <video 
+                src="https://videocdn.cdnpk.net/videos/d7067aab-16b0-52cf-b5fe-751c8972c83b/horizontal/previews/clear/large.mp4?token=exp=1769429678~hmac=50280c42222c84ec8fe71b2d910c3c7a35620e5fafba70cd047dcbe949862280" 
+                className="w-full h-full object-cover" 
+                autoPlay 
+                controls
+                playsInline
+              />
             </motion.div>
           </div>
         )}
