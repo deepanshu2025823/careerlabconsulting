@@ -9,8 +9,8 @@ const TrustAndArticles = () => {
 
   const articles = [
     { title: 'Off-the-shelf AI platform or Custom AI Agent solution?', img: 'https://img.freepik.com/free-photo/robot-working-as-cashier-instead-humans_23-2150911987.jpg' },
-    { title: 'Choosing the right LLM model for the job', img: 'https://img.freepik.com/free-photo/medium-shot-smiley-colleagues-work_23-2149622840.jpg' },
-    { title: 'What is Retrieval-Augmented Generation (RAG) for LLMs', img: 'https://img.freepik.com/free-photo/young-guy-aged-man-with-vr-glasses-sitting-settee_23-2148030187.jpg' },
+    { title: 'Choosing the right LLM model for the job', img: 'https://img.freepik.com/free-photo/face-recognition-personal-identification-collage_23-2150165610.jpg' },
+    { title: 'What is Retrieval-Augmented Generation (RAG) for LLMs', img: 'https://img.freepik.com/free-photo/teens-doing-experiments-robotics-laboratory-boy-protective-glasses-using-tablet-girl_1268-23422.jpg' },
     { title: 'CLC: Leader in LLMs solutions recognized by Deloitte...', img: 'https://img.freepik.com/free-photo/career-progression-promotion-achievement-success-concept_53876-120915.jpg' },
   ];
 
