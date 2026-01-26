@@ -198,7 +198,7 @@ export default function B2CHero() {
                         <div className="text-[8px] md:text-[10px] text-slate-500 font-bold uppercase tracking-widest">Rank</div>
                       </div>
                       <div className="text-left border-l border-white/10 pl-4 md:pl-6">
-                        <div className="text-white font-black text-lg md:text-xl tracking-tighter max-w-[80px] md:max-w-none">CLC/24-25/{activeStudent.batchNumber.split('/').pop()}</div>
+                        <div className="text-white font-black text-lg md:text-xl tracking-tighter max-w-[300px] md:max-w-none">CLC/24-25/{activeStudent.batchNumber.split('/').pop()}</div>
                         <div className="text-[8px] md:text-[10px] text-slate-500 font-bold uppercase tracking-widest">Batch</div>
                       </div>
                     </div>
