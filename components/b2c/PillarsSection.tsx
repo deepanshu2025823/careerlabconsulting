@@ -19,7 +19,7 @@ const pillars = [
     desc: "Embark on a journey into the future at Career Lab Consulting. We nurture minds with cutting-edge professional training in Data Science, AI, and Cybersecurity.",
     image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800",
     stats: [
-      { label: "Students", value: "15k+", icon: CheckCircle2 },
+      { label: "Students", value: "15000k+", icon: CheckCircle2 },
       { label: "Trainers", value: "1.5k+", icon: Star },
       { label: "Partners", value: "350+", icon: Users2 },
     ],
