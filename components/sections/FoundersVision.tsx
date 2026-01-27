@@ -83,7 +83,7 @@ const FoundersVision = () => {
               </div>
               <p className="text-xs md:text-sm font-medium">
                 <span className="text-emerald-400 font-bold tracking-widest uppercase text-[10px] block">Live Status</span>
-                Accepting New Partnerships for Q3 2024
+                Accepting New Partnerships for Q1 2026-27
               </p>
             </div>
           </div>
