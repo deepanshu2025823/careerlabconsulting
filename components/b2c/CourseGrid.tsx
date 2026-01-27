@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useMemo, useRef } from 'react';
-import { Play, Star, ArrowRight, Download, X } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { Play, Star, ArrowRight, Download, X, Calendar } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Internship {
@@ -61,7 +61,6 @@ export default function CourseGrid() {
     return allInternships[activeTab] || [];
   }, [activeTab]);
 
-  // Click handler that also centers the clicked tab
   const handleTabClick = (tab: string, e: React.MouseEvent) => {
     setActiveTab(tab);
     (e.currentTarget as HTMLElement).scrollIntoView({
@@ -85,17 +84,15 @@ export default function CourseGrid() {
           </p>
         </header>
 
-        {/* --- Hand-Slide Optimized Tabs --- */}
+        {/* --- Tabs --- */}
         <nav className="relative mb-12 group">
           <div 
             className="flex items-center overflow-x-auto no-scrollbar gap-3 pb-6 touch-pan-x cursor-grab active:cursor-grabbing snap-x snap-mandatory"
-            style={{ WebkitOverflowScrolling: 'touch' }} // Smooth momentum on iOS
           >
             {tabs.map((tab) => (
               <button 
                 key={tab} 
                 onClick={(e) => handleTabClick(tab, e)}
-                aria-pressed={activeTab === tab}
                 className={`flex-shrink-0 px-6 py-3 rounded-full text-[11px] font-black uppercase tracking-widest transition-all duration-300 border snap-start ${
                   activeTab === tab 
                   ? 'bg-blue-600 text-white border-blue-600 shadow-[0_0_20px_rgba(37,99,235,0.3)] scale-105' 
@@ -106,17 +103,10 @@ export default function CourseGrid() {
               </button>
             ))}
           </div>
-          
-          {/* Subtle Indicators for Scroll (Mobile Only) */}
-          <div className="absolute right-0 top-0 bottom-6 w-16 bg-gradient-to-l from-[#020617] to-transparent pointer-events-none md:hidden" />
-          <div className="absolute left-0 top-0 bottom-6 w-16 bg-gradient-to-r from-[#020617] to-transparent pointer-events-none md:hidden" />
         </nav>
 
-        {/* --- Responsive Grid --- */}
-        <motion.div 
-          layout
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10"
-        >
+        {/* --- Grid --- */}
+        <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
           <AnimatePresence mode="popLayout">
             {displayedCourses.map((course) => (
               <motion.article 
@@ -129,20 +119,13 @@ export default function CourseGrid() {
                 className="group bg-[#0a1229] border border-white/5 rounded-[2.5rem] overflow-hidden hover:border-blue-500/30 transition-all duration-500 flex flex-col"
               >
                 {/* Thumbnail */}
-                <div 
-                  className="relative aspect-video w-full overflow-hidden cursor-pointer"
-                  onClick={() => setSelectedVideo(course.videoId)}
-                >
+                <div className="relative aspect-video w-full overflow-hidden cursor-pointer" onClick={() => setSelectedVideo(course.videoId)}>
                   <img 
                     src={course.image} 
                     alt={course.title}
-                    width={800}
-                    height={450}
-                    loading="lazy" 
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-70 group-hover:opacity-100"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0a1229] via-transparent to-transparent opacity-60" />
-                  
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-16 h-16 bg-blue-600/90 rounded-full flex items-center justify-center text-white backdrop-blur-md group-hover:scale-110 transition-all shadow-xl">
                       <Play className="w-6 h-6 fill-current translate-x-0.5" />
@@ -156,15 +139,16 @@ export default function CourseGrid() {
                     {course.title}
                   </h3>
 
+                  {/* Updated Duration and Rating Info */}
                   <div className="grid grid-cols-2 gap-4 mb-8">
                     <div className="flex flex-col gap-1">
-                      <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Access</span>
-                      <span className="text-xs font-black text-slate-200">Lifetime</span>
+                      <span className="text-[10px] text-blue-500 font-bold uppercase tracking-widest">Duration</span>
+                      <span className="text-xs font-black text-slate-200">6 - 12 Months</span>
                     </div>
                     <div className="flex flex-col gap-1 items-end">
                       <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Rating</span>
                       <span className="flex items-center gap-1 text-xs font-black text-yellow-500">
-                        <Star className="w-3 h-3 fill-current" /> 4.9
+                        <Star className="w-3 h-3 fill-current" /> 4.9/5
                       </span>
                     </div>
                   </div>
@@ -200,19 +184,10 @@ export default function CourseGrid() {
               exit={{ scale: 0.9, y: 30 }}
               className="relative w-full max-w-5xl aspect-video bg-black rounded-3xl overflow-hidden border border-white/10 shadow-2xl"
             >
-              <button 
-                onClick={() => setSelectedVideo(null)}
-                className="absolute top-4 right-4 z-20 p-3 bg-black/60 hover:bg-red-500 rounded-full text-white transition-all"
-              >
+              <button onClick={() => setSelectedVideo(null)} className="absolute top-4 right-4 z-20 p-3 bg-black/60 hover:bg-red-500 rounded-full text-white transition-all">
                 <X className="w-6 h-6" />
               </button>
-              <iframe
-                className="w-full h-full"
-                src={`https://www.youtube.com/embed/${selectedVideo}?autoplay=1`}
-                title="Video Preview"
-                allow="autoplay; encrypted-media"
-                allowFullScreen
-              />
+              <iframe className="w-full h-full" src={`https://www.youtube.com/embed/${selectedVideo}?autoplay=1`} title="Video Preview" allow="autoplay; encrypted-media" allowFullScreen />
             </motion.div>
           </motion.div>
         )}
@@ -220,11 +195,7 @@ export default function CourseGrid() {
 
       <style jsx global>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { 
-          -ms-overflow-style: none; 
-          scrollbar-width: none; 
-          scroll-snap-type: x mandatory;
-        }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
     </section>
   );
