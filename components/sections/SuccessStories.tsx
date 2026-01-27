@@ -9,7 +9,7 @@ const OWNER_PHONE = "918700236923";
 const stories = [
   {
     id: 1,
-    title: "AI-Powered Recruitment for B2B Growth",
+    title: "AI-Powered Recruitment for Growth",
     description: "Career Lab Consulting implemented an advanced filtering system for our corporate partners, streamlining the talent acquisition process and reducing hiring time by half.",
     metric1: { value: "45%", label: "reduction in hiring cost" },
     metric2: { value: "98.2%", label: "client satisfaction rate" },
