@@ -292,7 +292,7 @@ export default function B2CHero() {
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="relative w-full max-w-4xl aspect-video bg-black rounded-xl md:rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
               <button onClick={() => setIsVideoOpen(false)} className="absolute top-2 right-2 md:top-4 md:right-4 z-10 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors"><X size={20} /></button>
               <video 
-                src="https://videocdn.cdnpk.net/videos/d7067aab-16b0-52cf-b5fe-751c8972c83b/horizontal/previews/clear/large.mp4?token=exp=1769429678~hmac=50280c42222c84ec8fe71b2d910c3c7a35620e5fafba70cd047dcbe949862280" 
+                src="https://youtu.be/IWFJ_IWr6kg" 
                 className="w-full h-full object-cover" 
                 autoPlay 
                 controls
