@@ -6,6 +6,7 @@ import {
   Loader2, CreditCard, X, TrendingUp 
 } from 'lucide-react';
 import Script from 'next/script';
+import Image from 'next/image';
 
 interface RazorpayResponse {
   razorpay_payment_id: string;
@@ -75,7 +76,7 @@ const tiers: Tier[] = [
     description: "Top-tier program for international roles with legal job.",
     targetCTC: "Avg CTC: ₹30-50 LPA",
     features: [
-      "100% Legal Job (Signed)",
+      "100% Legal Job (Signed Contract)",
       "Weekly 1-on-1 Expert Mentoring",
       "3+ Global Showcase Projects",
       "3 Premium Bonus Internships",
@@ -124,11 +125,17 @@ export default function PricingSection() {
       name: "InternX AI",
       description: paymentType === 'EMI' ? `EMI - ${tier.name}` : `Full - ${tier.name}`,
       handler: (res: RazorpayResponse) => handlePaymentSuccess(res, tier, paymentType === 'Full' ? 'Full Payment' : 'EMI Plan'),
+      prefill: {
+        name: "",
+        email: "",
+        contact: ""
+      },
       theme: { color: paymentType === 'Full' ? "#3b82f6" : "#10b981" },
     };
     
     if (window.Razorpay) {
-      new window.Razorpay(options).open();
+      const rzp = new window.Razorpay(options);
+      rzp.open();
     } else {
       alert("Razorpay SDK not loaded. Please check your internet.");
     }
@@ -140,7 +147,7 @@ export default function PricingSection() {
       <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
 
       <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-20">
+        <header className="text-center mb-20">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6">
             <Sparkles className="w-3 h-3 text-blue-400" />
             <span className="text-blue-400 text-[10px] font-black uppercase tracking-widest">Enrollment Portal</span>
@@ -148,11 +155,11 @@ export default function PricingSection() {
           <h2 className="text-4xl md:text-7xl font-black tracking-tighter uppercase leading-none">
             Choose Your <span className="italic text-slate-500 font-serif lowercase">Evolution</span>
           </h2>
-        </div>
+        </header>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto mb-32">
           {tiers.map((tier) => (
-            <div key={tier.id} className={`relative p-8 md:p-12 rounded-[3rem] border flex flex-col transition-all duration-500 ${tier.highlight ? 'bg-[#0a1229] border-blue-500 shadow-2xl shadow-blue-500/20 md:scale-105 z-20' : 'bg-white/[0.02] border-white/10'}`}>
+            <article key={tier.id} className={`relative p-8 md:p-12 rounded-[3rem] border flex flex-col transition-all duration-500 ${tier.highlight ? 'bg-[#0a1229] border-blue-500 shadow-2xl shadow-blue-500/20 md:scale-105 z-20' : 'bg-white/[0.02] border-white/10'}`}>
               <div className="mb-8">
                 <tier.icon className={`w-14 h-14 mb-8 ${tier.highlight ? 'text-blue-400' : 'text-slate-500'}`} />
                 <h3 className="text-4xl font-black uppercase mb-2">{tier.name}</h3>
@@ -175,9 +182,10 @@ export default function PricingSection() {
                              <img 
                                key={p.name} 
                                src={p.logo} 
-                               alt={p.name} 
+                               alt={`${p.name} Financing Partner`} 
                                title={p.name} 
                                className="h-5 w-auto object-contain mx-auto bg-white p-1 rounded-sm" 
+                               loading="lazy"
                              />
                            ))}
                         </div>
@@ -212,55 +220,64 @@ export default function PricingSection() {
                   {loadingId === `${tier.id}-EMI` ? <Loader2 className="animate-spin w-4 h-4" /> : <Zap className="w-4 h-4 text-green-400 group-hover:scale-125 transition-transform" />} Pay via EMI (Monthly)
                 </button>
               </div>
-            </div>
+            </article>
           ))}
         </div>
 
+        {/* Updated Table Data based on Brochure/Screenshot */}
         <div className="mt-20 border-t border-white/10 pt-20">
           <div className="text-center mb-12">
             <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4">InternX Learning <span className="text-slate-500 italic font-serif">vs</span> Traditional Learning</h3>
-            <p className="text-slate-400 text-sm italic font-medium tracking-wide uppercase">Breaking the theory-based education cycle.</p>
+            <p className="text-slate-400 text-sm italic font-medium tracking-wide uppercase">Closing the AI skills-to-hiring gap.</p>
           </div>
           <div className="overflow-x-auto rounded-[2.5rem] border border-white/10 bg-white/[0.01] backdrop-blur-sm">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="border-b border-white/10 bg-white/5">
-                  <th className="p-6 text-[10px] uppercase font-black text-slate-500">Benchmark Metric</th>
-                  <th className="p-6 text-[10px] uppercase font-black text-blue-400 tracking-widest underline decoration-2 underline-offset-8">InternX Learning</th>
-                  <th className="p-6 text-[10px] uppercase font-black text-slate-500">Traditional Learning</th>
+                  <th className="p-6 text-[10px] uppercase font-black text-slate-500">Feature Comparison</th>
+                  <th className="p-6 text-[10px] uppercase font-black text-blue-400 tracking-widest underline decoration-2 underline-offset-8 text-center">InternX-AI Ecosystem</th>
+                  <th className="p-6 text-[10px] uppercase font-black text-slate-500 text-center">Traditional Bootcamps</th>
                 </tr>
               </thead>
               <tbody className="text-sm font-medium">
                 <tr className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
-                  <td className="p-6 text-slate-300">Core Curriculum</td>
-                  <td className="p-6 text-blue-400 italic">Agentic AI & LLM Workflows</td>
-                  <td className="p-6 text-slate-500">Full-Stack / Legacy Data Science</td>
+                  <td className="p-6 text-slate-300">Proof of Work</td>
+                  <td className="p-6 text-blue-400 italic text-center">ResumeNFT™ (Blockchain Verified)</td>
+                  <td className="p-6 text-slate-500 text-center">Generic PDF Certificates</td>
                 </tr>
                 <tr className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
-                  <td className="p-6 text-slate-300">Project Quality</td>
-                  <td className="p-6 text-blue-400 flex items-center gap-2"><Check size={14} /> Live Global Startup Assets</td>
-                  <td className="p-6 text-slate-600 flex items-center gap-2"><X size={14} /> Dummy Capstones / Local CMS</td>
+                  <td className="p-6 text-slate-300">Project Type</td>
+                  <td className="p-6 text-blue-400 text-center">Agentic AI & Multi-Agent Workflows</td>
+                  <td className="p-6 text-slate-600 text-center">Legacy Full-Stack / CRUD Apps</td>
                 </tr>
                 <tr className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
-                  <td className="p-6 text-slate-300">Verification System</td>
-                  <td className="p-6 text-blue-400 flex items-center gap-2"><Check size={14} /> ResumeNFT (On-Chain Proof)</td>
-                  <td className="p-6 text-slate-600 flex items-center gap-2"><X size={14} /> Basic Paper/PDF Certificates</td>
+                  <td className="p-6 text-slate-300">Experience Source</td>
+                  <td className="p-6 text-blue-400 text-center">Live Startup Micro-Internships</td>
+                  <td className="p-6 text-slate-600 text-center">Dummy Capstone Projects</td>
+                </tr>
+                <tr className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                  <td className="p-6 text-slate-300">Hiring Network</td>
+                  <td className="p-6 text-blue-400 text-center">HireX Global Hiring Engine</td>
+                  <td className="p-6 text-slate-600 text-center">Basic Job Portals / Referral Links</td>
                 </tr>
                 <tr className="hover:bg-white/[0.02] transition-colors">
-                  <td className="p-6 text-slate-300">Career Accountability</td>
-                  <td className="p-6 text-blue-400 flex items-center gap-2"><Check size={14} /> Legal Signed Job Guarantee</td>
-                  <td className="p-6 text-slate-600 flex items-center gap-2"><X size={14} /> Soft "Placement Assistance"</td>
+                  <td className="p-6 text-slate-300">Outcome Guarantee</td>
+                  <td className="p-6 text-blue-400 text-center font-bold">Legal Job Guarantee (Elite Plan)</td>
+                  <td className="p-6 text-slate-600 text-center">"Placement Assistance"</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
 
-        <div className="mt-20 flex justify-center">
+        <div className="mt-20 flex flex-col items-center gap-6">
             <div className="flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 border border-white/10 shadow-2xl backdrop-blur-md">
                 <ShieldCheck className="w-4 h-4 text-blue-500" />
                 <span className="text-[10px] uppercase font-bold tracking-widest text-slate-400 italic">InternX-AI Secure SSL | PCI-DSS Compliant Gateway</span>
             </div>
+            <p className="text-slate-600 text-[9px] uppercase tracking-widest max-w-lg text-center leading-loose">
+              © 2026 Career Lab Consulting Pvt. Ltd. | InternX-AI is a Career Transformer built on Real Proof and Global Project Access.
+            </p>
         </div>
       </div>
     </section>
