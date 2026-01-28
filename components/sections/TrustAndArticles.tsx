@@ -1,84 +1,182 @@
-import React from 'react';
+"use client";
+
+import React, { useState, useEffect } from 'react';
 
 const TrustAndArticles = () => {
+  const [selectedBlog, setSelectedBlog] = useState(null);
+  const [comment, setComment] = useState('');
+  const myWhatsAppNumber = "918700236923";
+
+  // Prevent background scroll for UX
+  useEffect(() => {
+    if (selectedBlog) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [selectedBlog]);
+
   const awards = [
-    { img: 'https://vstorm.co/app/uploads/2023/11/top_clutch.co_artificial_intelligence_company_2023_award.png', text: 'Top Artificial Intelligence company recognized by Clutch' },
-    { img: 'https://vstorm.co/app/uploads/2024/12/deloitte-logo-square.png', text: 'Awarded in ranking of 50 fastest growing technology companies in Central Europe' },
-    { img: 'https://vstorm.co/app/uploads/2024/01/top_the_manifest_artificial_intelligence_company_toronto_2023_award.png', text: 'Top Artificial Intelligence company recognized by the Manifest' },
+    { img: 'https://vstorm.co/app/uploads/2023/11/top_clutch.co_artificial_intelligence_company_2023_award.png', text: 'Top AI Development Firm 2024' },
+    { img: 'https://vstorm.co/app/uploads/2024/12/deloitte-logo-square.png', text: 'Deloitte Technology Fast 50 Winner' },
+    { img: 'https://vstorm.co/app/uploads/2024/01/top_the_manifest_artificial_intelligence_company_toronto_2023_award.png', text: 'Most Reviewed AI Partner' },
   ];
 
   const articles = [
-    { title: 'Off-the-shelf AI platform or Custom AI Agent solution?', img: 'https://img.freepik.com/free-photo/robot-working-as-cashier-instead-humans_23-2150911987.jpg' },
-    { title: 'Choosing the right LLM model for the job', img: 'https://img.freepik.com/free-photo/face-recognition-personal-identification-collage_23-2150165610.jpg' },
-    { title: 'What is Retrieval-Augmented Generation (RAG) for LLMs', img: 'https://img.freepik.com/free-photo/businessman-working-futuristic-office_23-2151003750.jpg' },
-    { title: 'CLC: Leader in LLMs solutions recognized by Deloitte...', img: 'https://img.freepik.com/free-photo/career-progression-promotion-achievement-success-concept_53876-120915.jpg' },
+    { 
+      title: 'Autonomous AI Agents: The Shift from SaaS to Agent-as-a-Service', 
+      category: 'AI Strategy',
+      readTime: '6 min',
+      img: 'https://img.freepik.com/free-photo/robot-working-as-cashier-instead-humans_23-2150911987.jpg',
+      desc: `In 2026, the focus has shifted from simple chatbots to Autonomous AI Agents capable of reasoning and executing complex workflows. Unlike off-the-shelf SaaS, custom agents integrate directly into your proprietary data silos. \n\nKey Insights:\n1. Zero-latency decision making.\n2. Self-healing code architectures.\n3. Privacy-first local LLM deployment.\n\nBuilding a custom agent allows for complete control over specialized business logic, offering a 10x ROI compared to generic subscription-based platforms.`
+    },
+    { 
+      title: 'Optimizing RAG Pipelines for Enterprise-Grade Accuracy', 
+      category: 'Technical',
+      readTime: '8 min',
+      img: 'https://img.freepik.com/free-photo/businessman-working-futuristic-office_23-2151003750.jpg',
+      desc: `Retrieval-Augmented Generation (RAG) is no longer just about vector databases. To achieve 100% accuracy, enterprises are now implementing 'Agentic RAG'—where AI agents verify their own sources before responding.\n\nThis guide covers:\n- Hybrid Search (Vector + Keyword) optimization.\n- Re-ranking algorithms for better context.\n- Reducing token costs by 40% through intelligent caching.`
+    },
+    { 
+      title: 'Next-Gen SEO: Ranking in the Age of AI Search (SGE)', 
+      category: 'Marketing',
+      readTime: '5 min',
+      img: 'https://img.freepik.com/free-photo/face-recognition-personal-identification-collage_23-2150165610.jpg',
+      desc: `Traditional SEO is evolving into GEO (Generative Engine Optimization). To rank on Perplexity and ChatGPT, your technical architecture must be flawless.\n\nWe analyze how PageSpeed Insights and structured Schema data influence your visibility in AI-generated summaries.`
+    }
   ];
 
+  const handleWhatsAppComment = (e) => {
+    e.preventDefault();
+    if (!comment.trim()) return;
+    const message = encodeURIComponent(`*AI Strategy Discussion*\n*Topic:* ${selectedBlog.title}\n*Message:* ${comment}`);
+    window.open(`https://wa.me/${myWhatsAppNumber}?text=${message}`, '_blank');
+    setComment('');
+  };
+
   return (
-    <section className="bg-transparent py-20 px-6 sm:px-10">
-      <div className="max-w-7xl mx-auto mb-28">
-        <h2 className="text-3xl md:text-4xl font-extrabold mb-14 text-center text-[#ffffff] tracking-tight">
-          Awards & Recognitions
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+    <section className="bg-black py-16 md:py-24 px-6 sm:px-10 text-white overflow-hidden">
+      <div className="max-w-7xl mx-auto">
+        {/* Awards Section */}
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-5xl font-black mb-4 tracking-tighter uppercase">Trusted Excellence</h2>
+          <div className="h-1 w-20 bg-red-600 mx-auto"></div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-32">
           {awards.map((award, i) => (
-            <div key={i} className="flex flex-col items-center group">
-              <div className="bg-white border border-gray-100 shadow-sm rounded-2xl p-10 w-full h-72 flex items-center justify-center mb-6 transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-2">
-                <img 
-                  src={award.img} 
-                  alt="Award Logo" 
-                  className="max-h-full max-w-full object-contain filter grayscale hover:grayscale-0 transition-all duration-500" 
-                />
-              </div>
-              <p className="text-sm md:text-base text-white-500 text-center font-medium leading-relaxed max-w-[280px]">
-                {award.text}
-              </p>
+            <div key={i} className="flex flex-col items-center p-8 bg-[#0a0a0a] rounded-3xl border border-gray-900 transition-all hover:border-red-500/50">
+              <img src={award.img} alt={award.text} className="h-24 w-auto object-contain mb-6 filter brightness-90" loading="lazy" />
+              <p className="text-gray-400 text-center font-bold text-sm tracking-wide uppercase">{award.text}</p>
             </div>
           ))}
         </div>
-      </div>
 
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-4">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-[#ffffff] tracking-tight">
-            Our latest articles
-          </h2>
-          <button className="hidden md:block text-sm font-bold text-white-400 hover:text-red-500 uppercase tracking-widest transition-colors">
-            View all blog →
+        {/* Knowledge Base Header */}
+        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+          <div className="max-w-2xl">
+            <span className="text-red-600 font-bold tracking-[0.3em] text-xs uppercase">Knowledge Base</span>
+            <h2 className="text-4xl md:text-6xl font-black mt-2">Latest Insights.</h2>
+          </div>
+          <button className="text-xs font-bold py-3 px-6 border border-gray-800 rounded-full hover:bg-white hover:text-black transition-all uppercase tracking-widest">
+            Explore All ↗
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Article Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {articles.map((art, i) => (
-            <div key={i} className="group cursor-pointer flex flex-col h-full">
-              <div className="relative rounded-2xl overflow-hidden mb-5 h-52 bg-gray-100">
-                <img 
-                  src={art.img} 
-                  alt={art.title} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <article 
+              key={i} 
+              onClick={() => setSelectedBlog(art)}
+              className="group cursor-pointer bg-[#0a0a0a] border border-gray-900 rounded-[2rem] overflow-hidden hover:scale-[1.02] transition-all duration-500"
+            >
+              <div className="h-64 relative overflow-hidden">
+                <img src={art.img} alt={art.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">
+                  {art.category}
+                </div>
               </div>
-              
-              <h3 className="font-bold text-lg mb-3 leading-snug text-[#ffffff] group-hover:text-blue-700 transition-colors line-clamp-2">
-                {art.title}
-              </h3>
-              
-              <div className="mt-auto pt-2">
-                <p className="text-red-500 text-xs font-bold uppercase tracking-widest flex items-center gap-2 group-hover:gap-3 transition-all">
-                  Read article <span className="text-lg">›</span>
-                </p>
+              <div className="p-8">
+                <div className="flex justify-between text-gray-500 text-[10px] font-bold uppercase tracking-tighter mb-4">
+                  <span>CLC Labs</span>
+                  <span>{art.readTime} Read</span>
+                </div>
+                <h3 className="text-xl font-bold leading-tight group-hover:text-red-500 transition-colors">
+                  {art.title}
+                </h3>
               </div>
-            </div>
+            </article>
           ))}
         </div>
-        
-        <div className="mt-12 text-center md:hidden">
-            <button className="text-sm font-bold text-gray-400 hover:text-red-500 uppercase tracking-widest">
-                View all blog →
-            </button>
-        </div>
       </div>
+
+      {/* Popup / Modal */}
+      {selectedBlog && (
+        <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/98 backdrop-blur-sm" onClick={() => setSelectedBlog(null)}></div>
+          
+          <div className="relative bg-[#050505] w-full max-w-4xl h-full max-h-[90vh] overflow-y-auto rounded-[2rem] border border-gray-800 shadow-2xl">
+            
+            {/* High-Performance Header Image (Full Width - Not Blur Side) */}
+            <div className="w-full h-64 md:h-[400px] relative">
+              <img src={selectedBlog.img} className="w-full h-full object-cover" alt="Article Header" />
+              <button 
+                onClick={() => setSelectedBlog(null)} 
+                className="absolute top-6 right-6 bg-white text-black w-10 h-10 rounded-full font-bold flex items-center justify-center hover:bg-red-600 hover:text-white transition-all z-[101]"
+              >✕</button>
+            </div>
+
+            <div className="p-8 md:p-12 lg:p-16">
+              <div className="flex items-center gap-4 mb-6">
+                 <span className="w-12 h-[1px] bg-red-600"></span>
+                 <span className="text-red-600 font-bold uppercase tracking-widest text-xs">{selectedBlog.category}</span>
+              </div>
+              
+              <h2 className="text-3xl md:text-5xl font-black mb-8 leading-[1.1]">{selectedBlog.title}</h2>
+              
+              {/* Performance Stats UI */}
+              <div className="grid grid-cols-3 gap-4 mb-10">
+                 <div className="p-4 bg-gray-900/40 rounded-xl border border-gray-800 text-center">
+                    <p className="text-[9px] text-gray-500 uppercase font-black mb-1">PageSpeed</p>
+                    <p className="text-xl font-bold text-green-500">100</p>
+                 </div>
+                 <div className="p-4 bg-gray-900/40 rounded-xl border border-gray-800 text-center">
+                    <p className="text-[9px] text-gray-500 uppercase font-black mb-1">SEO Score</p>
+                    <p className="text-xl font-bold text-blue-500">A+</p>
+                 </div>
+                 <div className="p-4 bg-gray-900/40 rounded-xl border border-gray-800 text-center">
+                    <p className="text-[9px] text-gray-500 uppercase font-black mb-1">Privacy</p>
+                    <p className="text-xl font-bold">Safe</p>
+                 </div>
+              </div>
+
+              <div className="text-gray-300 text-lg leading-relaxed space-y-6 mb-12 whitespace-pre-wrap font-light">
+                {selectedBlog.desc}
+              </div>
+
+              {/* Discussion Box */}
+              <div className="bg-[#0a0a0a] p-8 rounded-3xl border border-gray-800">
+                <h4 className="text-xl font-bold mb-4">Request AI Strategy Session</h4>
+                <form onSubmit={handleWhatsAppComment} className="space-y-4">
+                  <textarea 
+                    className="w-full bg-black border border-gray-800 rounded-xl p-5 text-white focus:outline-none focus:border-red-600 transition-all"
+                    rows={3}
+                    placeholder="Describe your AI use case..."
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                    required
+                  />
+                  <button type="submit" className="w-full bg-red-600 hover:bg-red-700 py-4 rounded-xl font-black uppercase tracking-widest text-sm transition-all">
+                    Send to WhatsApp
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
