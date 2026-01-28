@@ -5,6 +5,10 @@
   --foreground: #ffffff;
 }
 
+html {
+  content-visibility: auto; 
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
