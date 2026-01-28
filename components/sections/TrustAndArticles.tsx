@@ -2,12 +2,19 @@
 
 import React, { useState, useEffect } from 'react';
 
+interface Article {
+  title: string;
+  category: string;
+  readTime: string;
+  img: string;
+  desc: string;
+}
+
 const TrustAndArticles = () => {
-  const [selectedBlog, setSelectedBlog] = useState(null);
+  const [selectedBlog, setSelectedBlog] = useState<Article | null>(null);
   const [comment, setComment] = useState('');
   const myWhatsAppNumber = "918700236923";
 
-  // Prevent background scroll for UX
   useEffect(() => {
     if (selectedBlog) {
       document.body.style.overflow = 'hidden';
@@ -23,33 +30,34 @@ const TrustAndArticles = () => {
     { img: 'https://vstorm.co/app/uploads/2024/01/top_the_manifest_artificial_intelligence_company_toronto_2023_award.png', text: 'Most Reviewed AI Partner' },
   ];
 
-  const articles = [
+  const articles: Article[] = [
     { 
-      title: 'Autonomous AI Agents: The Shift from SaaS to Agent-as-a-Service', 
+      title: 'Autonomous AI Agents: The Shift from SaaS to Agent-as-Service', 
       category: 'AI Strategy',
       readTime: '6 min',
       img: 'https://img.freepik.com/free-photo/robot-working-as-cashier-instead-humans_23-2150911987.jpg',
-      desc: `In 2026, the focus has shifted from simple chatbots to Autonomous AI Agents capable of reasoning and executing complex workflows. Unlike off-the-shelf SaaS, custom agents integrate directly into your proprietary data silos. \n\nKey Insights:\n1. Zero-latency decision making.\n2. Self-healing code architectures.\n3. Privacy-first local LLM deployment.\n\nBuilding a custom agent allows for complete control over specialized business logic, offering a 10x ROI compared to generic subscription-based platforms.`
+      desc: `In 2026, the focus has shifted from simple chatbots to Autonomous AI Agents...`
     },
     { 
       title: 'Optimizing RAG Pipelines for Enterprise-Grade Accuracy', 
       category: 'Technical',
       readTime: '8 min',
       img: 'https://img.freepik.com/free-photo/businessman-working-futuristic-office_23-2151003750.jpg',
-      desc: `Retrieval-Augmented Generation (RAG) is no longer just about vector databases. To achieve 100% accuracy, enterprises are now implementing 'Agentic RAG'—where AI agents verify their own sources before responding.\n\nThis guide covers:\n- Hybrid Search (Vector + Keyword) optimization.\n- Re-ranking algorithms for better context.\n- Reducing token costs by 40% through intelligent caching.`
+      desc: `Retrieval-Augmented Generation (RAG) is no longer just about vector databases...`
     },
     { 
       title: 'Next-Gen SEO: Ranking in the Age of AI Search (SGE)', 
       category: 'Marketing',
       readTime: '5 min',
       img: 'https://img.freepik.com/free-photo/face-recognition-personal-identification-collage_23-2150165610.jpg',
-      desc: `Traditional SEO is evolving into GEO (Generative Engine Optimization). To rank on Perplexity and ChatGPT, your technical architecture must be flawless.\n\nWe analyze how PageSpeed Insights and structured Schema data influence your visibility in AI-generated summaries.`
+      desc: `Traditional SEO is evolving into GEO (Generative Engine Optimization)...`
     }
   ];
 
-  const handleWhatsAppComment = (e) => {
+  const handleWhatsAppComment = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!comment.trim()) return;
+    if (!comment.trim() || !selectedBlog) return;
+    
     const message = encodeURIComponent(`*AI Strategy Discussion*\n*Topic:* ${selectedBlog.title}\n*Message:* ${comment}`);
     window.open(`https://wa.me/${myWhatsAppNumber}?text=${message}`, '_blank');
     setComment('');
@@ -58,7 +66,6 @@ const TrustAndArticles = () => {
   return (
     <section className="bg-black py-16 md:py-24 px-6 sm:px-10 text-white overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        {/* Awards Section */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-black mb-4 tracking-tighter uppercase">Trusted Excellence</h2>
           <div className="h-1 w-20 bg-red-600 mx-auto"></div>
@@ -73,7 +80,6 @@ const TrustAndArticles = () => {
           ))}
         </div>
 
-        {/* Knowledge Base Header */}
         <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
           <div className="max-w-2xl">
             <span className="text-red-600 font-bold tracking-[0.3em] text-xs uppercase">Knowledge Base</span>
@@ -84,7 +90,6 @@ const TrustAndArticles = () => {
           </button>
         </div>
 
-        {/* Article Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {articles.map((art, i) => (
             <article 
@@ -112,14 +117,11 @@ const TrustAndArticles = () => {
         </div>
       </div>
 
-      {/* Popup / Modal */}
       {selectedBlog && (
         <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/98 backdrop-blur-sm" onClick={() => setSelectedBlog(null)}></div>
           
           <div className="relative bg-[#050505] w-full max-w-4xl h-full max-h-[90vh] overflow-y-auto rounded-[2rem] border border-gray-800 shadow-2xl">
-            
-            {/* High-Performance Header Image (Full Width - Not Blur Side) */}
             <div className="w-full h-64 md:h-[400px] relative">
               <img src={selectedBlog.img} className="w-full h-full object-cover" alt="Article Header" />
               <button 
@@ -136,7 +138,6 @@ const TrustAndArticles = () => {
               
               <h2 className="text-3xl md:text-5xl font-black mb-8 leading-[1.1]">{selectedBlog.title}</h2>
               
-              {/* Performance Stats UI */}
               <div className="grid grid-cols-3 gap-4 mb-10">
                  <div className="p-4 bg-gray-900/40 rounded-xl border border-gray-800 text-center">
                     <p className="text-[9px] text-gray-500 uppercase font-black mb-1">PageSpeed</p>
@@ -156,7 +157,6 @@ const TrustAndArticles = () => {
                 {selectedBlog.desc}
               </div>
 
-              {/* Discussion Box */}
               <div className="bg-[#0a0a0a] p-8 rounded-3xl border border-gray-800">
                 <h4 className="text-xl font-bold mb-4">Request AI Strategy Session</h4>
                 <form onSubmit={handleWhatsAppComment} className="space-y-4">
