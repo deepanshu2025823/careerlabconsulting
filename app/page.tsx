@@ -1,22 +1,24 @@
+import dynamic from 'next/dynamic';
 import Navbar from "@/components/layout/Navbar";
 import HeroB2B from "@/components/sections/HeroB2B";
 import ProductMatrix from "@/components/sections/ProductMatrix";
-import FeatureGrid from "@/components/sections/FeatureGrid";
-import CompanyJourney from "@/components/sections/CompanyJourney";
-import TrustSection from "@/components/sections/TrustSection";
-import ExecutionFlow from "@/components/sections/ExecutionFlow"; 
-import B2BProductTabs from "@/components/sections/B2BProductTabs";
-import SuccessStories from "@/components/sections/SuccessStories";
-import FoundersVision from "@/components/sections/FoundersVision";
-import MethodologySection from "@/components/sections/MethodologySection";
-import TabbedServices from "@/components/sections/TabbedServices";
-import LLMServicesSection from "@/components/sections/LLMServicesSection";
-import TrustAndArticles from "@/components/sections/TrustAndArticles";
-import FaqSection from "@/components/sections/FaqSection";
-import LiveTrafficSection from "@/components/sections/LiveTrafficSection";
-import Footer from "@/components/sections/Footer";
-import B2BPricingSection from "@/components/sections/B2BPricingSection"; 
 import { Analytics } from "@vercel/analytics/next"; 
+
+const B2BPricingSection = dynamic(() => import("@/components/sections/B2BPricingSection"));
+const FeatureGrid = dynamic(() => import("@/components/sections/FeatureGrid"));
+const CompanyJourney = dynamic(() => import("@/components/sections/CompanyJourney"));
+const TrustSection = dynamic(() => import("@/components/sections/TrustSection"));
+const ExecutionFlow = dynamic(() => import("@/components/sections/ExecutionFlow"));
+const B2BProductTabs = dynamic(() => import("@/components/sections/B2BProductTabs"));
+const SuccessStories = dynamic(() => import("@/components/sections/SuccessStories"));
+const FoundersVision = dynamic(() => import("@/components/sections/FoundersVision"));
+const MethodologySection = dynamic(() => import("@/components/sections/MethodologySection"));
+const TabbedServices = dynamic(() => import("@/components/sections/TabbedServices"));
+const LLMServicesSection = dynamic(() => import("@/components/sections/LLMServicesSection"));
+const TrustAndArticles = dynamic(() => import("@/components/sections/TrustAndArticles"));
+const FaqSection = dynamic(() => import("@/components/sections/FaqSection"));
+const LiveTrafficSection = dynamic(() => import("@/components/sections/LiveTrafficSection"));
+const Footer = dynamic(() => import("@/components/sections/Footer"));
 
 export default function B2BHome() {
   return (
@@ -24,6 +26,7 @@ export default function B2BHome() {
       <Navbar />
       <HeroB2B />
       <ProductMatrix />
+
       <B2BPricingSection />
       <FeatureGrid />
       <CompanyJourney />
@@ -39,6 +42,7 @@ export default function B2BHome() {
       <FaqSection />
       <LiveTrafficSection />
       <Footer />
+      
       <Analytics /> 
     </main>
   );
