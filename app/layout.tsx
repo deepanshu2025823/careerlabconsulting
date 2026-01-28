@@ -13,7 +13,7 @@ const geistSans = Geist({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#000000", 
+  themeColor: "#020617", 
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -72,6 +72,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className="scroll-smooth">
       <head>
+        <link rel="preconnect" href="https://images.pexels.com" />
+        <link rel="preconnect" href="https://images.unsplash.com" />
+        
         <Script
           id="schema-org"
           type="application/ld+json"
@@ -98,7 +101,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className={`${geistSans.variable} antialiased font-sans bg-[#020617] text-white selection:bg-blue-500/30`}>
-        <main min-h-screen>
+        <main className="min-h-screen">
           {children}
         </main>
         
