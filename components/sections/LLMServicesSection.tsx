@@ -41,8 +41,8 @@ const LLMServices = () => {
       className="py-24 px-4 md:px-12 bg-[#020617] relative overflow-hidden" 
       aria-labelledby="services-title"
     >
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/5 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-600/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/5 blur-[120px] rounded-full pointer-events-none will-change-[filter]" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-600/5 blur-[120px] rounded-full pointer-events-none will-change-[filter]" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <header className="mb-20 text-center">
@@ -71,16 +71,16 @@ const LLMServices = () => {
                     src={service.image}
                     alt={service.alt}
                     fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 opacity-50 group-hover:opacity-100"
-                    loading={index <= 1 ? "eager" : "lazy"} 
-                    priority={index <= 1}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 opacity-40 group-hover:opacity-100"
+                    loading={index < 2 ? "eager" : "lazy"}
+                    onLoadingComplete={(img) => img.classList.remove('opacity-0')}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80" />
                 </div>
 
                 <div className="flex items-center gap-5 mb-6">
-                  <div className="p-4 bg-slate-950 border border-white/5 rounded-2xl group-hover:border-blue-500/50 transition-colors duration-500">
+                  <div className="p-4 bg-slate-950 border border-white/5 rounded-2xl group-hover:border-blue-500/50 transition-colors duration-500 shadow-inner">
                     {service.icon}
                   </div>
                   <h3 className="text-3xl font-bold text-white tracking-tight">
@@ -94,7 +94,7 @@ const LLMServices = () => {
 
                 <button 
                   aria-label={`Learn more about ${service.title}`}
-                  className="flex items-center gap-3 text-blue-400 font-black uppercase text-xs tracking-widest group/btn hover:text-blue-200 transition-all"
+                  className="flex items-center gap-3 text-blue-400 font-black uppercase text-xs tracking-widest group/btn hover:text-blue-200 transition-all outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-lg"
                 >
                   Learn more 
                   <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-2 transition-transform" />
