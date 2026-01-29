@@ -42,7 +42,6 @@ export default function B2BHome() {
       <FaqSection />
       <LiveTrafficSection />
       <Footer />
-      
       <Analytics /> 
     </main>
   );
