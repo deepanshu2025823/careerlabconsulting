@@ -173,12 +173,11 @@ export default function InternXAI() {
               </ul>
             </div>
             <div className="relative">
-              {/* IMAGE PLACEHOLDER: Use a 3D isometric illustration of a connected tech ecosystem */}
               <div className="aspect-square rounded-3xl overflow-hidden border border-white/10 bg-gradient-to-br from-slate-900 to-slate-800 relative group">
                 <img 
-                   src="https://images.pexels.com/photos/17483874/pexels-photo-17483874/free-photo-of-an-artist-s-illustration-of-artificial-intelligence-ai-this-image-represents-how-machine-learning-is-inspired-by-neuroscience-and-the-human-brain-it-was-created-by-novoto-studio-as.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
+                   src="https://media.istockphoto.com/id/962678392/photo/business-team-working-together.webp?a=1&b=1&s=612x612&w=0&k=20&c=NjteWnCySZuUBRXYjjQMOhN61ayLsf0Ok0MEm_mX5JI=" 
                    alt="InternX AI Ecosystem" 
-                   className="w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform duration-700"
+                   className="w-full h-full object-cover opacity group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#03081a] via-transparent to-transparent"></div>
                 <div className="absolute bottom-8 left-8">
