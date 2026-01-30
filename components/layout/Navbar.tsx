@@ -491,7 +491,7 @@ export default function Navbar() {
               <Search className="w-5 h-5" />
             </button>
             
-            <Link href="/b2c" className="hidden sm:block relative group overflow-hidden bg-blue-600 text-white px-5 py-3 rounded-full font-black text-[10px] uppercase tracking-[2px] shadow-[0_10px_20px_rgba(37,99,235,0.3)] transition-all active:scale-95 whitespace-nowrap">
+            <Link href="/internship" className="hidden sm:block relative group overflow-hidden bg-blue-600 text-white px-5 py-3 rounded-full font-black text-[10px] uppercase tracking-[2px] shadow-[0_10px_20px_rgba(37,99,235,0.3)] transition-all active:scale-95 whitespace-nowrap">
               <span className="relative z-10">Get Internship</span>
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity" />
             </Link>
@@ -586,7 +586,7 @@ export default function Navbar() {
 
             <div className="mt-6">
               <Link 
-                href="/b2c" 
+                href="/internship" 
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block w-full text-center bg-blue-600 py-4 rounded-xl text-white font-bold uppercase tracking-[2px] text-[11px]"
               >

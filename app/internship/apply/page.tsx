@@ -1,6 +1,6 @@
 import B2CHeader from "@/components/b2c/B2CHeader";
 import Footer from "@/components/b2c/Footer";
-import ApplyClient from "@/app/b2c/apply/ApplyClient";
+import ApplyClient from "@/app/internship/apply/ApplyClient";
 
 export const metadata = {
   title: "Apply for InternX | Career Lab",
