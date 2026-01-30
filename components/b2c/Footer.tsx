@@ -231,8 +231,8 @@ export default function Footer() {
           <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-4">
               <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">© 2015 - {currentYear} Career Lab Consulting</span>
-              <Link href="/privacy" className="text-[10px] text-slate-500 font-bold uppercase tracking-widest hover:text-blue-400 transition-colors">Privacy Policy</Link>
-              <Link href="/terms" className="text-[10px] text-slate-500 font-bold uppercase tracking-widest hover:text-blue-400 transition-colors">Terms of Service</Link>
+              <Link href="/privacy-policy" className="text-[10px] text-slate-500 font-bold uppercase tracking-widest hover:text-blue-400 transition-colors">Privacy Policy</Link>
+              <Link href="/terms-of-service" className="text-[10px] text-slate-500 font-bold uppercase tracking-widest hover:text-blue-400 transition-colors">Terms of Service</Link>
             </div>
 
             <div className="flex items-center gap-3 px-5 py-2.5 bg-emerald-500/5 border border-emerald-500/10 rounded-full shadow-inner">
