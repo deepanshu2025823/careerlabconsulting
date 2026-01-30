@@ -15,7 +15,6 @@ import {
 export default function InternXAI() {
   const [activeMonth, setActiveMonth] = useState(0);
 
-  // DATA SOURCED FROM PDF: "InternX-AI Developer - Foundation Syllabus"
   const curriculum = [
     {
       month: "Month 1: Programming & AI Foundations",
@@ -61,17 +60,15 @@ export default function InternXAI() {
     }
   ];
 
-  // DATA SOURCED FROM PDF: "Competitor Comparison"
   const comparisonData = [
     { feature: "Real Startup Projects", internx: true, bootcamps: false, courses: false },
     { feature: "ResumeNFT (Blockchain Proof)", internx: true, bootcamps: false, courses: false },
     { feature: "Public GitHub Portfolio", internx: true, bootcamps: "Optional", courses: false },
     { feature: "Live Weekend Delivery", internx: true, bootcamps: true, courses: false },
     { feature: "Elite Career Pathway", internx: true, bootcamps: false, courses: false },
-    { feature: "Legal Job Guarantee (Elite)", internx: true, bootcamps: "Conditional", courses: false },
+    { feature: "Legal Performance Based Job Offers (Elite)", internx: true, bootcamps: "Conditional", courses: false },
   ];
 
-  // DATA SOURCED FROM PDF: "Industry Project Areas"
   const projectTracks = [
     { title: "FinTech", desc: "Lead scoring, fraud analysis & sales automation.", icon: <Coins /> },
     { title: "EdTech", desc: "AI tutors, content generation & learner support.", icon: <GraduationCap /> },
