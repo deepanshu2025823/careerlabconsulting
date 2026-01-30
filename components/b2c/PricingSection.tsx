@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Check, Zap, Crown, Terminal, ShieldCheck, Sparkles, 
-  Loader2, CreditCard, X, TrendingUp, Calendar, User, Mail, Phone, MessageSquare, ChevronRight, Clock, ArrowLeft 
+  Loader2, CreditCard, X, TrendingUp, Calendar, User, Mail, Phone, MessageSquare, ChevronRight, Clock, ArrowLeft, Globe 
 } from 'lucide-react';
 import Script from 'next/script';
 
@@ -17,9 +17,10 @@ interface Tier {
   id: string;
   name: string;
   duration: string;
-  priceINR: string;
-  rawAmount: number; // Full price in paise
-  emiAmount: number; // Kept for display data
+  priceDisplay: string; // Dynamic Display Price (₹ or $)
+  rawAmountINR: number; // Always keep base calculation in INR paise
+  rawAmountUSD: number; // Amount in Cents (for future reference or display calc)
+  emiAmount: number; 
   emiText: string;
   description: string;
   targetCTC: string;
@@ -43,7 +44,6 @@ declare global {
 }
 
 // --- Data Constants ---
-
 const partners = [
   { name: "HDFC", logo: "https://cdn.worldvectorlogo.com/logos/hdfc-bank-logo.svg" },
   { name: "ICICI", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/ICICI_Bank_Logo.svg/3840px-ICICI_Bank_Logo.svg.png" },
@@ -52,56 +52,16 @@ const partners = [
   { name: "ShopSe", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBNp2z8bJCidU0Z4TCfjF4JARJkY4Gh1_5Qw&s" }
 ];
 
-const tiers: Tier[] = [
-  {
-    id: "plan-foundation",
-    name: "Foundation",
-    duration: "6 Months",
-    priceINR: "₹1,49,999", 
-    rawAmount: 14999900, // 1,49,999 INR in paise
-    emiAmount: 520800, 
-    emiText: "EMI starts from: 5208 INR",
-    description: "Build your first AI career asset with ResumeNFT visibility.",
-    targetCTC: "Avg CTC: ₹10-12 LPA",
-    features: [
-      "Real Startup Agentic AI Projects",
-      "ResumeNFT + GitHub Portfolio",
-      "Python & Prompt Engineering Basics",
-      "1 Verified Internship Certificate",
-      "GPT & LangChain Starter Projects",
-      "HireX Job Network Access"
-    ],
-    highlight: false,
-    icon: Terminal
-  },
-  {
-    id: "plan-elite",
-    name: "Elite",
-    duration: "12 Months",
-    priceINR: "₹2,49,999",
-    rawAmount: 24999900, // 2,49,999 INR in paise
-    emiAmount: 520800, 
-    emiText: "EMI starts from: 5208 INR",
-    description: "Top-tier program for international roles with legal job.",
-    targetCTC: "Avg CTC: ₹30-50 LPA",
-    features: [
-      "100% Legal Job (Signed Contract)",
-      "Weekly 1-on-1 Expert Mentoring",
-      "3+ Global Showcase Projects",
-      "3 Premium Bonus Internships",
-      "Advanced Agentic AI Workflows",
-      "Germany/Remote Role Specialization"
-    ],
-    highlight: true,
-    icon: Crown
-  }
-];
-
 export default function PricingSection() {
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const [activeModal, setActiveModal] = useState<'register' | 'demo' | null>(null);
   const [selectedTier, setSelectedTier] = useState<Tier | null>(null);
   
+  // Country & Currency State
+  const [countryCode, setCountryCode] = useState<string>('IN'); // Default to India
+  const [currencySymbol, setCurrencySymbol] = useState<string>('₹');
+  const [isInternational, setIsInternational] = useState<boolean>(false);
+
   // Registration Flow State
   const [registerStep, setRegisterStep] = useState<'selection' | 'form'>('selection');
   const [paymentType, setPaymentType] = useState<'full' | 'seat'>('seat'); 
@@ -121,6 +81,76 @@ export default function PricingSection() {
 
   const ownerPhone = "918700236923";
 
+  // --- 1. Automatic Location Detection ---
+  useEffect(() => {
+    const checkLocation = async () => {
+      try {
+        const response = await fetch('https://ipapi.co/json/');
+        const data = await response.json();
+        if (data && data.country_code) {
+          setCountryCode(data.country_code);
+          if (data.country_code !== 'IN') {
+            setCurrencySymbol('$');
+            setIsInternational(true);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to detect location, defaulting to INR", error);
+        // Fallback is already IN/₹
+      }
+    };
+    checkLocation();
+  }, []);
+
+  // --- 2. Dynamic Pricing Logic ---
+  // We define prices dynamically based on the state
+  const tiers: Tier[] = [
+    {
+      id: "plan-foundation",
+      name: "Foundation",
+      duration: "6 Months",
+      priceDisplay: isInternational ? "$1,999" : "₹1,49,999", // $1999 approx for international
+      rawAmountINR: 14999900, 
+      rawAmountUSD: 199900, 
+      emiAmount: 520800, 
+      emiText: isInternational ? "Flexible installments available" : "EMI starts from: 5208 INR",
+      description: "Build your first AI career asset with ResumeNFT visibility.",
+      targetCTC: isInternational ? "Avg Salary: $40k-$60k" : "Avg CTC: ₹10-12 LPA",
+      features: [
+        "Real Startup Agentic AI Projects",
+        "ResumeNFT + GitHub Portfolio",
+        "Python & Prompt Engineering Basics",
+        "1 Verified Internship Certificate",
+        "GPT & LangChain Starter Projects",
+        "HireX Job Network Access"
+      ],
+      highlight: false,
+      icon: Terminal
+    },
+    {
+      id: "plan-elite",
+      name: "Elite",
+      duration: "12 Months",
+      priceDisplay: isInternational ? "$3,499" : "₹2,49,999", // $3499 approx for international
+      rawAmountINR: 24999900,
+      rawAmountUSD: 349900,
+      emiAmount: 520800, 
+      emiText: isInternational ? "Flexible installments available" : "EMI starts from: 5208 INR",
+      description: "Top-tier program for international roles with legal job.",
+      targetCTC: isInternational ? "Avg Salary: $80k-$120k" : "Avg CTC: ₹30-50 LPA",
+      features: [
+        "100% Legal Job (Signed Contract)",
+        "Weekly 1-on-1 Expert Mentoring",
+        "3+ Global Showcase Projects",
+        "3 Premium Bonus Internships",
+        "Advanced Agentic AI Workflows",
+        "Germany/Remote Role Specialization"
+      ],
+      highlight: true,
+      icon: Crown
+    }
+  ];
+
   // --- Reset handlers ---
   const resetModals = () => {
     setActiveModal(null);
@@ -139,23 +169,36 @@ export default function PricingSection() {
   // --- Payment Logic ---
 
   const handlePaymentSuccess = async (response: RazorpayResponse, tier: Tier, type: 'Full Payment' | 'Seat Registration') => {
-    const amountPaid = type === 'Seat Registration' ? "₹10,000" : tier.priceINR;
+    // Determine amount text based on currency
+    const seatPrice = isInternational ? "$150" : "₹10,000";
+    const amountPaid = type === 'Seat Registration' ? seatPrice : tier.priceDisplay;
     
     // Construct WhatsApp Message
     let waMessage = `*New Enrollment Confirmation* %0A%0A`;
     waMessage += `*Plan:* ${tier.name}%0A`;
     waMessage += `*Type:* ${type}%0A`;
-    waMessage += `*Amount Paid:* ${amountPaid}%0A`;
+    waMessage += `*Amount Paid:* ${amountPaid} (${isInternational ? 'USD/Intl' : 'INR'})%0A`;
     waMessage += `*Payment ID:* ${response.razorpay_payment_id}%0A`;
     waMessage += `*Student Name:* ${formData.name}%0A`;
     waMessage += `*Email:* ${formData.email}%0A`;
     waMessage += `*Phone:* ${formData.phone}%0A`;
+    waMessage += `*Country:* ${countryCode}%0A`;
 
     const whatsappUrl = `https://wa.me/${ownerPhone}?text=${waMessage}`;
 
     try {
-      // Optional: Save to your DB via API
-      // await fetch('/api/send-confirmation', ... );
+      // API call to send email (make sure your API handles the 'user' object)
+       await fetch('/api/send-confirmation', {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({ 
+           planName: tier.name, 
+           amount: amountPaid, 
+           paymentId: response.razorpay_payment_id, 
+           type,
+           user: formData // Sending user data to API
+         }),
+       });
       
       // Redirect to WhatsApp
       window.open(whatsappUrl, '_blank');
@@ -167,13 +210,13 @@ export default function PricingSection() {
     }
   };
 
-  const initRazorpay = (amount: number, description: string, type: 'Full Payment' | 'Seat Registration') => {
+  const initRazorpay = (amount: number, currency: string, description: string, type: 'Full Payment' | 'Seat Registration') => {
     if (!selectedTier) return;
 
     const options = {
       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, 
       amount: amount, 
-      currency: "INR",
+      currency: currency, // Dynamic Currency
       name: "InternX AI",
       description: description,
       handler: (res: RazorpayResponse) => handlePaymentSuccess(res, selectedTier, type),
@@ -198,22 +241,32 @@ export default function PricingSection() {
     e.preventDefault();
     if (!selectedTier) return;
     
+    // Determine Currency and Amount
+    // Note: Razorpay accepts international payments in USD if enabled in dashboard. 
+    // Otherwise, we calculate equivalent INR. 
+    // Here we will use the currency detected.
+    
+    const currency = isInternational ? "USD" : "INR";
+    
+    let amountToCharge = 0;
+
     if (paymentType === 'full') {
-        // Full Payment - Use Tier Amount
-        initRazorpay(selectedTier.rawAmount, `Full Payment - ${selectedTier.name}`, 'Full Payment');
+       // Full Payment
+       amountToCharge = isInternational ? selectedTier.rawAmountUSD : selectedTier.rawAmountINR;
     } else {
-        // Seat Registration - Fixed 10,000 INR (1000000 Paise)
-        initRazorpay(1000000, `Seat Registration - ${selectedTier.name}`, 'Seat Registration');
+       // Seat Registration
+       // INR 10,000 = 1000000 paise
+       // USD $150 = 15000 cents (approx equivalent for seat)
+       amountToCharge = isInternational ? 15000 : 1000000;
     }
+
+    initRazorpay(amountToCharge, currency, `${paymentType} - ${selectedTier.name}`, paymentType);
   };
 
   // --- Demo Booking Logic ---
-
   const handleBookDemoSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoadingId('booking-demo');
-
-    // Email logic placeholder
     
     try {
       await new Promise(resolve => setTimeout(resolve, 1500)); 
@@ -231,7 +284,7 @@ export default function PricingSection() {
     const dates = [];
     for (let i = 0; i < 5; i++) {
       const d = new Date();
-      d.setDate(d.getDate() + i + 1); // Start from tomorrow
+      d.setDate(d.getDate() + i + 1); 
       dates.push(d);
     }
     return dates;
@@ -251,6 +304,13 @@ export default function PricingSection() {
           <h2 className="text-4xl md:text-7xl font-black tracking-tighter uppercase leading-none">
             Choose Your <span className="italic text-slate-500 font-serif lowercase">Evolution</span>
           </h2>
+          {/* Location Indicator */}
+          <div className="mt-4 flex justify-center">
+             <div className="flex items-center gap-2 text-xs font-bold text-slate-500 bg-white/5 px-3 py-1 rounded-full border border-white/5">
+                <Globe className="w-3 h-3" />
+                {isInternational ? `International Pricing (${countryCode})` : `India Pricing (${countryCode})`}
+             </div>
+          </div>
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto mb-32">
@@ -262,31 +322,34 @@ export default function PricingSection() {
                 <p className="text-blue-400 font-bold text-sm tracking-widest uppercase mb-6">{tier.duration} Program</p>
                 
                 <div className="flex flex-col gap-1">
-                  <span className="text-6xl font-black tracking-tighter">{tier.priceINR}</span>
+                  <span className="text-6xl font-black tracking-tighter">{tier.priceDisplay}</span>
                   <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-3 mt-3 flex items-center gap-2">
                     <TrendingUp className="w-4 h-4 text-blue-400" />
                     <span className="text-blue-300 text-sm font-bold uppercase">{tier.targetCTC}</span>
                   </div>
                   
+                  {/* Show EMI options only for India or generic text for Intl */}
                   <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-4 mt-2">
                     <span className="text-green-400 text-sm font-bold flex items-center gap-2 italic mb-3">
                       <Zap className="w-4 h-4 fill-green-400" /> {tier.emiText}
                     </span>
-                    <div className="border-t border-green-500/10 pt-4">
-                        <div className="grid grid-cols-5 gap-3 items-center opacity-80 hover:opacity-100 transition-all duration-500">
-                           {partners.map((p) => (
-                             <img 
-                               key={p.name} 
-                               src={p.logo} 
-                               alt={`${p.name} Financing Partner`} 
-                               title={p.name} 
-                               className="h-5 w-auto object-contain mx-auto bg-white p-1 rounded-sm" 
-                               loading="lazy"
-                             />
-                           ))}
+                    {!isInternational && (
+                        <div className="border-t border-green-500/10 pt-4">
+                            <div className="grid grid-cols-5 gap-3 items-center opacity-80 hover:opacity-100 transition-all duration-500">
+                            {partners.map((p) => (
+                                <img 
+                                key={p.name} 
+                                src={p.logo} 
+                                alt={`${p.name} Financing Partner`} 
+                                title={p.name} 
+                                className="h-5 w-auto object-contain mx-auto bg-white p-1 rounded-sm" 
+                                loading="lazy"
+                                />
+                            ))}
+                            </div>
+                            <p className="text-[7px] uppercase font-black tracking-[0.2em] text-center text-slate-600 mt-4 italic">No-Cost EMI Approved Partners</p>
                         </div>
-                        <p className="text-[7px] uppercase font-black tracking-[0.2em] text-center text-slate-600 mt-4 italic">No-Cost EMI Approved Partners</p>
-                    </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -408,7 +471,7 @@ export default function PricingSection() {
                     >
                         <div className="text-left">
                         <div className="text-sm font-bold uppercase tracking-widest text-blue-100 mb-1">Full Payment</div>
-                        <div className="text-2xl font-black text-white">{selectedTier.priceINR}</div>
+                        <div className="text-2xl font-black text-white">{selectedTier.priceDisplay}</div>
                         </div>
                         <ChevronRight className="w-6 h-6 text-white group-hover:translate-x-1 transition-transform" />
                     </button>
@@ -422,7 +485,9 @@ export default function PricingSection() {
                     >
                         <div className="text-left">
                         <div className="text-sm font-bold uppercase tracking-widest text-slate-300 mb-1">Seat Registration</div>
-                        <div className="text-2xl font-black text-green-400">₹10,000</div>
+                        <div className="text-2xl font-black text-green-400">
+                           {isInternational ? "$150" : "₹10,000"}
+                        </div>
                         </div>
                         <ChevronRight className="w-6 h-6 text-slate-400 group-hover:translate-x-1 transition-transform" />
                     </button>
@@ -469,7 +534,10 @@ export default function PricingSection() {
                             type="submit" 
                             className={`w-full mt-6 py-4 text-white font-bold uppercase tracking-widest rounded-xl transition-all cursor-pointer shadow-lg ${paymentType === 'full' ? 'bg-blue-600 hover:bg-blue-500 shadow-blue-900/20' : 'bg-green-600 hover:bg-green-500 shadow-green-900/20'}`}
                         >
-                            {paymentType === 'full' ? `Pay ${selectedTier.priceINR} Securely` : 'Pay ₹10,000 to Reserve'}
+                            {paymentType === 'full' 
+                               ? `Pay ${selectedTier.priceDisplay} Securely` 
+                               : `Pay ${isInternational ? "$150" : "₹10,000"} to Reserve`
+                            }
                         </button>
                         <button type="button" onClick={() => setRegisterStep('selection')} className="w-full py-2 text-xs text-slate-500 hover:text-white transition-colors cursor-pointer flex items-center justify-center gap-1">
                            <ArrowLeft className="w-3 h-3" /> Back to Options
