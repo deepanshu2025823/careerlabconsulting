@@ -52,7 +52,7 @@ const lmsUsers: User[] = [
   { id: 13, name: "Ana Silva", course: "Full Stack", img: "https://i.pravatar.cc/150?u=13", lat: 38.72, lng: -9.13, country: "Portugal", city: "Lisbon" },
 
   { id: 14, name: "Sarah Chen", course: "Data Science", img: "https://i.pravatar.cc/150?u=14", lat: 40.71, lng: -74.00, country: "USA", city: "New York" },
-  { id: 15, name: "Carlos Gomes", course: "Mobile App Dev", img: "https://i.pravatar.cc/150?u=22", lat: -23.55, lng: -46.63, country: "Brazil", city: "Sao Paulo" },
+  { id: 15, name: "Carlos Gomes", course: "Mobile App Dev", img: "https://i.pravatar.cc/150?u=35", lat: -23.55, lng: -46.63, country: "Brazil", city: "Sao Paulo" },
   { id: 16, name: "Liam Smith", course: "DevOps", img: "https://i.pravatar.cc/150?u=16", lat: 43.65, lng: -79.38, country: "Canada", city: "Toronto" },
   { id: 17, name: "Maria Garcia", course: "AI Engineer", img: "https://i.pravatar.cc/150?u=17", lat: 19.43, lng: -99.13, country: "Mexico", city: "Mexico City" },
   { id: 18, name: "John Doe", course: "SRE", img: "https://i.pravatar.cc/150?u=18", lat: 34.05, lng: -118.24, country: "USA", city: "Los Angeles" },
