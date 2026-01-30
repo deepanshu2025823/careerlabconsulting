@@ -3,10 +3,11 @@
 import React, { useState } from 'react';
 import { 
   Check, Zap, Crown, Terminal, ShieldCheck, Sparkles, 
-  Loader2, CreditCard, X, TrendingUp 
+  Loader2, CreditCard, X, TrendingUp, Calendar, User, Mail, Phone, MessageSquare, ChevronRight, Clock 
 } from 'lucide-react';
 import Script from 'next/script';
-import Image from 'next/image';
+
+// --- Interfaces ---
 
 interface RazorpayResponse {
   razorpay_payment_id: string;
@@ -19,8 +20,8 @@ interface Tier {
   name: string;
   duration: string;
   priceINR: string;
-  rawAmount: number;
-  emiAmount: number;
+  rawAmount: number; // Full price in paise
+  emiAmount: number; // Kept for display data
   emiText: string;
   description: string;
   targetCTC: string;
@@ -29,11 +30,21 @@ interface Tier {
   icon: any; 
 }
 
+interface UserFormData {
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+}
+
+// --- Global Declaration for Razorpay ---
 declare global {
   interface Window {
     Razorpay: any;
   }
 }
+
+// --- Data Constants ---
 
 const partners = [
   { name: "HDFC", logo: "https://cdn.worldvectorlogo.com/logos/hdfc-bank-logo.svg" },
@@ -90,63 +101,173 @@ const tiers: Tier[] = [
 
 export default function PricingSection() {
   const [loadingId, setLoadingId] = useState<string | null>(null);
+  const [activeModal, setActiveModal] = useState<'register' | 'demo' | null>(null);
+  const [selectedTier, setSelectedTier] = useState<Tier | null>(null);
+  
+  // Registration Flow State
+  const [registerStep, setRegisterStep] = useState<'selection' | 'form'>('selection');
+  
+  // Demo Booking State
+  const [demoStep, setDemoStep] = useState<'calendar' | 'form'>('calendar');
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
+
+  // Shared Form State
+  const [formData, setFormData] = useState<UserFormData>({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+
   const ownerPhone = "918700236923";
 
-  const handlePaymentSuccess = async (response: RazorpayResponse, tier: Tier, type: string) => {
-    const amountPaid = type === 'EMI Plan' ? "₹5,208 (EMI Start)" : tier.priceINR;
-    const waMessage = `*New Enrollment Confirmation*%0A%0A*Plan:* ${tier.name}%0A*Type:* ${type}%0A*Amount:* ${amountPaid}%0A*Payment ID:* ${response.razorpay_payment_id}`;
+  // --- Reset handlers ---
+  const resetModals = () => {
+    setActiveModal(null);
+    setSelectedTier(null);
+    setRegisterStep('selection');
+    setDemoStep('calendar');
+    setSelectedDate(null);
+    setSelectedTime(null);
+    setFormData({ name: '', email: '', phone: '', message: '' });
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // --- Payment Logic ---
+
+  const handlePaymentSuccess = async (response: RazorpayResponse, tier: Tier, type: 'Full Payment' | 'Seat Registration') => {
+    const amountPaid = type === 'Seat Registration' ? "₹10,000" : tier.priceINR;
+    
+    // Construct WhatsApp Message
+    let waMessage = `*New Enrollment Confirmation* %0A%0A`;
+    waMessage += `*Plan:* ${tier.name}%0A`;
+    waMessage += `*Type:* ${type}%0A`;
+    waMessage += `*Amount Paid:* ${amountPaid}%0A`;
+    waMessage += `*Payment ID:* ${response.razorpay_payment_id}%0A`;
+    
+    if (type === 'Seat Registration') {
+      waMessage += `*Student Name:* ${formData.name}%0A`;
+      waMessage += `*Email:* ${formData.email}%0A`;
+      waMessage += `*Phone:* ${formData.phone}%0A`;
+    }
+
     const whatsappUrl = `https://wa.me/${ownerPhone}?text=${waMessage}`;
 
     try {
-      await fetch('/api/send-confirmation', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          planName: tier.name, 
-          amount: amountPaid, 
-          paymentId: response.razorpay_payment_id, 
-          type: type 
-        }),
-      });
+      // Optional: Save to your DB via API
+       await fetch('/api/send-confirmation', {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({ 
+           planName: tier.name, 
+           amount: amountPaid, 
+           paymentId: response.razorpay_payment_id, 
+           type,
+           user: formData
+         }),
+       });
+      
+      // Redirect to WhatsApp
       window.open(whatsappUrl, '_blank');
+      resetModals();
     } catch (err) { 
-      console.error(err); 
+      console.error("Error logging payment:", err); 
+      // Still open WhatsApp even if API fails
+      window.open(whatsappUrl, '_blank');
+      resetModals();
     }
   };
 
-  const makePayment = async (tier: Tier, paymentType: 'Full' | 'EMI') => {
-    const actionId = `${tier.id}-${paymentType}`;
-    setLoadingId(actionId);
-    
+  const initRazorpay = (amount: number, description: string, type: 'Full Payment' | 'Seat Registration') => {
+    if (!selectedTier) return;
+
     const options = {
-      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-      amount: paymentType === 'EMI' ? tier.emiAmount : tier.rawAmount,
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, 
+      amount: amount, 
       currency: "INR",
       name: "InternX AI",
-      description: paymentType === 'EMI' ? `EMI - ${tier.name}` : `Full - ${tier.name}`,
-      handler: (res: RazorpayResponse) => handlePaymentSuccess(res, tier, paymentType === 'Full' ? 'Full Payment' : 'EMI Plan'),
+      description: description,
+      handler: (res: RazorpayResponse) => handlePaymentSuccess(res, selectedTier, type),
       prefill: {
-        name: "",
-        email: "",
-        contact: ""
+        name: formData.name,
+        email: formData.email,
+        contact: formData.phone
       },
-      theme: { color: paymentType === 'Full' ? "#3b82f6" : "#10b981" },
+      theme: { color: type === 'Full Payment' ? "#3b82f6" : "#10b981" },
     };
-    
+
     if (window.Razorpay) {
       const rzp = new window.Razorpay(options);
       rzp.open();
     } else {
-      alert("Razorpay SDK not loaded. Please check your internet.");
+      alert("Razorpay SDK not loaded. Please check your internet connection.");
     }
-    setLoadingId(null);
+  };
+
+  const handleFullPaymentClick = () => {
+    if (!selectedTier) return;
+    initRazorpay(selectedTier.rawAmount, `Full Payment - ${selectedTier.name}`, 'Full Payment');
+  };
+
+  const handleSeatRegistrationSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedTier) return;
+    // 10,000 INR = 1000000 Paise
+    initRazorpay(1000000, `Seat Registration - ${selectedTier.name}`, 'Seat Registration');
+  };
+
+  // --- Demo Booking Logic ---
+
+  const handleBookDemoSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoadingId('booking-demo');
+
+    const emailBody = {
+      to: 'info@careerlabconsulting.com',
+      subject: 'New Demo Request',
+      details: {
+        ...formData,
+        requestedDate: selectedDate,
+        requestedTime: selectedTime,
+        planInterest: selectedTier?.name
+      }
+    };
+
+    try {
+      // Simulate API call to send email
+      await new Promise(resolve => setTimeout(resolve, 1500)); 
+      alert("Demo request sent successfully! We will contact you shortly.");
+      resetModals();
+    } catch (error) {
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoadingId(null);
+    }
+  };
+
+  // --- Helper to get next 5 days for calendar ---
+  const getNextDays = () => {
+    const dates = [];
+    for (let i = 0; i < 5; i++) {
+      const d = new Date();
+      d.setDate(d.getDate() + i + 1); // Start from tomorrow
+      dates.push(d);
+    }
+    return dates;
   };
 
   return (
-    <section className="py-20 md:py-32 bg-[#020617] text-white font-sans overflow-hidden">
+    // NOTE: Removed 'overflow-hidden' from section to ensure sticky elements work if needed, 
+    // but Modal is now fixed to viewport so it won't care about section overflow.
+    <section className="py-20 md:py-32 bg-[#020617] text-white font-sans relative">
       <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
 
-      <div className="max-w-6xl mx-auto px-6">
+      {/* Main Content Wrapper */}
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
         <header className="text-center mb-20">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6">
             <Sparkles className="w-3 h-3 text-blue-400" />
@@ -205,26 +326,32 @@ export default function PricingSection() {
               </div>
 
               <div className="flex flex-col gap-4 mt-auto">
+                {/* BUTTONS WITH EXPLICIT CURSOR POINTER */}
                 <button 
-                  onClick={() => makePayment(tier, 'Full')} 
-                  disabled={!!loadingId} 
-                  className="w-full py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] flex items-center justify-center gap-3 transition-all bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/20 disabled:opacity-50"
+                  onClick={() => {
+                    setSelectedTier(tier);
+                    setActiveModal('register');
+                  }} 
+                  className="w-full py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] flex items-center justify-center gap-3 transition-all bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/20 cursor-pointer relative z-30"
                 >
-                  {loadingId === `${tier.id}-Full` ? <Loader2 className="animate-spin w-4 h-4" /> : <CreditCard className="w-4 h-4" />} Full Payment
+                  <CreditCard className="w-4 h-4" /> Register Now
                 </button>
+                
                 <button 
-                  onClick={() => makePayment(tier, 'EMI')} 
-                  disabled={!!loadingId} 
-                  className="w-full py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] flex items-center justify-center gap-3 transition-all bg-white/5 hover:bg-white/10 border border-white/20 text-white group disabled:opacity-50"
+                  onClick={() => {
+                    setSelectedTier(tier);
+                    setActiveModal('demo');
+                  }} 
+                  className="w-full py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] flex items-center justify-center gap-3 transition-all bg-white/5 hover:bg-white/10 border border-white/20 text-white group cursor-pointer relative z-30"
                 >
-                  {loadingId === `${tier.id}-EMI` ? <Loader2 className="animate-spin w-4 h-4" /> : <Zap className="w-4 h-4 text-green-400 group-hover:scale-125 transition-transform" />} Pay via EMI (Monthly)
+                  <Calendar className="w-4 h-4 text-green-400 group-hover:scale-125 transition-transform" /> Book Your Demo
                 </button>
               </div>
             </article>
           ))}
         </div>
 
-        {/* Updated Table Data based on Brochure/Screenshot */}
+        {/* --- Table Section --- */}
         <div className="mt-20 border-t border-white/10 pt-20">
           <div className="text-center mb-12">
             <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4">InternX Learning <span className="text-slate-500 italic font-serif">vs</span> Traditional Learning</h3>
@@ -255,11 +382,6 @@ export default function PricingSection() {
                   <td className="p-6 text-blue-400 text-center">Live Startup Micro-Internships</td>
                   <td className="p-6 text-slate-600 text-center">Dummy Capstone Projects</td>
                 </tr>
-                <tr className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
-                  <td className="p-6 text-slate-300">Hiring Network</td>
-                  <td className="p-6 text-blue-400 text-center">HireX Global Hiring Engine</td>
-                  <td className="p-6 text-slate-600 text-center">Basic Job Portals / Referral Links</td>
-                </tr>
                 <tr className="hover:bg-white/[0.02] transition-colors">
                   <td className="p-6 text-slate-300">Outcome Guarantee</td>
                   <td className="p-6 text-blue-400 text-center font-bold">Legal Job Guarantee (Elite Plan)</td>
@@ -276,10 +398,231 @@ export default function PricingSection() {
                 <span className="text-[10px] uppercase font-bold tracking-widest text-slate-400 italic">InternX-AI Secure SSL | PCI-DSS Compliant Gateway</span>
             </div>
             <p className="text-slate-600 text-[9px] uppercase tracking-widest max-w-lg text-center leading-loose">
-              © 2026 Career Lab Consulting Pvt. Ltd. | InternX-AI is a Career Transformer built on Real Proof and Global Project Access.
+              © 2026 Career Lab Consulting Pvt. Ltd.
             </p>
         </div>
       </div>
+
+      {/* ================= MODAL OVERLAY (FIXED POSITION) ================= */}
+      {/* Uses 'fixed inset-0' to stick to viewport (screen), not the page.
+          Uses 'z-[9999]' to appear above everything else.
+          'flex items-center justify-center' ensures horizontal and vertical centering.
+      */}
+      {activeModal && selectedTier && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+          
+          {/* REGISTER MODAL */}
+          {activeModal === 'register' && (
+            <div className="bg-[#0f172a] border border-blue-500/20 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl relative">
+                <div className="p-6 border-b border-white/10 flex justify-between items-center bg-white/5">
+                <h3 className="text-xl font-black uppercase tracking-tight flex items-center gap-2 text-white">
+                    <Crown className="w-5 h-5 text-blue-400" /> 
+                    {registerStep === 'selection' ? `Join ${selectedTier.name}` : 'Seat Reservation'}
+                </h3>
+                <button onClick={resetModals} className="p-2 hover:bg-white/10 rounded-full transition-colors cursor-pointer">
+                    <X className="w-5 h-5 text-slate-400" />
+                </button>
+                </div>
+
+                <div className="p-8">
+                {registerStep === 'selection' ? (
+                    <div className="space-y-4">
+                    <p className="text-slate-400 text-sm mb-6">Select how you would like to proceed with your enrollment.</p>
+                    
+                    <button 
+                        onClick={handleFullPaymentClick}
+                        className="w-full p-6 rounded-2xl bg-blue-600 hover:bg-blue-500 border border-blue-400/20 flex items-center justify-between group transition-all cursor-pointer"
+                    >
+                        <div className="text-left">
+                        <div className="text-sm font-bold uppercase tracking-widest text-blue-100 mb-1">Full Payment</div>
+                        <div className="text-2xl font-black text-white">{selectedTier.priceINR}</div>
+                        </div>
+                        <ChevronRight className="w-6 h-6 text-white group-hover:translate-x-1 transition-transform" />
+                    </button>
+
+                    <button 
+                        onClick={() => setRegisterStep('form')}
+                        className="w-full p-6 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-between group transition-all cursor-pointer"
+                    >
+                        <div className="text-left">
+                        <div className="text-sm font-bold uppercase tracking-widest text-slate-300 mb-1">Seat Registration</div>
+                        <div className="text-2xl font-black text-green-400">₹10,000</div>
+                        </div>
+                        <ChevronRight className="w-6 h-6 text-slate-400 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                    <p className="text-[10px] text-slate-500 text-center mt-4">Full payment secures instant access. Seat registration reserves your spot.</p>
+                    </div>
+                ) : (
+                    <form onSubmit={handleSeatRegistrationSubmit} className="space-y-4">
+                        <div className="space-y-4">
+                        <div className="relative">
+                            <User className="absolute left-4 top-3.5 w-4 h-4 text-slate-500" />
+                            <input 
+                            type="text" name="name" required placeholder="Full Name" 
+                            value={formData.name} onChange={handleInputChange}
+                            className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
+                            />
+                        </div>
+                        <div className="relative">
+                            <Mail className="absolute left-4 top-3.5 w-4 h-4 text-slate-500" />
+                            <input 
+                            type="email" name="email" required placeholder="Email Address" 
+                            value={formData.email} onChange={handleInputChange}
+                            className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
+                            />
+                        </div>
+                        <div className="relative">
+                            <Phone className="absolute left-4 top-3.5 w-4 h-4 text-slate-500" />
+                            <input 
+                            type="tel" name="phone" required placeholder="WhatsApp Number" 
+                            value={formData.phone} onChange={handleInputChange}
+                            className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
+                            />
+                        </div>
+                        <div className="relative">
+                            <MessageSquare className="absolute left-4 top-3.5 w-4 h-4 text-slate-500" />
+                            <input 
+                            type="text" name="message" placeholder="Short Message (Optional)" 
+                            value={formData.message} onChange={handleInputChange}
+                            className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
+                            />
+                        </div>
+                        </div>
+
+                        <button type="submit" className="w-full mt-6 py-4 bg-green-600 hover:bg-green-500 text-white font-bold uppercase tracking-widest rounded-xl transition-all shadow-lg shadow-green-900/20 cursor-pointer">
+                            Pay ₹10,000 to Reserve
+                        </button>
+                        <button type="button" onClick={() => setRegisterStep('selection')} className="w-full py-2 text-xs text-slate-500 hover:text-white transition-colors cursor-pointer">
+                            Back to Options
+                        </button>
+                    </form>
+                )}
+                </div>
+            </div>
+          )}
+
+          {/* DEMO BOOKING MODAL */}
+          {activeModal === 'demo' && (
+            <div className="bg-[#0f172a] border border-white/10 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl relative">
+                <div className="p-6 border-b border-white/10 flex justify-between items-center bg-white/5">
+                <h3 className="text-xl font-black uppercase tracking-tight flex items-center gap-2 text-white">
+                    <Calendar className="w-5 h-5 text-green-400" /> Book Free Demo
+                </h3>
+                <button onClick={resetModals} className="p-2 hover:bg-white/10 rounded-full transition-colors cursor-pointer">
+                    <X className="w-5 h-5 text-slate-400" />
+                </button>
+                </div>
+                
+                <div className="p-8">
+                {demoStep === 'calendar' ? (
+                    <div className="space-y-6">
+                    <div>
+                        <h4 className="text-sm font-bold uppercase text-slate-400 mb-3">1. Select Date</h4>
+                        <div className="grid grid-cols-5 gap-2">
+                        {getNextDays().map((date, idx) => {
+                            const dateStr = date.toDateString();
+                            const isSelected = selectedDate === dateStr;
+                            return (
+                            <button 
+                                key={idx}
+                                onClick={() => setSelectedDate(dateStr)}
+                                className={`p-2 rounded-lg border text-center transition-all cursor-pointer ${isSelected ? 'bg-blue-600 border-blue-500 text-white' : 'bg-white/5 border-white/10 text-slate-400 hover:bg-white/10'}`}
+                            >
+                                <div className="text-[10px] uppercase font-bold">{date.toLocaleDateString('en-US', { weekday: 'short' })}</div>
+                                <div className="text-lg font-black">{date.getDate()}</div>
+                            </button>
+                            )
+                        })}
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 className="text-sm font-bold uppercase text-slate-400 mb-3">2. Select Time</h4>
+                        <div className="grid grid-cols-3 gap-2">
+                        {['10:00 AM', '12:00 PM', '02:00 PM', '04:00 PM', '06:00 PM'].map((time) => (
+                            <button
+                                key={time}
+                                onClick={() => setSelectedTime(time)}
+                                disabled={!selectedDate}
+                                className={`py-2 rounded-lg border text-xs font-bold transition-all ${selectedTime === time ? 'bg-green-600 border-green-500 text-white' : 'bg-white/5 border-white/10 text-slate-400 hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed'}`}
+                            >
+                                {time}
+                            </button>
+                        ))}
+                        </div>
+                    </div>
+
+                    <button 
+                        disabled={!selectedDate || !selectedTime}
+                        onClick={() => setDemoStep('form')}
+                        className="w-full py-4 mt-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold uppercase tracking-widest rounded-xl transition-all cursor-pointer"
+                    >
+                        Continue
+                    </button>
+                    </div>
+                ) : (
+                    <form onSubmit={handleBookDemoSubmit} className="space-y-4">
+                    <div className="bg-blue-900/20 border border-blue-500/20 p-3 rounded-lg flex items-center gap-3 mb-6">
+                        <Clock className="w-4 h-4 text-blue-400" />
+                        <span className="text-xs text-blue-200">
+                        {selectedDate} @ {selectedTime}
+                        </span>
+                    </div>
+
+                    <div className="space-y-4">
+                        <div className="relative">
+                        <User className="absolute left-4 top-3.5 w-4 h-4 text-slate-500" />
+                        <input 
+                            type="text" name="name" required placeholder="Full Name" 
+                            value={formData.name} onChange={handleInputChange}
+                            className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
+                        />
+                        </div>
+                        <div className="relative">
+                        <Mail className="absolute left-4 top-3.5 w-4 h-4 text-slate-500" />
+                        <input 
+                            type="email" name="email" required placeholder="Email Address" 
+                            value={formData.email} onChange={handleInputChange}
+                            className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
+                        />
+                        </div>
+                        <div className="relative">
+                        <Phone className="absolute left-4 top-3.5 w-4 h-4 text-slate-500" />
+                        <input 
+                            type="tel" name="phone" required placeholder="WhatsApp Number" 
+                            value={formData.phone} onChange={handleInputChange}
+                            className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
+                        />
+                        </div>
+                        <div className="relative">
+                        <MessageSquare className="absolute left-4 top-3.5 w-4 h-4 text-slate-500" />
+                        <input 
+                            type="text" name="message" placeholder="Topics you want to discuss..." 
+                            value={formData.message} onChange={handleInputChange}
+                            className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
+                        />
+                        </div>
+                    </div>
+
+                    <button 
+                        type="submit" 
+                        disabled={loadingId === 'booking-demo'}
+                        className="w-full mt-6 py-4 bg-white text-slate-900 hover:bg-slate-200 font-bold uppercase tracking-widest rounded-xl transition-all shadow-lg flex justify-center items-center gap-2 cursor-pointer"
+                    >
+                        {loadingId === 'booking-demo' ? <Loader2 className="animate-spin w-4 h-4" /> : 'Confirm Booking'}
+                    </button>
+                    <button type="button" onClick={() => setDemoStep('calendar')} className="w-full py-2 text-xs text-slate-500 hover:text-white transition-colors cursor-pointer">
+                        Back to Calendar
+                    </button>
+                    </form>
+                )}
+                </div>
+            </div>
+          )}
+
+        </div>
+      )}
+
     </section>
   );
 }
