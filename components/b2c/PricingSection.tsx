@@ -251,19 +251,19 @@ export default function PricingSection() {
     let amountToCharge = 0;
 
     if (paymentType === 'full') {
-       // Full Payment
        amountToCharge = isInternational ? selectedTier.rawAmountUSD : selectedTier.rawAmountINR;
     } else {
-       // Seat Registration
-       // INR 10,000 = 1000000 paise
-       // USD $150 = 15000 cents (approx equivalent for seat)
        amountToCharge = isInternational ? 15000 : 1000000;
     }
 
-    initRazorpay(amountToCharge, currency, `${paymentType} - ${selectedTier.name}`, paymentType);
+    initRazorpay(
+      amountToCharge, 
+      currency, 
+      `${paymentType} - ${selectedTier.name}`, 
+      paymentType === 'full' ? 'Full Payment' : 'Seat Registration'
+    );
   };
 
-  // --- Demo Booking Logic ---
   const handleBookDemoSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoadingId('booking-demo');
