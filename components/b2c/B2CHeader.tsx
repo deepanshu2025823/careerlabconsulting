@@ -26,7 +26,7 @@ const megaMenuCategories = [
     title: 'AI & Data',
     icon: Cpu,
     programs: [
-      { name: 'InternX-AI', href: '/internship/internx-ai-engineer' },
+      { name: 'InternX-AI', href: '/internship/internx-ai' },
       { name: 'InternX-Data Engineer', href: '/internship/internx-data-engineer' },
       { name: 'InternX-AI Quality & Safety Engineer', href: '/internship/internx-ai-quality-safety-engineer' },
     ],
