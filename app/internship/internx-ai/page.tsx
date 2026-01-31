@@ -549,66 +549,86 @@ export default function InternXAIPage() {
              </div>
         </section>
 
-        {/* --- PRICING --- */}
-        <section id="pricing" className="py-24 px-6 bg-[#03081a]">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-black uppercase text-white">Program Fees</h2>
-              <p className="text-slate-400">Scholarships up to 30% available based on test performance.</p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              <div className="bg-white/5 border border-white/10 rounded-3xl p-8 hover:border-blue-500/50 transition-all group relative">
-                <h3 className="text-2xl font-bold mb-2 text-white">Foundation</h3>
-                <p className="text-slate-400 text-sm mb-6">6 Months • Beginner Friendly</p>
-                <div className="flex items-end gap-2 mb-1">
-                  <div className="text-4xl font-black text-white">₹1,49,999</div>
-                  <div className="text-xl font-bold text-slate-500 mb-1">/ ~$2,000</div>
-                </div>
-                <div className="mb-6 p-3 bg-blue-500/10 rounded-lg text-xs font-bold text-blue-400 text-center">
-                    EMI starts at ₹5,208/month (India Only)
-                </div>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" /> Weekend Live Classes</li>
-                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" /> Real Industry Projects</li>
-                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" /> ResumeNFT Proof</li>
-                </ul>
-                <button 
-                  onClick={() => handlePayment('Foundation', 149999)}
-                  className="w-full py-4 bg-white text-black font-bold rounded-xl hover:bg-slate-200 transition-colors shadow-lg shadow-white/10"
-                >
-                  Apply for Foundation
-                </button>
-              </div>
+<section id="pricing" className="py-24 px-6 bg-[#03081a]">
+  <div className="max-w-6xl mx-auto">
+    <div className="text-center mb-16">
+      <h2 className="text-4xl font-black uppercase text-white">Program Fees</h2>
+      <p className="text-slate-400">Merit-based scholarships available based on test performance.</p>
+    </div>
+    
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      
+      <div className="bg-white/5 border border-white/10 rounded-3xl p-8 hover:border-blue-500/50 transition-all group relative flex flex-col">
+        <h3 className="text-2xl font-bold mb-2 text-white">Foundation</h3>
+        <p className="text-slate-400 text-sm mb-6">6 Months • Beginner Friendly</p>
+        
+        <div className="flex items-end gap-2 mb-2">
+          <div className="text-4xl font-black text-white">₹1,49,999</div>
+          <div className="text-xl font-bold text-slate-500 mb-1">/ ~$2,000</div>
+        </div>
 
-              <div className="bg-[#0b0f1f] border border-purple-500/30 rounded-3xl p-8 relative overflow-hidden group">
-                <div className="absolute top-0 right-0 bg-purple-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase">Career Accelerator</div>
-                <h3 className="text-2xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">Elite</h3>
-                <p className="text-slate-400 text-sm mb-6">12 Months • Full Career Path</p>
-                <div className="flex items-end gap-2 mb-1">
-                  <div className="text-4xl font-black text-white">₹2,49,999</div>
-                  <div className="text-xl font-bold text-slate-500 mb-1">/ ~$3,000</div>
-                </div>
-                <div className="mb-6 p-3 bg-purple-500/10 rounded-lg text-xs font-bold text-purple-400 text-center">
-                    Includes Foundation + Advanced Layer
-                </div>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" /> <strong>Everything in Foundation</strong></li>
-                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" /> Advanced MLOps & GenAI</li>
-                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" /> Enterprise-Grade Projects</li>
-                </ul>
-                <button 
-                  onClick={() => handlePayment('Elite', 249999)}
-                  className="w-full py-4 bg-purple-600 text-white font-bold rounded-xl hover:bg-purple-700 transition-colors shadow-lg shadow-purple-600/20"
-                >
-                  Check Elite Eligibility
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
+        <div className="mb-4">
+            <span className="inline-block bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-bold px-3 py-1 rounded-full">
+                Up to 30% Scholarship Available
+            </span>
+        </div>
 
-        {/* --- PROBLEM STATEMENT --- */}
+        <div className="mb-6 p-3 bg-blue-500/10 rounded-lg text-xs font-bold text-blue-400 text-center">
+            EMI starts at ₹5,208/month (India Only)
+        </div>
+
+        <ul className="space-y-3 mb-8 flex-grow">
+          <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" /> Weekend Live Classes</li>
+          <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" /> Real Industry Projects</li>
+          <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" /> ResumeNFT Proof</li>
+        </ul>
+        
+        <button 
+          onClick={() => handlePayment('Foundation', 149999)}
+          className="w-full py-4 bg-white text-black font-bold rounded-xl hover:bg-slate-200 transition-colors shadow-lg shadow-white/10"
+        >
+          Apply for Foundation
+        </button>
+      </div>
+
+      <div className="bg-[#0b0f1f] border border-purple-500/30 rounded-3xl p-8 relative overflow-hidden group flex flex-col">
+        <div className="absolute top-0 right-0 bg-purple-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase">Career Accelerator</div>
+        <h3 className="text-2xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">Elite</h3>
+        <p className="text-slate-400 text-sm mb-6">12 Months • Full Career Path</p>
+        
+        <div className="flex items-end gap-2 mb-2">
+          <div className="text-4xl font-black text-white">₹2,49,999</div>
+          <div className="text-xl font-bold text-slate-500 mb-1">/ ~$3,000</div>
+        </div>
+
+        <div className="mb-4">
+            <span className="inline-block bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-bold px-3 py-1 rounded-full animate-pulse">
+                Up to 40% Scholarship Available
+            </span>
+        </div>
+
+        <div className="mb-6 p-3 bg-purple-500/10 rounded-lg text-xs font-bold text-purple-400 text-center">
+            Includes Foundation + Advanced Layer
+        </div>
+
+        <ul className="space-y-3 mb-8 flex-grow">
+          <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" /> <strong>Everything in Foundation</strong></li>
+          <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" /> Advanced MLOps & GenAI</li>
+          <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" /> Enterprise-Grade Projects</li>
+        </ul>
+        
+        <button 
+          onClick={() => handlePayment('Elite', 249999)}
+          className="w-full py-4 bg-purple-600 text-white font-bold rounded-xl hover:bg-purple-700 transition-colors shadow-lg shadow-purple-600/20"
+        >
+          Check Elite Eligibility
+        </button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
         <section className="py-24 px-6">
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>

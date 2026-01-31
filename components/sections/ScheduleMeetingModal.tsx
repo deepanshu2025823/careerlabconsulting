@@ -8,7 +8,6 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// --- Client Configuration ---
 const CONTACT_NUMBER = "918700236923"; 
 
 interface ModalProps {
@@ -26,7 +25,6 @@ export default function ScheduleMeetingModal({ isOpen, onClose, planInfo }: Moda
 
   const timeSlots = ["10:00 AM", "11:00 AM", "12:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM"];
 
-  // Calendar Logic
   const daysInMonth = useMemo(() => {
     const year = selectedDate.getFullYear();
     const month = selectedDate.getMonth();
@@ -84,13 +82,7 @@ export default function ScheduleMeetingModal({ isOpen, onClose, planInfo }: Moda
   return (
     <AnimatePresence>
       {isOpen && (
-        // CHANGES HERE: 
-        // 1. 'fixed' -> 'absolute': This makes it stay inside the section.
-        // 2. 'h-full': Ensures it covers the full height of the section.
-        // 3. 'z-50': Keeps it above pricing cards but below global headers/navbars if needed.
         <div className="absolute inset-0 z-50 flex items-center justify-center p-4 h-full w-full">
-          
-          {/* Backdrop: Changed to absolute so it only dims the section */}
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -103,11 +95,8 @@ export default function ScheduleMeetingModal({ isOpen, onClose, planInfo }: Moda
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            // Added max-h styling to ensure it fits well within section boundaries
             className="relative w-full max-w-4xl bg-[#0B1121] border border-white/10 rounded-[2.5rem] shadow-[0_0_50px_rgba(37,99,235,0.15)] overflow-hidden flex flex-col max-h-[800px] h-auto"
           >
-            
-            {/* Header */}
             <div className="flex items-center justify-between p-6 lg:px-10 border-b border-white/5 bg-white/[0.02]">
               <div className="flex items-center gap-4">
                 <div className="hidden sm:flex p-3 bg-blue-500/10 rounded-2xl border border-blue-500/20 text-blue-500">
@@ -130,11 +119,9 @@ export default function ScheduleMeetingModal({ isOpen, onClose, planInfo }: Moda
               </button>
             </div>
 
-            {/* Body */}
             <div className="flex-1 overflow-y-auto p-6 lg:p-10 custom-scrollbar">
               <AnimatePresence mode="wait">
                 
-                {/* STEP 1: DATE & TIME */}
                 {step === 'date' && (
                   <motion.div 
                     key="date-step"
@@ -143,7 +130,6 @@ export default function ScheduleMeetingModal({ isOpen, onClose, planInfo }: Moda
                     exit={{ opacity: 0, x: -20 }}
                     className="grid grid-cols-1 lg:grid-cols-2 gap-10"
                   >
-                    {/* Calendar */}
                     <div className="bg-white/[0.02] p-6 rounded-[2rem] border border-white/5">
                       <div className="flex items-center justify-between mb-6">
                         <h4 className="text-white font-black text-xs uppercase tracking-widest flex items-center gap-2">
@@ -186,7 +172,6 @@ export default function ScheduleMeetingModal({ isOpen, onClose, planInfo }: Moda
                       </div>
                     </div>
 
-                    {/* Time Slots */}
                     <div className="flex flex-col justify-between">
                       <div className="space-y-6">
                         <h4 className="text-white font-black text-xs uppercase tracking-widest flex items-center gap-2">
@@ -220,7 +205,6 @@ export default function ScheduleMeetingModal({ isOpen, onClose, planInfo }: Moda
                   </motion.div>
                 )}
 
-                {/* STEP 2: FORM DETAILS */}
                 {step === 'details' && (
                   <motion.div 
                     key="details-step"
@@ -289,7 +273,6 @@ export default function ScheduleMeetingModal({ isOpen, onClose, planInfo }: Moda
                   </motion.div>
                 )}
 
-                {/* STEP 3: SUCCESS */}
                 {step === 'success' && (
                   <motion.div 
                     key="success-step"

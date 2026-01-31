@@ -10,7 +10,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Script from 'next/script';
 import ScheduleMeetingModal from './ScheduleMeetingModal'; 
 
-// --- Client Contact Details ---
 const CONTACT_INFO = {
   whatsapp: "918700236923",
   email: "info@careerlabconsulting.com"
