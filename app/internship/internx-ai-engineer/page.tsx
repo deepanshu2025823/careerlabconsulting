@@ -12,8 +12,52 @@ import {
   Users, Coins, Zap, Code2, 
   Layout, Server, BrainCircuit, Network, Trophy, 
   FileCheck, Medal, Timer, Play, ChevronDown, Plus,
-  TrendingUp, Wallet
+  TrendingUp, Wallet, Check
 } from 'lucide-react';
+
+const BrandIcons = {
+  Python: () => (
+    <svg viewBox="0 0 256 256" className="w-12 h-12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M126.916 0C66.14 0 54.815 27.283 54.815 27.283V56.78H109.9V47.518H145.42V78.705H37.513C37.513 78.705 0 78.077 0 134.417C0 190.757 33.129 187.319 33.129 187.319H62.96V156.463C62.96 156.463 61.464 120.375 99.492 120.375H154.545C154.545 120.375 192.176 118.814 192.176 80.363C192.176 41.912 187.265 0 126.916 0ZM96.53 20.485C102.13 20.485 106.666 25.02 106.666 30.62C106.666 36.22 102.13 40.755 96.53 40.755C90.93 40.755 86.395 36.22 86.395 30.62C86.395 25.02 90.93 20.485 96.53 20.485Z" fill="#3776AB"/>
+      <path d="M129.084 256C189.86 256 201.185 228.717 201.185 228.717V199.22H146.1V208.482H110.58V177.295H218.487C218.487 177.295 256 177.923 256 121.583C256 65.243 222.871 68.681 222.871 68.681H193.04V99.537C193.04 99.537 194.536 135.625 156.508 135.625H101.455C101.455 135.625 63.824 137.186 63.824 175.637C63.824 214.088 68.735 256 129.084 256ZM159.47 235.515C153.87 235.515 149.334 230.98 149.334 225.38C149.334 219.78 153.87 215.245 159.47 215.245C165.07 215.245 169.605 219.78 169.605 225.38C169.605 230.98 165.07 235.515 159.47 235.515Z" fill="#FFD43B"/>
+    </svg>
+  ),
+  OpenAI: () => (
+    <svg viewBox="0 0 24 24" className="w-12 h-12 text-white" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.0462 6.0462 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1195 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.453l-.142.0805L8.704 5.4596a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l3.8556-2.2086 3.8556 2.2086v4.4172l-3.8556 2.2086-3.8556-2.2086z"/>
+    </svg>
+  ),
+  LangChain: () => (
+    <div className="w-12 h-12 flex items-center justify-center">
+        <span className="text-3xl">🦜</span>
+    </div>
+  ),
+  GitHub: () => (
+    <svg viewBox="0 0 98 96" className="w-12 h-12" xmlns="http://www.w3.org/2000/svg">
+      <path fillRule="evenodd" clipRule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z" fill="#ffffff"/>
+    </svg>
+  ),
+  SQL: () => (
+    <div className="w-12 h-12 flex items-center justify-center bg-blue-100 rounded-lg">
+       <span className="font-black text-blue-600 text-xl">SQL</span>
+    </div>
+  ),
+  Zapier: () => (
+    <svg viewBox="0 0 24 24" className="w-12 h-12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 12H13.5V4L20 12H10.5V20L4 12Z" fill="#FF4F00"/>
+    </svg>
+  ),
+  PyTorch: () => (
+    <svg viewBox="0 0 24 24" className="w-12 h-12" fill="none" xmlns="http://www.w3.org/2000/svg">
+       <path d="M12.9 22.8C12.9 22.8 11.4 22.8 10.3 21.6C9.2 20.4 9.2 18.7 9.8 17.5L12.5 12.2L11 9.3L7.7 15.8C7.1 17 6.8 18.3 7 19.6C7.2 21 8 22.2 9.2 23.1C10.4 24 11.9 24.4 13.4 24.3C14.9 24.1 16.2 23.5 17.2 22.5L16 21.3C15.2 22.2 14.1 22.7 12.9 22.8ZM16.3 17.6L14.4 13.9L12.9 16.8L15.6 20.3C16.1 20.1 16.5 19.8 16.9 19.4C17.3 19 17.5 18.5 17.7 18L16.3 17.6ZM8.1 7.2L5.4 12.5C4.8 13.7 4.8 15.3 5.9 16.5C7 17.7 8.5 17.7 8.5 17.7L9.7 18.9C9.7 18.9 9.2 18.8 8.6 18.6C8 18.4 7.4 18 6.9 17.5C5.8 16.4 5.3 14.8 5.5 13.3C5.7 11.7 6.6 10.4 7.9 9.5L8.1 7.2ZM12.7 1.2C12.7 1.2 14.2 1.2 15.3 2.4C16.4 3.6 16.4 5.3 15.8 6.5L13.1 11.8L14.6 14.7L17.9 8.2C18.5 7 18.8 5.7 18.6 4.4C18.4 3 17.6 1.8 16.4 0.9C15.2 0 13.7 -0.4 12.2 -0.3C10.7 -0.1 9.4 0.5 8.4 1.5L9.6 2.7C10.4 1.8 11.5 1.3 12.7 1.2ZM9.3 6.4L11.2 10.1L12.7 7.2L10 3.7C9.5 3.9 9.1 4.2 8.7 4.6C8.3 5 8.1 5.5 7.9 6L9.3 6.4ZM17.5 16.8L20.2 11.5C20.8 10.3 20.8 8.7 19.7 7.5C18.6 6.3 17.1 6.3 17.1 6.3L15.9 5.1C15.9 5.1 16.4 5.2 17 5.4C17.6 5.6 18.2 6 18.7 6.5C19.8 7.6 20.3 9.2 20.1 10.7C19.9 12.3 19 13.6 17.7 14.5L17.5 16.8Z" fill="#EE4C2C"/>
+    </svg>
+  ),
+  FastAPI: () => (
+    <svg viewBox="0 0 24 24" className="w-12 h-12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 0C5.38 0 0 5.38 0 12C0 18.62 5.38 24 12 24C18.62 24 24 18.62 24 12C24 5.38 18.62 0 12 0ZM11.16 19.5L10.04 12.82H6.96L12.84 4.5L13.96 11.18H17.04L11.16 19.5Z" fill="#009688"/>
+    </svg>
+  )
+};
 
 const industryDomains = [
   { 
@@ -167,14 +211,14 @@ const ecosystem = [
 ];
 
 const tools = [
-  { name: "Python", icon: "🐍" },
-  { name: "OpenAI API", icon: "🤖" },
-  { name: "LangChain", icon: "🦜" },
-  { name: "GitHub", icon: "🐙" },
-  { name: "SQL", icon: "🗄️" },
-  { name: "Zapier/Make", icon: "⚡" },
-  { name: "PyTorch", icon: "🔥" },
-  { name: "FastAPI", icon: "🚀" }
+  { name: "Python", icon: <BrandIcons.Python /> },
+  { name: "OpenAI API", icon: <BrandIcons.OpenAI /> },
+  { name: "LangChain", icon: <BrandIcons.LangChain /> },
+  { name: "GitHub", icon: <BrandIcons.GitHub /> },
+  { name: "SQL", icon: <BrandIcons.SQL /> },
+  { name: "Zapier/Make", icon: <BrandIcons.Zapier /> },
+  { name: "PyTorch", icon: <BrandIcons.PyTorch /> },
+  { name: "FastAPI", icon: <BrandIcons.FastAPI /> }
 ];
 
 const gamificationData = [
@@ -269,10 +313,45 @@ const careerGrowth = [
 
 const hiringPartners = ["Zapier", "Notion", "Turing", "Freshworks", "Loom", "OutSystems", "HubSpot", "Monday.com"];
 
+const foundationVsEliteData = [
+    {
+        category: "Features & Delivery",
+        rows: [
+            { feature: "Duration", foundation: "6 Months", elite: "12 Months (Foundation Included)" },
+            { feature: "Live Learning", foundation: "Weekend Syllabus", elite: "Weekend Syllabus" },
+            { feature: "Projects", foundation: "Guided Industry Projects", elite: "Guided + Custom Choice" },
+            { feature: "Mentorship", foundation: "Weekly 1:1", elite: "Weekly 1:1 + Technical Deep Dive" },
+            { feature: "Global Hiring Exposure", foundation: "Limited", elite: "Strong Focus" },
+        ]
+    },
+    {
+        category: "Tools & Tech Stack",
+        rows: [
+            { feature: "Python", foundation: "Basics & Fundamentals", elite: "Advanced Engineering" },
+            { feature: "AI/ML Depth", foundation: "Concepts & Application", elite: "Production Pipelines & MLOps" },
+            { feature: "GenAI & LLMs", foundation: "Prompting & API Usage", elite: "RAG, Vector DBs, Fine-tuning" },
+            { feature: "Agentic AI", foundation: "No", elite: "Multi-Agent Systems (LangGraph)" },
+            { feature: "Deployment", foundation: "Basic API (Flask)", elite: "Scalable Cloud Architecture" },
+        ]
+    },
+    {
+        category: "Career & Outcomes",
+        rows: [
+            { feature: "Job Roles", foundation: "Jr. AI Developer, Intern", elite: "AI/ML Engineer, GenAI Engineer" },
+            { feature: "Interview Opps", foundation: "Multiple", elite: "Unlimited till Selection" },
+            { feature: "Avg CTC (India)", foundation: "₹4L - ₹6L (Entry)", elite: "₹9L - ₹15L (Accelerated)" },
+            { feature: "Avg CTC (Global)", foundation: "$5K - $8K", elite: "$15K - $25K+" },
+            { feature: "ResumeNFT Tier", foundation: "Foundation Tier", elite: "Advanced Tier" },
+        ]
+    }
+];
+
+
 export default function InternXAIPage() {
   const [activeTab, setActiveTab] = useState('foundation');
   const [activeGamification, setActiveGamification] = useState(gamificationData[0]);
   const [activeFaqIndex, setActiveFaqIndex] = useState<number | null>(0);
+  const [comparisonCategory, setComparisonCategory] = useState(foundationVsEliteData[0]);
 
   const handlePayment = (planName: string, amount: number) => {
     if (typeof window === 'undefined' || !(window as any).Razorpay) {
@@ -312,7 +391,7 @@ export default function InternXAIPage() {
 
       <main className="flex-grow">
         
-        <section className="relative pt-32 pb-20 px-6 overflow-hidden">
+        <section className="relative pt-32 pb-10 px-6 overflow-hidden">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80vw] h-[500px] bg-blue-600/10 rounded-full blur-[120px] -z-10" />
           
           <article className="max-w-7xl mx-auto text-center">
@@ -325,7 +404,7 @@ export default function InternXAIPage() {
             </div>
 
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-black uppercase tracking-tighter mb-6 leading-tight text-white">
-              InternX-AI Developer<br />
+              InternX-AI<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
                 Foundation
               </span>
@@ -362,6 +441,58 @@ export default function InternXAIPage() {
               ))}
             </div>
           </article>
+        </section>
+
+        <section id="pricing" className="py-24 px-6 bg-[#03081a]">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-black uppercase text-white">Program Fees</h2>
+              <p className="text-slate-400">Scholarships up to 30% available based on test performance.</p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              <div className="bg-white/5 border border-white/10 rounded-3xl p-8 hover:border-blue-500/50 transition-all group relative">
+                <h3 className="text-2xl font-bold mb-2 text-white">Foundation</h3>
+                <p className="text-slate-400 text-sm mb-6">6 Months • Beginner Friendly</p>
+                <div className="text-4xl font-black mb-1 text-white">₹1,49,999</div>
+                <div className="mb-6 p-3 bg-blue-500/10 rounded-lg text-xs font-bold text-blue-400 text-center">
+                    EMI starts at ₹5,208/month
+                </div>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" /> Weekend Live Classes</li>
+                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" /> Real Industry Projects</li>
+                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" /> ResumeNFT Proof</li>
+                </ul>
+                <button 
+                  onClick={() => handlePayment('Foundation', 149999)}
+                  className="w-full py-4 bg-white text-black font-bold rounded-xl hover:bg-slate-200 transition-colors shadow-lg shadow-white/10"
+                >
+                  Apply for Foundation
+                </button>
+              </div>
+
+              <div className="bg-[#0b0f1f] border border-purple-500/30 rounded-3xl p-8 relative overflow-hidden group">
+                <div className="absolute top-0 right-0 bg-purple-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase">Career Accelerator</div>
+                <h3 className="text-2xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">Elite</h3>
+                <p className="text-slate-400 text-sm mb-6">12 Months • Full Career Path</p>
+                <div className="text-4xl font-black mb-1 text-white">₹2,49,999</div>
+                <div className="mb-6 p-3 bg-purple-500/10 rounded-lg text-xs font-bold text-purple-400 text-center">
+                    Includes Foundation + Advanced Layer
+                </div>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" /> <strong>Everything in Foundation</strong></li>
+                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" /> Advanced MLOps & GenAI</li>
+                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" /> Enterprise-Grade Projects</li>
+                </ul>
+                <button 
+                  onClick={() => handlePayment('Elite', 249999)}
+                  className="w-full py-4 bg-purple-600 text-white font-bold rounded-xl hover:bg-purple-700 transition-colors shadow-lg shadow-purple-600/20"
+                >
+                  Check Elite Eligibility
+                </button>
+              </div>
+            </div>
+          </div>
         </section>
 
         <section className="py-12 bg-blue-950/20 border-y border-white/5">
@@ -538,11 +669,13 @@ export default function InternXAIPage() {
         <section className="py-12 bg-white/5 border-y border-white/5 overflow-hidden">
           <div className="max-w-7xl mx-auto px-6">
             <h3 className="text-center text-sm font-black uppercase tracking-widest text-slate-500 mb-8">Tools You Will Master</h3>
-            <div className="flex flex-wrap justify-center gap-8 md:gap-12 grayscale opacity-70 hover:opacity-100 hover:grayscale-0 transition-all duration-500">
+            <div className="flex flex-wrap justify-center gap-10 md:gap-16 opacity-80 hover:opacity-100 transition-all duration-500">
               {tools.map((tool, i) => (
-                <div key={i} className="flex flex-col items-center gap-2">
-                  <span className="text-3xl filter drop-shadow-lg">{tool.icon}</span>
-                  <span className="text-xs font-bold text-white">{tool.name}</span>
+                <div key={i} className="flex flex-col items-center gap-3 group">
+                  <div className="transform group-hover:scale-110 transition-transform duration-300">
+                    {tool.icon}
+                  </div>
+                  <span className="text-xs font-bold text-white group-hover:text-blue-400 transition-colors">{tool.name}</span>
                 </div>
               ))}
             </div>
@@ -590,6 +723,47 @@ export default function InternXAIPage() {
             </div>
           </div>
         </section>
+        
+        {/* --- ADDED: FOUNDATION VS ELITE COMPARISON TABLES --- */}
+        <section className="py-24 px-6 bg-[#020617] border-t border-white/10">
+            <div className="max-w-6xl mx-auto">
+                <div className="text-center mb-16">
+                    <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white mb-4">Choose Your Track</h2>
+                    <p className="text-slate-400">Detailed comparison of Foundation vs. Elite tracks.</p>
+                </div>
+
+                <div className="flex justify-center mb-8 gap-2 flex-wrap">
+                    {foundationVsEliteData.map((cat, i) => (
+                        <button 
+                            key={i}
+                            onClick={() => setComparisonCategory(cat)}
+                            className={`px-4 py-2 rounded-full text-sm font-bold border transition-all ${
+                                comparisonCategory.category === cat.category 
+                                ? 'bg-white text-black border-white' 
+                                : 'bg-transparent text-slate-400 border-white/20 hover:border-white/50'
+                            }`}
+                        >
+                            {cat.category}
+                        </button>
+                    ))}
+                </div>
+
+                <div className="bg-[#0b0f1f] rounded-2xl border border-white/10 overflow-hidden">
+                    <div className="grid grid-cols-3 bg-white/5 border-b border-white/10 text-xs md:text-sm font-black uppercase tracking-widest text-slate-500">
+                        <div className="p-4 md:p-6">Feature</div>
+                        <div className="p-4 md:p-6 text-blue-400 bg-blue-900/10 border-x border-white/5">Foundation</div>
+                        <div className="p-4 md:p-6 text-purple-400 bg-purple-900/10">Elite</div>
+                    </div>
+                    {comparisonCategory.rows.map((row, idx) => (
+                        <div key={idx} className="grid grid-cols-3 border-b border-white/5 hover:bg-white/5 transition-colors">
+                            <div className="p-4 md:p-6 text-sm font-bold text-white flex items-center">{row.feature}</div>
+                            <div className="p-4 md:p-6 text-sm text-slate-300 border-x border-white/5 bg-blue-900/5">{row.foundation}</div>
+                            <div className="p-4 md:p-6 text-sm text-white font-semibold bg-purple-900/5">{row.elite}</div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
 
         <section className="py-24 px-6 bg-[#050b24]">
           <div className="max-w-6xl mx-auto">
@@ -609,11 +783,11 @@ export default function InternXAIPage() {
                         onClick={() => setActiveGamification(item)}
                         className={`text-left p-5 rounded-xl border transition-all duration-300 flex items-center gap-4 ${activeGamification.id === item.id ? 'bg-white/10 border-white/20 shadow-lg' : 'bg-transparent border-transparent hover:bg-white/5'}`}
                       >
-                         <div className={`${item.color} p-2 bg-white/5 rounded-lg shrink-0`}>{item.icon}</div>
-                         <div>
-                            <span className={`block font-bold text-sm ${activeGamification.id === item.id ? 'text-white' : 'text-slate-400'}`}>{item.label}</span>
-                         </div>
-                         {activeGamification.id === item.id && <ChevronRight className="ml-auto w-4 h-4 text-white/50" />}
+                          <div className={`${item.color} p-2 bg-white/5 rounded-lg shrink-0`}>{item.icon}</div>
+                          <div>
+                             <span className={`block font-bold text-sm ${activeGamification.id === item.id ? 'text-white' : 'text-slate-400'}`}>{item.label}</span>
+                          </div>
+                          {activeGamification.id === item.id && <ChevronRight className="ml-auto w-4 h-4 text-white/50" />}
                       </button>
                    ))}
                 </div>
@@ -772,77 +946,25 @@ export default function InternXAIPage() {
 
                <div className="hidden md:flex flex-row items-end justify-center gap-8 h-96 relative z-10 pt-10">
                   {careerGrowth.map((item, idx) => (
-                     <div key={idx} className="w-1/4 h-full flex flex-col justify-end group">
-                        <div className="relative flex-grow flex items-end justify-center mb-4">
-                           <div 
-                              className={`w-24 rounded-t-lg bg-gradient-to-t ${item.color} shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-700 ease-out group-hover:scale-105 group-hover:brightness-110 relative`}
-                              style={{ height: item.h }}
-                           >
-                              <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white text-blue-950 px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap shadow-lg flex items-center gap-1 opacity-100 transition-all">
-                                 <Wallet className="w-3 h-3" />
-                                 {item.ctc}
-                              </div>
-                           </div>
-                        </div>
-                        <div className="text-center border-t border-white/10 pt-4">
-                           <div className="text-[10px] font-black uppercase text-slate-500 tracking-widest mb-1">{item.year}</div>
-                           <div className="text-sm font-bold text-white group-hover:text-blue-400 transition-colors">{item.role}</div>
-                        </div>
-                     </div>
+                      <div key={idx} className="w-1/4 h-full flex flex-col justify-end group">
+                         <div className="relative flex-grow flex items-end justify-center mb-4">
+                            <div 
+                               className={`w-24 rounded-t-lg bg-gradient-to-t ${item.color} shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-700 ease-out group-hover:scale-105 group-hover:brightness-110 relative`}
+                               style={{ height: item.h }}
+                            >
+                               <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white text-blue-950 px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap shadow-lg flex items-center gap-1 opacity-100 transition-all">
+                                  <Wallet className="w-3 h-3" />
+                                  {item.ctc}
+                               </div>
+                            </div>
+                         </div>
+                         <div className="text-center border-t border-white/10 pt-4">
+                            <div className="text-[10px] font-black uppercase text-slate-500 tracking-widest mb-1">{item.year}</div>
+                            <div className="text-sm font-bold text-white group-hover:text-blue-400 transition-colors">{item.role}</div>
+                         </div>
+                      </div>
                   ))}
                </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="pricing" className="py-24 px-6 bg-[#03081a]">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-black uppercase text-white">Program Fees</h2>
-              <p className="text-slate-400">Scholarships up to 30% available based on test performance.</p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              <div className="bg-white/5 border border-white/10 rounded-3xl p-8 hover:border-blue-500/50 transition-all group relative">
-                <h3 className="text-2xl font-bold mb-2 text-white">Foundation</h3>
-                <p className="text-slate-400 text-sm mb-6">6 Months • Beginner Friendly</p>
-                <div className="text-4xl font-black mb-1 text-white">₹1,49,999</div>
-                <div className="mb-6 p-3 bg-blue-500/10 rounded-lg text-xs font-bold text-blue-400 text-center">
-                    EMI starts at ₹5,208/month
-                </div>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" /> Weekend Live Classes</li>
-                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" /> Real Industry Projects</li>
-                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" /> ResumeNFT Proof</li>
-                </ul>
-                <button 
-                  onClick={() => handlePayment('Foundation', 149999)}
-                  className="w-full py-4 bg-white text-black font-bold rounded-xl hover:bg-slate-200 transition-colors shadow-lg shadow-white/10"
-                >
-                  Apply for Foundation
-                </button>
-              </div>
-
-              <div className="bg-[#0b0f1f] border border-purple-500/30 rounded-3xl p-8 relative overflow-hidden group">
-                <div className="absolute top-0 right-0 bg-purple-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase">Career Accelerator</div>
-                <h3 className="text-2xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">Elite</h3>
-                <p className="text-slate-400 text-sm mb-6">12 Months • Full Career Path</p>
-                <div className="text-4xl font-black mb-1 text-white">₹2,49,999</div>
-                <div className="mb-6 p-3 bg-purple-500/10 rounded-lg text-xs font-bold text-purple-400 text-center">
-                    Includes Foundation + Advanced Layer
-                </div>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" /> <strong>Everything in Foundation</strong></li>
-                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" /> Advanced MLOps & GenAI</li>
-                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" /> Enterprise-Grade Projects</li>
-                </ul>
-                <button 
-                  onClick={() => handlePayment('Elite', 249999)}
-                  className="w-full py-4 bg-purple-600 text-white font-bold rounded-xl hover:bg-purple-700 transition-colors shadow-lg shadow-purple-600/20"
-                >
-                  Check Elite Eligibility
-                </button>
-              </div>
             </div>
           </div>
         </section>
