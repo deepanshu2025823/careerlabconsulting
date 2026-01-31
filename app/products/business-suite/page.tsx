@@ -1,7 +1,6 @@
 import React from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/sections/Footer';
-import ProductMatrix from '@/components/sections/ProductMatrix';
 import MethodologySection from '@/components/sections/MethodologySection';
 import FaqSection from '@/components/sections/FaqSection';
 
@@ -58,8 +57,6 @@ const BusinessSuitePage = () => {
           ))}
         </div>
       </section>
-
-      <ProductMatrix />
 
       <MethodologySection />
 

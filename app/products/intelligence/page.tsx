@@ -3,7 +3,6 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/sections/Footer';
 import FeatureGrid from '@/components/sections/FeatureGrid';
 import SuccessStories from '@/components/sections/SuccessStories';
-import ProductMatrix from '@/components/sections/ProductMatrix';
 import { BrainCircuit, LineChart, Binary, Search, Database, Fingerprint } from 'lucide-react';
 
 const IntelligenceSuitePage = () => {
@@ -73,10 +72,6 @@ const IntelligenceSuitePage = () => {
           ))}
         </div>
       </section>
-
-      <div className="py-12 border-y border-white/5">
-        <ProductMatrix />
-      </div>
 
       <section className="py-24 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">

@@ -1,7 +1,6 @@
 import React from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/sections/Footer';
-import ProductMatrix from '@/components/sections/ProductMatrix';
 import ExecutionFlow from '@/components/sections/ExecutionFlow';
 import FeatureGrid from '@/components/sections/FeatureGrid';
 
@@ -112,8 +111,6 @@ const OperationsSuitePage = () => {
           </div>
         </div>
       </section>
-
-      <ProductMatrix />
 
       <FeatureGrid />
 
