@@ -9,13 +9,54 @@ import {
   Terminal, Database, Activity, Cpu, Bot, Rocket, 
   Shield, Lock, CheckCircle2, XCircle, ChevronRight, 
   Globe, Briefcase, GraduationCap, Layers, Search, 
-  Users, Coins, BarChart3, Star, Zap, Code2, 
+  Users, Coins, Zap, Code2, 
   Layout, Server, BrainCircuit, Network, Trophy, 
   FileCheck, Medal, Timer, Play, ChevronDown, Plus,
   TrendingUp, Wallet
 } from 'lucide-react';
 
-// --- DATA CONSTANTS ---
+const industryDomains = [
+  { 
+    title: "FinTech", 
+    desc: "Lead Scoring & Fraud", 
+    icon: <Coins className="w-8 h-8 mx-auto text-yellow-400 mb-2" /> 
+  },
+  { 
+    title: "EdTech", 
+    desc: "AI Tutors & Content", 
+    icon: <GraduationCap className="w-8 h-8 mx-auto text-blue-400 mb-2" /> 
+  },
+  { 
+    title: "HRTech", 
+    desc: "Resume Screening", 
+    icon: <Users className="w-8 h-8 mx-auto text-pink-400 mb-2" /> 
+  },
+  { 
+    title: "D2C/Retail", 
+    desc: "Customer Automation", 
+    icon: <Globe className="w-8 h-8 mx-auto text-green-400 mb-2" /> 
+  },
+  { 
+    title: "HealthTech", 
+    desc: "Diagnosis & Prediction", 
+    icon: <Activity className="w-8 h-8 mx-auto text-red-400 mb-2" /> 
+  },
+  { 
+    title: "CyberSec", 
+    desc: "Threat Detection AI", 
+    icon: <Shield className="w-8 h-8 mx-auto text-indigo-400 mb-2" /> 
+  },
+  { 
+    title: "Supply Chain", 
+    desc: "Route Optimization", 
+    icon: <Network className="w-8 h-8 mx-auto text-orange-400 mb-2" /> 
+  },
+  { 
+    title: "Media & Ent.", 
+    desc: "RecSys & GenAI", 
+    icon: <Play className="w-8 h-8 mx-auto text-purple-400 mb-2" /> 
+  }
+];
 
 const foundationSyllabus = [
   {
@@ -198,7 +239,7 @@ const faqs = [
 const careerGrowth = [
   { 
     year: "Year 1", 
-    role: "Jr. AI Engineer / Data Analyst", 
+    role: "Jr. AI Engineer / Analyst", 
     ctc: "₹4L - ₹7L", 
     h: "25%", 
     color: "from-slate-600 to-slate-500" 
@@ -233,7 +274,6 @@ export default function InternXAIPage() {
   const [activeGamification, setActiveGamification] = useState(gamificationData[0]);
   const [activeFaqIndex, setActiveFaqIndex] = useState<number | null>(0);
 
-  // --- RAZORPAY HANDLER ---
   const handlePayment = (planName: string, amount: number) => {
     if (typeof window === 'undefined' || !(window as any).Razorpay) {
       alert("Payment gateway failed to load. Please refresh.");
@@ -265,20 +305,17 @@ export default function InternXAIPage() {
   };
 
   return (
-    <div className="bg-[#020617] min-h-screen flex flex-col font-sans text-slate-100">
+    <div className="bg-[#020617] min-h-screen flex flex-col font-sans text-slate-100 overflow-x-hidden selection:bg-blue-500/30 selection:text-blue-200">
       <B2CHeader />
       
-      {/* Load Razorpay Script */}
       <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
 
       <main className="flex-grow">
         
-        {/* --- SECTION 1: HERO & POSITIONING --- */}
         <section className="relative pt-32 pb-20 px-6 overflow-hidden">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80vw] h-[500px] bg-blue-600/10 rounded-full blur-[120px] -z-10" />
           
-          <div className="max-w-7xl mx-auto text-center">
-            {/* Sub-headline */}
+          <article className="max-w-7xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-8 animate-in fade-in slide-in-from-bottom-4">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -287,40 +324,36 @@ export default function InternXAIPage() {
               <span className="text-xs font-bold tracking-widest uppercase text-blue-400">Foundation → Elite Pathway</span>
             </div>
 
-            {/* Headline */}
-            <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-6 leading-tight text-white">
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-black uppercase tracking-tighter mb-6 leading-tight text-white">
               InternX-AI Developer<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
                 Foundation
               </span>
             </h1>
 
-            {/* Supporting Line */}
-            <p className="max-w-3xl mx-auto text-slate-300 text-lg md:text-xl leading-relaxed mb-10">
+            <p className="max-w-3xl mx-auto text-slate-300 text-lg leading-relaxed mb-10 px-2">
               A 6-month, weekend-only AI program to build <strong>real projects</strong>, 
               earn <strong>ResumeNFT™ proof</strong>, and become eligible for Elite AI roles.
-              <span className="block mt-4 text-sm text-slate-500 font-medium tracking-wide">
+              <span className="block mt-4 text-xs md:text-sm text-slate-500 font-medium tracking-wide">
                 PROJECTS → PROOF → INTERVIEWS → ELITE ELIGIBILITY
               </span>
             </p>
 
-            {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link href="#pricing" className="w-full sm:w-auto px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-900/20">
-                <Rocket className="w-5 h-5" /> Download Full Syllabus
+              <Link href="#pricing" className="w-full sm:w-auto px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-900/20 hover:scale-105 active:scale-95 duration-200">
+                <Rocket className="w-5 h-5" /> Download Syllabus
               </Link>
-              <Link href="#eligibility" className="w-full sm:w-auto px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2">
+              <Link href="#eligibility" className="w-full sm:w-auto px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 hover:scale-105 active:scale-95 duration-200">
                 <FileCheck className="w-5 h-5" /> Check Elite Eligibility
               </Link>
             </div>
 
-            {/* Trust Badges */}
             <div className="mt-16 pt-8 border-t border-white/5 grid grid-cols-2 md:grid-cols-4 gap-8 opacity-80">
               {[
                 { val: "15,000+", label: "Learners Trained" },
                 { val: "27+", label: "Countries" },
                 { val: "3,500+", label: "Projects Shipped" },
-                { val: "Certifications", label: "Microsoft / IBM / NASSCOM" },
+                { val: "Certifications", label: "Microsoft / IBM" },
               ].map((stat, i) => (
                 <div key={i} className="flex flex-col items-center">
                   <span className="text-xl md:text-2xl font-black text-white">{stat.val}</span>
@@ -328,46 +361,43 @@ export default function InternXAIPage() {
                 </div>
               ))}
             </div>
-          </div>
+          </article>
         </section>
 
-        {/* --- SECTION 2: POSITIONING STATEMENT --- */}
         <section className="py-12 bg-blue-950/20 border-y border-white/5">
           <div className="max-w-5xl mx-auto text-center px-6">
-            <h2 className="text-2xl md:text-3xl font-black italic text-white/90">
+            <h2 className="text-xl md:text-3xl font-black italic text-white/90 leading-normal">
               &quot;Real AI Careers. Built with Projects. Verified with Proof. Hired with Confidence.&quot;
             </h2>
-            <div className="flex flex-wrap justify-center gap-6 mt-6 text-sm font-bold text-slate-400">
+            <div className="flex flex-wrap justify-center gap-4 md:gap-6 mt-6 text-sm font-bold text-slate-400">
               <span className="flex items-center gap-2"><XCircle className="w-4 h-4 text-red-500" /> No Course Fatigue</span>
               <span className="flex items-center gap-2"><XCircle className="w-4 h-4 text-red-500" /> No Fake Resumes</span>
-              <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-green-500" /> Only Proof-Driven Careers</span>
+              <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-green-500" /> Proof-Driven Careers</span>
             </div>
           </div>
         </section>
 
-        {/* --- SECTION 3: WHY IT EXISTS & JOURNEY --- */}
         <section className="py-24 px-6">
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
               <div className="bg-red-500/10 border border-red-500/20 p-8 rounded-2xl mb-8">
                 <h3 className="text-red-400 font-black uppercase tracking-widest text-sm mb-4">The Problem</h3>
                 <ul className="space-y-4">
-                  <li className="flex gap-3 text-slate-300"><XCircle className="w-5 h-5 text-red-500 shrink-0" /> Most learners jump straight into advanced AI and fail.</li>
-                  <li className="flex gap-3 text-slate-300"><XCircle className="w-5 h-5 text-red-500 shrink-0" /> Certificates without proof don&apos;t help in hiring.</li>
-                  <li className="flex gap-3 text-slate-300"><XCircle className="w-5 h-5 text-red-500 shrink-0" /> Recruiters care about what you&apos;ve built, not watched.</li>
+                  <li className="flex gap-3 text-slate-300 text-sm md:text-base"><XCircle className="w-5 h-5 text-red-500 shrink-0" /> Most learners jump straight into advanced AI and fail.</li>
+                  <li className="flex gap-3 text-slate-300 text-sm md:text-base"><XCircle className="w-5 h-5 text-red-500 shrink-0" /> Certificates without proof don&apos;t help in hiring.</li>
+                  <li className="flex gap-3 text-slate-300 text-sm md:text-base"><XCircle className="w-5 h-5 text-red-500 shrink-0" /> Recruiters care about what you&apos;ve built, not watched.</li>
                 </ul>
               </div>
               <div>
-                <h2 className="text-3xl font-bold mb-4 text-white">The Foundation Philosophy</h2>
-                <p className="text-slate-400 mb-6">Foundation is not the destination. It is the qualification layer for Elite. We start from zero, build fundamentals correctly, and create verifiable proof.</p>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4 text-white">The Foundation Philosophy</h2>
+                <p className="text-slate-400 mb-6 text-sm md:text-base">Foundation is not the destination. It is the qualification layer for Elite. We start from zero, build fundamentals correctly, and create verifiable proof.</p>
                 <div className="p-4 bg-blue-500/10 border-l-4 border-blue-500 rounded-r-lg">
-                  <p className="text-blue-400 font-bold">&quot;Foundation is the eligibility layer. Elite is the acceleration layer.&quot;</p>
+                  <p className="text-blue-400 font-bold text-sm md:text-base">&quot;Foundation is the eligibility layer. Elite is the acceleration layer.&quot;</p>
                 </div>
               </div>
             </div>
             
-            {/* Visual Journey Map */}
-            <div className="relative border border-white/10 rounded-3xl p-8 bg-gradient-to-br from-slate-900 to-slate-800 shadow-2xl">
+            <div className="relative border border-white/10 rounded-3xl p-6 md:p-8 bg-gradient-to-br from-slate-900 to-slate-800 shadow-2xl">
               <h3 className="text-white font-bold mb-6 text-center border-b border-white/10 pb-4">Full Learning Journey</h3>
               <div className="space-y-6">
                 {[
@@ -378,7 +408,7 @@ export default function InternXAIPage() {
                   { step: "5", text: "Qualify for Elite" },
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-4 group">
-                    <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-xs font-bold text-white group-hover:scale-110 transition-transform">{item.step}</div>
+                    <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-xs font-bold text-white group-hover:scale-110 transition-transform shrink-0">{item.step}</div>
                     <div className="h-0.5 flex-1 bg-white/10 group-hover:bg-blue-500/50 transition-colors"></div>
                     <span className="text-sm font-bold text-slate-300 group-hover:text-white transition-colors">{item.text}</span>
                   </div>
@@ -388,12 +418,11 @@ export default function InternXAIPage() {
           </div>
         </section>
 
-        {/* --- SECTION 4: CLC ECOSYSTEM --- */}
         <section className="py-20 bg-[#03081a] px-6">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4 text-white">The CLC Ecosystem</h2>
-              <p className="text-slate-400">InternX-AI operates inside the full Career Lab Consulting ecosystem, not as a standalone course.</p>
+              <p className="text-slate-400">InternX-AI operates inside the full Career Lab Consulting ecosystem.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
               {ecosystem.map((item, i) => (
@@ -409,55 +438,55 @@ export default function InternXAIPage() {
           </div>
         </section>
 
-        {/* --- SECTION 5: SYLLABUS OVERVIEW --- */}
         <section className="py-24 px-6">
           <div className="max-w-6xl mx-auto">
-            <div className="flex justify-center space-x-4 mb-12">
-              <button 
-                onClick={() => setActiveTab('foundation')}
-                className={`px-6 py-2 rounded-full font-bold transition-all ${activeTab === 'foundation' ? 'bg-blue-600 text-white' : 'bg-white/5 text-slate-400 border border-white/10'}`}
-              >
-                Foundation (Months 1-6)
-              </button>
-              <button 
-                onClick={() => setActiveTab('elite')}
-                className={`px-6 py-2 rounded-full font-bold transition-all ${activeTab === 'elite' ? 'bg-purple-600 text-white' : 'bg-white/5 text-slate-400 border border-white/10'}`}
-              >
-                Elite (Months 7-12)
-              </button>
+            <div className="flex justify-center mb-12 overflow-x-auto pb-4 no-scrollbar">
+              <div className="flex space-x-4 min-w-max px-2">
+                <button 
+                  onClick={() => setActiveTab('foundation')}
+                  className={`px-6 py-2 rounded-full font-bold transition-all ${activeTab === 'foundation' ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/40' : 'bg-white/5 text-slate-400 border border-white/10'}`}
+                >
+                  Foundation (Months 1-6)
+                </button>
+                <button 
+                  onClick={() => setActiveTab('elite')}
+                  className={`px-6 py-2 rounded-full font-bold transition-all ${activeTab === 'elite' ? 'bg-purple-600 text-white shadow-lg shadow-purple-900/40' : 'bg-white/5 text-slate-400 border border-white/10'}`}
+                >
+                  Elite (Months 7-12)
+                </button>
+              </div>
             </div>
 
             {activeTab === 'foundation' ? (
-              <div className="animate-in fade-in slide-in-from-bottom-4">
-                 <div className="flex flex-col md:flex-row justify-between items-end mb-8">
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
                   <div>
-                    <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white">Foundation Syllabus</h2>
-                    <p className="text-blue-400 font-bold uppercase tracking-widest mt-2">Weekend-Only • Assessed • Certified</p>
+                    <h2 className="text-3xl md:text-6xl font-black uppercase tracking-tighter text-white">Foundation Syllabus</h2>
+                    <p className="text-blue-400 font-bold uppercase tracking-widest mt-2 text-sm">Weekend-Only • Assessed • Certified</p>
                   </div>
-                  <div className="mt-4 md:mt-0 flex flex-col gap-2">
+                  <div className="flex flex-col gap-2">
                       <span className="bg-green-500/10 text-green-400 px-4 py-2 rounded-full text-xs font-bold border border-green-500/20 text-center">
                         Beginner Friendly • No Coding Required
                       </span>
-                      <span className="text-[10px] text-slate-500 text-right uppercase">Weekday Sessions: Practice Only (Optional)</span>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {foundationSyllabus.map((mod, i) => (
-                    <div key={i} className="bg-slate-900/50 border border-white/10 rounded-2xl p-6 hover:border-blue-500/50 transition-all group">
+                    <div key={i} className="bg-slate-900/50 border border-white/10 rounded-2xl p-6 hover:border-blue-500/50 transition-all group flex flex-col h-full">
                       <div className="flex justify-between items-start mb-4">
                         <div className="bg-blue-900/20 p-3 rounded-lg text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-colors">{mod.icon}</div>
                         <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">{mod.month}</span>
                       </div>
-                      <h3 className="text-lg font-bold text-white mb-3 min-h-[56px]">{mod.title}</h3>
-                      <ul className="space-y-2 mb-6 min-h-[100px]">
+                      <h3 className="text-lg font-bold text-white mb-3">{mod.title}</h3>
+                      <ul className="space-y-2 mb-6 flex-grow">
                         {mod.topics.map((t, idx) => (
                           <li key={idx} className="flex gap-2 text-xs text-slate-400">
                             <div className="w-1 h-1 bg-blue-500 rounded-full mt-1.5 shrink-0" /> {t}
                           </li>
                         ))}
                       </ul>
-                      <div className="pt-4 border-t border-white/5 bg-white/5 -mx-6 -mb-6 p-4">
+                      <div className="pt-4 border-t border-white/5 bg-white/5 -mx-6 -mb-6 p-4 mt-auto">
                         <p className="text-[10px] uppercase font-bold text-slate-500 mb-1">Industry Project</p>
                         <p className="text-xs font-bold text-blue-300">{mod.project}</p>
                       </div>
@@ -466,13 +495,13 @@ export default function InternXAIPage() {
                 </div>
               </div>
             ) : (
-              <div className="animate-in fade-in slide-in-from-bottom-4">
-                 <div className="flex flex-col md:flex-row justify-between items-end mb-8">
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
                   <div>
-                    <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">Elite Syllabus</h2>
-                    <p className="text-purple-400 font-bold uppercase tracking-widest mt-2">Advanced AI Engineering • System Design</p>
+                    <h2 className="text-3xl md:text-6xl font-black uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">Elite Syllabus</h2>
+                    <p className="text-purple-400 font-bold uppercase tracking-widest mt-2 text-sm">Advanced AI Engineering • System Design</p>
                   </div>
-                  <div className="mt-4 md:mt-0">
+                  <div>
                       <span className="bg-purple-500/10 text-purple-400 px-4 py-2 rounded-full text-xs font-bold border border-purple-500/20">
                         Selection Based Only • Global Readiness
                       </span>
@@ -481,20 +510,20 @@ export default function InternXAIPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {eliteSyllabus.map((mod, i) => (
-                    <div key={i} className="bg-[#0b0f1f] border border-purple-500/20 rounded-2xl p-6 hover:border-purple-500/60 transition-all group">
+                    <div key={i} className="bg-[#0b0f1f] border border-purple-500/20 rounded-2xl p-6 hover:border-purple-500/60 transition-all group flex flex-col h-full">
                       <div className="flex justify-between items-start mb-4">
                         <div className="bg-purple-900/20 p-3 rounded-lg text-purple-400 group-hover:bg-purple-600 group-hover:text-white transition-colors">{mod.icon}</div>
                         <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">{mod.month}</span>
                       </div>
-                      <h3 className="text-lg font-bold text-white mb-3 min-h-[56px]">{mod.title}</h3>
-                      <ul className="space-y-2 mb-6 min-h-[100px]">
+                      <h3 className="text-lg font-bold text-white mb-3">{mod.title}</h3>
+                      <ul className="space-y-2 mb-6 flex-grow">
                         {mod.topics.map((t, idx) => (
                           <li key={idx} className="flex gap-2 text-xs text-slate-400">
                             <div className="w-1 h-1 bg-purple-500 rounded-full mt-1.5 shrink-0" /> {t}
                           </li>
                         ))}
                       </ul>
-                      <div className="pt-4 border-t border-white/5 bg-purple-900/10 -mx-6 -mb-6 p-4">
+                      <div className="pt-4 border-t border-white/5 bg-purple-900/10 -mx-6 -mb-6 p-4 mt-auto">
                         <p className="text-[10px] uppercase font-bold text-slate-500 mb-1">Enterprise Project</p>
                         <p className="text-xs font-bold text-purple-300">{mod.project}</p>
                       </div>
@@ -506,7 +535,6 @@ export default function InternXAIPage() {
           </div>
         </section>
 
-        {/* --- SECTION 6: TOOLS & TECH STACK --- */}
         <section className="py-12 bg-white/5 border-y border-white/5 overflow-hidden">
           <div className="max-w-7xl mx-auto px-6">
             <h3 className="text-center text-sm font-black uppercase tracking-widest text-slate-500 mb-8">Tools You Will Master</h3>
@@ -521,7 +549,6 @@ export default function InternXAIPage() {
           </div>
         </section>
 
-        {/* --- SECTION 7: THE UNIFIED TEST / THE GATE --- */}
         <section id="eligibility" className="py-24 px-6 relative overflow-hidden bg-gradient-to-b from-[#020617] to-indigo-950/20">
           <div className="max-w-5xl mx-auto border border-blue-500/30 bg-[#03081a] rounded-3xl p-8 md:p-12 relative z-10 shadow-2xl shadow-blue-900/20">
             <div className="absolute top-0 right-0 p-4">
@@ -532,9 +559,9 @@ export default function InternXAIPage() {
               <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4 text-white">
                 The Qualification <span className="text-blue-500">Gate</span>
               </h2>
-              <p className="text-slate-400 max-w-2xl mx-auto">
-                Serious learner directly commit to elite. You must pass the <strong>Unified Qualification Test</strong>.
-                This ensures outsourcing, copy-pasting, and ChatGPT-only shortcuts do not work.
+              <p className="text-slate-400 max-w-2xl mx-auto text-sm md:text-base">
+                Serious learners only. You must pass the <strong>Unified Qualification Test</strong>.
+                This ensures outsourcing and copy-pasting shortcuts do not work.
               </p>
             </div>
 
@@ -542,29 +569,28 @@ export default function InternXAIPage() {
               <div className="text-center p-6 bg-white/5 rounded-2xl border border-white/10 hover:border-blue-500/50 transition-colors">
                 <Code2 className="w-10 h-10 mx-auto text-blue-400 mb-4" />
                 <h4 className="font-bold text-white mb-2">Build from Scratch</h4>
-                <p className="text-xs text-slate-400">4-6 hour live practical build. No step-by-step instructions. You build a real AI app.</p>
+                <p className="text-xs text-slate-400">4-6 hour live practical build. You build a real AI app.</p>
               </div>
               <div className="text-center p-6 bg-white/5 rounded-2xl border border-white/10 hover:border-purple-500/50 transition-colors">
                 <Shield className="w-10 h-10 mx-auto text-purple-400 mb-4" />
                 <h4 className="font-bold text-white mb-2">Anti-Cheat Design</h4>
-                <p className="text-xs text-slate-400">Randomized datasets and constraints per learner. Group cheating is mathematically impossible.</p>
+                <p className="text-xs text-slate-400">Randomized datasets. Group cheating is mathematically impossible.</p>
               </div>
               <div className="text-center p-6 bg-white/5 rounded-2xl border border-white/10 hover:border-green-500/50 transition-colors">
                 <Users className="w-10 h-10 mx-auto text-green-400 mb-4" />
                 <h4 className="font-bold text-white mb-2">Live Viva Defense</h4>
-                <p className="text-xs text-slate-400">If you can&apos;t explain your code logic in the live viva, you fail. Even if the code works.</p>
+                <p className="text-xs text-slate-400">Explain your code logic live. Even if the code works.</p>
               </div>
             </div>
 
             <div className="mt-12 text-center">
               <div className="inline-block bg-white/10 px-6 py-3 rounded-xl border border-white/10">
-                <p className="font-bold text-white">Outcome: <span className="text-green-400">Pass = Elite Eligible</span> | <span className="text-red-400">Fail = Foundation Certificate Only (Re-Attempt)</span></p>
+                <p className="font-bold text-white text-sm md:text-base">Outcome: <span className="text-green-400">Pass = Elite Eligible</span> | <span className="text-red-400">Fail = Foundation Cert Only</span></p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* --- SECTION 8: GAMIFIED ASSESSMENT (INTERACTIVE LMS DASHBOARD UI) --- */}
         <section className="py-24 px-6 bg-[#050b24]">
           <div className="max-w-6xl mx-auto">
              <div className="text-center mb-12">
@@ -576,7 +602,6 @@ export default function InternXAIPage() {
              </div>
 
              <div className="flex flex-col lg:flex-row gap-8 items-start">
-                {/* Left: Tab Navigation */}
                 <div className="w-full lg:w-1/3 flex flex-col gap-3">
                    {gamificationData.map((item) => (
                       <button 
@@ -584,7 +609,7 @@ export default function InternXAIPage() {
                         onClick={() => setActiveGamification(item)}
                         className={`text-left p-5 rounded-xl border transition-all duration-300 flex items-center gap-4 ${activeGamification.id === item.id ? 'bg-white/10 border-white/20 shadow-lg' : 'bg-transparent border-transparent hover:bg-white/5'}`}
                       >
-                         <div className={`${item.color} p-2 bg-white/5 rounded-lg`}>{item.icon}</div>
+                         <div className={`${item.color} p-2 bg-white/5 rounded-lg shrink-0`}>{item.icon}</div>
                          <div>
                             <span className={`block font-bold text-sm ${activeGamification.id === item.id ? 'text-white' : 'text-slate-400'}`}>{item.label}</span>
                          </div>
@@ -593,10 +618,8 @@ export default function InternXAIPage() {
                    ))}
                 </div>
 
-                {/* Right: Mock LMS Window & Video */}
                 <div className="w-full lg:w-2/3">
                    <div className="bg-[#0f172a] border border-slate-700/50 rounded-2xl overflow-hidden shadow-2xl relative">
-                      {/* Browser Header Mock */}
                       <div className="bg-[#1e293b] px-4 py-3 flex items-center gap-2 border-b border-slate-700">
                          <div className="flex gap-1.5">
                             <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
@@ -604,13 +627,12 @@ export default function InternXAIPage() {
                             <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
                          </div>
                          <div className="flex-1 text-center">
-                            <div className="inline-block bg-[#020617] px-4 py-1 rounded text-[10px] text-slate-400 font-mono">
+                            <div className="inline-block bg-[#020617] px-4 py-1 rounded text-[10px] text-slate-400 font-mono truncate max-w-[200px] md:max-w-full">
                                lms.internx.ai/assessments/{activeGamification.id}
                             </div>
                          </div>
                       </div>
 
-                      {/* Video Content Area */}
                       <div className="relative aspect-video bg-black group">
                          <video 
                            key={activeGamification.video} 
@@ -619,25 +641,23 @@ export default function InternXAIPage() {
                            autoPlay
                            loop
                            muted
-                           playsInline
+                           playsInline 
                          />
                          
-                         {/* Content Overlay */}
-                         <div className="absolute inset-0 flex flex-col justify-end p-8 bg-gradient-to-t from-[#020617] via-[#020617]/80 to-transparent">
+                         <div className="absolute inset-0 flex flex-col justify-end p-4 md:p-8 bg-gradient-to-t from-[#020617] via-[#020617]/80 to-transparent">
                             <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full ${activeGamification.bg} ${activeGamification.border} border mb-4 w-fit`}>
                                <span className={`w-2 h-2 rounded-full bg-current ${activeGamification.color}`}></span>
                                <span className={`text-xs font-bold uppercase tracking-wider ${activeGamification.color}`}>{activeGamification.stat}</span>
                             </div>
-                            <h3 className="text-2xl font-bold text-white mb-2">{activeGamification.title}</h3>
-                            <p className="text-slate-300 text-sm max-w-lg mb-4">{activeGamification.desc}</p>
+                            <h3 className="text-xl md:text-2xl font-bold text-white mb-2">{activeGamification.title}</h3>
+                            <p className="text-slate-300 text-xs md:text-sm max-w-lg mb-4 hidden md:block">{activeGamification.desc}</p>
                             
                             <div className="flex items-center gap-2 text-xs font-mono text-slate-500">
                                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                               SYSTEM ACTIVE • MODULE LOCKED
+                               SYSTEM ACTIVE
                             </div>
                          </div>
 
-                         {/* Play Button Overlay (Visual Only) */}
                          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                             <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30">
                                <Play className="w-6 h-6 text-white fill-white ml-1" />
@@ -650,42 +670,41 @@ export default function InternXAIPage() {
           </div>
         </section>
 
-        {/* --- SECTION 9: REAL INDUSTRY TRACKS --- */}
         <section className="py-20 bg-white/5 border-y border-white/5 px-6">
           <div className="max-w-7xl mx-auto text-center">
-            <h2 className="text-3xl font-black uppercase mb-8 text-white">Real Industry Domains</h2>
-            <p className="text-slate-400 mb-12 max-w-2xl mx-auto">Projects are pre-defined and guided for Foundation. Custom tracks are Elite-only.</p>
+            <h2 className="text-3xl font-black uppercase mb-8 text-white">
+              Real Industry Domains
+            </h2>
+            <p className="text-slate-400 mb-12 max-w-2xl mx-auto">
+              Projects are pre-defined and guided for Foundation. Custom tracks available for Elite.
+            </p>
+            
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="p-6 border border-white/10 rounded-xl hover:bg-white/5 transition-colors">
-                <Coins className="w-8 h-8 mx-auto text-yellow-400 mb-2" />
-                <h4 className="font-bold text-white">FinTech</h4>
-                <p className="text-xs text-slate-400 mt-1">Lead Scoring & Fraud</p>
-              </div>
-              <div className="p-6 border border-white/10 rounded-xl hover:bg-white/5 transition-colors">
-                <GraduationCap className="w-8 h-8 mx-auto text-blue-400 mb-2" />
-                <h4 className="font-bold text-white">EdTech</h4>
-                <p className="text-xs text-slate-400 mt-1">AI Tutors & Content</p>
-              </div>
-              <div className="p-6 border border-white/10 rounded-xl hover:bg-white/5 transition-colors">
-                <Users className="w-8 h-8 mx-auto text-pink-400 mb-2" />
-                <h4 className="font-bold text-white">HRTech</h4>
-                <p className="text-xs text-slate-400 mt-1">Resume Screening</p>
-              </div>
-              <div className="p-6 border border-white/10 rounded-xl hover:bg-white/5 transition-colors">
-                <Globe className="w-8 h-8 mx-auto text-green-400 mb-2" />
-                <h4 className="font-bold text-white">D2C/Retail</h4>
-                <p className="text-xs text-slate-400 mt-1">Customer Automation</p>
-              </div>
+              {industryDomains.map((item, i) => (
+                <div 
+                  key={i} 
+                  className="p-6 border border-white/10 rounded-xl hover:bg-white/5 transition-colors group cursor-default"
+                >
+                  <div className="transform group-hover:scale-110 transition-transform duration-300">
+                    {item.icon}
+                  </div>
+                  <h4 className="font-bold text-white text-sm md:text-base">
+                    {item.title}
+                  </h4>
+                  <p className="text-[10px] md:text-xs text-slate-400 mt-1">
+                    {item.desc}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* --- SECTION 10: COMPETITOR COMPARISON --- */}
         <section className="py-24 px-6 bg-[#03081a]">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-center mb-16 text-white">InternX-AI vs The Rest</h2>
             <div className="overflow-x-auto rounded-xl border border-white/10">
-              <table className="w-full text-left border-collapse">
+              <table className="w-full text-left border-collapse min-w-[800px]">
                 <thead>
                   <tr className="bg-white/5">
                     <th className="p-6 text-xs font-black uppercase tracking-widest text-slate-500">Feature</th>
@@ -718,7 +737,6 @@ export default function InternXAIPage() {
           </div>
         </section>
 
-        {/* --- SECTION 11: EARNINGS GRAPH (UPDATED WITH ROLES & CTC) --- */}
         <section className="py-24 px-6 bg-slate-900/20">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
@@ -726,31 +744,46 @@ export default function InternXAIPage() {
               <p className="text-slate-400 mt-4">Typical career progression for AI Engineers with real project experience.</p>
             </div>
             
-            <div className="bg-[#020617] p-8 md:p-12 rounded-3xl border border-white/10 relative shadow-2xl">
+            <div className="bg-[#020617] p-8 md:p-12 rounded-3xl border border-white/10 relative shadow-2xl overflow-hidden">
                <div className="absolute top-0 right-0 p-6 opacity-10 pointer-events-none">
                   <TrendingUp className="w-32 h-32 text-blue-500" />
                </div>
 
-               <div className="flex flex-col md:flex-row items-end justify-center gap-6 md:gap-8 h-auto md:h-96 relative z-10 pt-10">
-                  {/* Bars & Labels Loop */}
+               <div className="flex flex-col gap-8 md:hidden relative z-10 pt-4">
                   {careerGrowth.map((item, idx) => (
-                     <div key={idx} className="w-full md:w-1/4 h-full flex flex-col justify-end group">
-                        
-                        {/* The Bar */}
+                    <div key={idx} className="w-full">
+                       <div className="flex justify-between items-center mb-2">
+                          <span className="text-[10px] font-black uppercase text-slate-500 tracking-widest">{item.year}</span>
+                          <span className="text-xs font-bold text-white">{item.role}</span>
+                       </div>
+                       <div className="relative h-10 w-full bg-white/5 rounded-r-full flex items-center">
+                          <div 
+                             className={`h-full rounded-r-full bg-gradient-to-r ${item.color} shadow-lg relative flex items-center animate-in slide-in-from-left duration-1000`}
+                             style={{ width: item.h }}
+                          >
+                             <div className="absolute right-4 text-white text-xs font-bold whitespace-nowrap flex items-center gap-1 drop-shadow-md">
+                                <Wallet className="w-3 h-3" /> {item.ctc}
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                  ))}
+               </div>
+
+               <div className="hidden md:flex flex-row items-end justify-center gap-8 h-96 relative z-10 pt-10">
+                  {careerGrowth.map((item, idx) => (
+                     <div key={idx} className="w-1/4 h-full flex flex-col justify-end group">
                         <div className="relative flex-grow flex items-end justify-center mb-4">
                            <div 
-                              className={`w-16 md:w-24 rounded-t-lg bg-gradient-to-t ${item.color} shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-700 ease-out group-hover:scale-105 group-hover:brightness-110 relative`}
+                              className={`w-24 rounded-t-lg bg-gradient-to-t ${item.color} shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-700 ease-out group-hover:scale-105 group-hover:brightness-110 relative`}
                               style={{ height: item.h }}
                            >
-                              {/* Floating CTC Badge on Top of Bar */}
                               <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white text-blue-950 px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap shadow-lg flex items-center gap-1 opacity-100 transition-all">
                                  <Wallet className="w-3 h-3" />
                                  {item.ctc}
                               </div>
                            </div>
                         </div>
-                        
-                        {/* The Labels (Year & Role) */}
                         <div className="text-center border-t border-white/10 pt-4">
                            <div className="text-[10px] font-black uppercase text-slate-500 tracking-widest mb-1">{item.year}</div>
                            <div className="text-sm font-bold text-white group-hover:text-blue-400 transition-colors">{item.role}</div>
@@ -759,12 +792,9 @@ export default function InternXAIPage() {
                   ))}
                </div>
             </div>
-            
-            <p className="text-center text-slate-500 text-sm italic mt-8">&quot;AI won&apos;t take your job. Someone trained in Agentic AI will. Be that someone.&quot;</p>
           </div>
         </section>
 
-        {/* --- SECTION 12: PRICING (WITH RAZORPAY) --- */}
         <section id="pricing" className="py-24 px-6 bg-[#03081a]">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
@@ -773,20 +803,17 @@ export default function InternXAIPage() {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              {/* Foundation Card */}
               <div className="bg-white/5 border border-white/10 rounded-3xl p-8 hover:border-blue-500/50 transition-all group relative">
                 <h3 className="text-2xl font-bold mb-2 text-white">Foundation</h3>
                 <p className="text-slate-400 text-sm mb-6">6 Months • Beginner Friendly</p>
                 <div className="text-4xl font-black mb-1 text-white">₹1,49,999</div>
-                <p className="text-sm text-slate-500 mb-6">or ~$2,000 USD (Global)</p>
                 <div className="mb-6 p-3 bg-blue-500/10 rounded-lg text-xs font-bold text-blue-400 text-center">
-                   EMI starts at ₹5,208/month (India)
+                    EMI starts at ₹5,208/month
                 </div>
                 <ul className="space-y-3 mb-8">
-                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-green-400" /> Weekend Live Classes</li>
-                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-green-400" /> Real Industry Projects</li>
-                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-green-400" /> ResumeNFT Proof</li>
-                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-green-400" /> Elite Eligibility Test</li>
+                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" /> Weekend Live Classes</li>
+                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" /> Real Industry Projects</li>
+                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" /> ResumeNFT Proof</li>
                 </ul>
                 <button 
                   onClick={() => handlePayment('Foundation', 149999)}
@@ -796,21 +823,18 @@ export default function InternXAIPage() {
                 </button>
               </div>
 
-              {/* Elite Card */}
               <div className="bg-[#0b0f1f] border border-purple-500/30 rounded-3xl p-8 relative overflow-hidden group">
                 <div className="absolute top-0 right-0 bg-purple-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase">Career Accelerator</div>
                 <h3 className="text-2xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">Elite</h3>
                 <p className="text-slate-400 text-sm mb-6">12 Months • Full Career Path</p>
                 <div className="text-4xl font-black mb-1 text-white">₹2,49,999</div>
-                <p className="text-sm text-slate-500 mb-6">or ~$3,000 USD (Global)</p>
                 <div className="mb-6 p-3 bg-purple-500/10 rounded-lg text-xs font-bold text-purple-400 text-center">
-                   Includes Foundation + Advanced Layer
+                    Includes Foundation + Advanced Layer
                 </div>
                 <ul className="space-y-3 mb-8">
-                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-purple-400" /> <strong>Everything in Foundation</strong></li>
-                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-purple-400" /> Advanced MLOps & GenAI</li>
-                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-purple-400" /> Enterprise-Grade Projects</li>
-                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-purple-400" /> Unlimited Interviews</li>
+                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" /> <strong>Everything in Foundation</strong></li>
+                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" /> Advanced MLOps & GenAI</li>
+                  <li className="flex gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" /> Enterprise-Grade Projects</li>
                 </ul>
                 <button 
                   onClick={() => handlePayment('Elite', 249999)}
@@ -823,7 +847,6 @@ export default function InternXAIPage() {
           </div>
         </section>
 
-        {/* --- SECTION 13: FAQ (ACCORDION UI) --- */}
         <section className="py-24 px-6">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl font-black uppercase mb-12 text-center text-white">Frequently Asked Questions</h2>
@@ -838,8 +861,8 @@ export default function InternXAIPage() {
                     className="w-full flex justify-between items-center p-6 text-left"
                     aria-expanded={activeFaqIndex === i}
                   >
-                    <h4 className="font-bold text-white pr-4">{faq.q}</h4>
-                    {activeFaqIndex === i ? <ChevronDown className="w-5 h-5 text-blue-400" /> : <Plus className="w-5 h-5 text-slate-500" />}
+                    <h4 className="font-bold text-white pr-4 text-sm md:text-base">{faq.q}</h4>
+                    {activeFaqIndex === i ? <ChevronDown className="w-5 h-5 text-blue-400 shrink-0" /> : <Plus className="w-5 h-5 text-slate-500 shrink-0" />}
                   </button>
                   
                   <div 
@@ -853,7 +876,6 @@ export default function InternXAIPage() {
           </div>
         </section>
 
-        {/* --- SECTION 14: PARTNERS & FINAL CTA --- */}
         <section className="py-12 border-t border-white/5 opacity-50">
           <div className="max-w-7xl mx-auto px-6 overflow-hidden">
               <p className="text-center text-xs uppercase tracking-widest mb-8 text-slate-500">Hiring Partners & Alumni Work At</p>
@@ -866,7 +888,7 @@ export default function InternXAIPage() {
         </section>
 
         <section className="py-24 px-6 text-center">
-          <h2 className="text-4xl md:text-6xl font-black uppercase mb-8 text-white">Start where you belong.<br/>Advance when you&apos;re ready.</h2>
+          <h2 className="text-4xl md:text-6xl font-black uppercase mb-8 text-white leading-tight">Start where you belong.<br/><span className="text-blue-500">Advance</span> when you&apos;re ready.</h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-lg shadow-blue-900/50">
               Start with Foundation
