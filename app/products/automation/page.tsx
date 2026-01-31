@@ -2,7 +2,6 @@ import React from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/sections/Footer';
 import ExecutionFlow from '@/components/sections/ExecutionFlow';
-import ProductMatrix from '@/components/sections/ProductMatrix';
 import FeatureGrid from '@/components/sections/FeatureGrid';
 import { Bot, Settings, Zap, Cpu, Network, Workflow } from 'lucide-react';
 
@@ -100,8 +99,6 @@ const AutomationPlatformPage = () => {
       <div className="py-12 border-y border-white/5">
         <ExecutionFlow />
       </div>
-
-      <ProductMatrix />
 
       <FeatureGrid />
 
